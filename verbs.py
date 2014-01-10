@@ -1,8 +1,13 @@
 #!/usr/bin/env python3
 
 
-from accentuation import recessive
-from syllabify import is_vowel
+from accentuation import recessive, perispomenon, properispomenon
+from syllabify import is_vowel, syllabify
+
+
+def make_perispomenon(w): return perispomenon(syllabify(w))[0]
+def make_properispomenon(w): return properispomenon(syllabify(w))[0]
+
 
 class Endings:
 
@@ -43,6 +48,26 @@ class Endings5(Endings):
 class Endings8(Endings5):
 
     def _3P(self): return recessive(self.stem + "α" + "σι(ν)")
+
+
+class Endings12(Endings):
+
+    def _1S(self): return recessive(self.stem + "ω")
+    def _2S(self): return recessive(self.stem + "ῃς")
+    def _3S(self): return recessive(self.stem + "ῃ")
+    def _1P(self): return recessive(self.stem + "ω" + "μεν")
+    def _2P(self): return recessive(self.stem + "η" + "τε")
+    def _3P(self): return recessive(self.stem + "ω" + "σι(ν)")
+
+
+class Endings14(Endings):
+
+    def _1S(self): return make_perispomenon(self.stem + "ω")
+    def _2S(self): return make_perispomenon(self.stem + "ῃς")
+    def _3S(self): return make_perispomenon(self.stem + "ῃ")
+    def _1P(self): return make_properispomenon(self.stem + "ω" + "μεν")
+    def _2P(self): return make_properispomenon(self.stem + "η" + "τε")
+    def _3P(self): return make_properispomenon(self.stem + "ω" + "σι(ν)")
 
 
 class Endings7(Endings):
@@ -86,6 +111,16 @@ class Endings2(Endings):
     def _1P(self): return recessive(self.stem + "ο" + "μεθα")
     def _2P(self): return recessive(self.stem + "ε" + "σθε")
     def _3P(self): return recessive(self.stem + "ο" + "νται")
+
+
+class Endings13(Endings):
+
+    def _1S(self): return recessive(self.stem + "ω" + "μαι")
+    def _2S(self): return recessive(self.stem + "ῃ")
+    def _3S(self): return recessive(self.stem + "η" + "ται")
+    def _1P(self): return recessive(self.stem + "ω" + "μεθα")
+    def _2P(self): return recessive(self.stem + "η" + "σθε")
+    def _3P(self): return recessive(self.stem + "ω" + "νται")
 
 
 class Endings11(Endings):
@@ -134,6 +169,13 @@ class Verb1:
     def XMI(self): return Endings9(redup(self.stem1))
     def YAI(self): return Endings10("ἐ" + redup(self.stem1) + "κ")
     def YMI(self): return Endings11("ἐ" + redup(self.stem1))
+
+    def PAS(self): return Endings12(self.stem1)
+    def PMS(self): return Endings13(self.stem1)
+    def AAS(self): return Endings12(self.stem1 + "σ")
+    def AMS(self): return Endings13(self.stem1 + "σ")
+    def APS(self): return Endings14(self.stem1 + "θ")
+    def XAS(self): return Endings12(redup(self.stem1) + "κ")
 
 
 def redup(stem):
@@ -249,3 +291,45 @@ if __name__ == "__main__":
     assert luw.YMI()._1P() == "ἐλελύμεθα"
     assert luw.YMI()._2P() == "ἐλέλυσθε"
     assert luw.YMI()._3P() == "ἐλέλυντο"
+
+    assert luw.PAS()._1S() == "λύω"
+    assert luw.PAS()._2S() == "λύῃς"
+    assert luw.PAS()._3S() == "λύῃ"
+    assert luw.PAS()._1P() == "λύωμεν"
+    assert luw.PAS()._2P() == "λύητε"
+    assert luw.PAS()._3P() == "λύωσι(ν)"
+
+    assert luw.PMS()._1S() == "λύωμαι"
+    assert luw.PMS()._2S() == "λύῃ"
+    assert luw.PMS()._3S() == "λύηται"
+    assert luw.PMS()._1P() == "λυώμεθα"
+    assert luw.PMS()._2P() == "λύησθε"
+    assert luw.PMS()._3P() == "λύωνται"
+
+    assert luw.AAS()._1S() == "λύσω"
+    assert luw.AAS()._2S() == "λύσῃς"
+    assert luw.AAS()._3S() == "λύσῃ"
+    assert luw.AAS()._1P() == "λύσωμεν"
+    assert luw.AAS()._2P() == "λύσητε"
+    assert luw.AAS()._3P() == "λύσωσι(ν)"
+
+    assert luw.AMS()._1S() == "λύσωμαι"
+    assert luw.AMS()._2S() == "λύσῃ"
+    assert luw.AMS()._3S() == "λύσηται"
+    assert luw.AMS()._1P() == "λυσώμεθα"
+    assert luw.AMS()._2P() == "λύσησθε"
+    assert luw.AMS()._3P() == "λύσωνται"
+
+    assert luw.APS()._1S() == "λυθῶ"
+    assert luw.APS()._2S() == "λυθῇς"
+    assert luw.APS()._3S() == "λυθῇ"
+    assert luw.APS()._1P() == "λυθῶμεν"
+    assert luw.APS()._2P() == "λυθῆτε"
+    assert luw.APS()._3P() == "λυθῶσι(ν)"
+
+    assert luw.XAS()._1S() == "λελύκω"
+    assert luw.XAS()._2S() == "λελύκῃς"
+    assert luw.XAS()._3S() == "λελύκῃ"
+    assert luw.XAS()._1P() == "λελύκωμεν"
+    assert luw.XAS()._2P() == "λελύκητε"
+    assert luw.XAS()._3P() == "λελύκωσι(ν)"
