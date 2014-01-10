@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 
 
-from accentuation import recessive, perispomenon, properispomenon
+from accentuation import recessive, paroxytone, perispomenon, properispomenon
 from syllabify import is_vowel, syllabify
 
 
+def make_paroxytone(w): return paroxytone(syllabify(w))[0]
 def make_perispomenon(w): return perispomenon(syllabify(w))[0]
 def make_properispomenon(w): return properispomenon(syllabify(w))[0]
 
@@ -153,6 +154,74 @@ class Endings6(Endings):
     def _3P(self): return recessive(self.stem + "α" + "ντο")
 
 
+class Endings15(Endings):
+
+    def _1S(self): return recessive(self.stem + "οι" + "μι")
+    def _2S(self): return make_paroxytone(self.stem + "οι" + "ς")
+    def _3S(self): return make_paroxytone(self.stem + "οι" + "")
+    def _1P(self): return recessive(self.stem + "οι" + "μεν")
+    def _2P(self): return recessive(self.stem + "οι" + "τε")
+    def _3P(self): return recessive(self.stem + "οι" + "εν")
+
+
+class Endings17(Endings):
+
+    def _1S(self): return recessive(self.stem + "αι" + "μι")
+    def _2S(self): return "{}/{}".format(
+                          make_paroxytone(self.stem + "αι" + "ς"),
+                          recessive(self.stem + "ει" + "ας"),
+    )
+    def _3S(self): return "{}/{}".format(
+                          make_paroxytone(self.stem + "αι" + ""),
+                          recessive(self.stem + "ει" + "ε"),
+    )
+    def _1P(self): return recessive(self.stem + "αι" + "μεν")
+    def _2P(self): return recessive(self.stem + "αι" + "τε")
+    def _3P(self): return "{}/{}".format(
+                          recessive(self.stem + "αι" + "εν"),
+                          recessive(self.stem + "ει" + "αν"),
+    )
+
+
+class Endings16(Endings):
+
+    def _1S(self): return recessive(self.stem + "οι" + "μην")
+    def _2S(self): return recessive(self.stem + "οι" + "ο")
+    def _3S(self): return recessive(self.stem + "οι" + "το")
+    def _1P(self): return recessive(self.stem + "οι" + "μεθα")
+    def _2P(self): return recessive(self.stem + "οι" + "σθε")
+    def _3P(self): return recessive(self.stem + "οι" + "ντο")
+
+
+class Endings18(Endings):
+
+    def _1S(self): return recessive(self.stem + "αι" + "μην")
+    def _2S(self): return recessive(self.stem + "αι" + "ο")
+    def _3S(self): return recessive(self.stem + "αι" + "το")
+    def _1P(self): return recessive(self.stem + "αι" + "μεθα")
+    def _2P(self): return recessive(self.stem + "αι" + "σθε")
+    def _3P(self): return recessive(self.stem + "αι" + "ντο")
+
+
+class Endings19(Endings):
+
+    def _1S(self): return recessive(self.stem + "ειη" + "ν")
+    def _2S(self): return recessive(self.stem + "ειη" + "ς")
+    def _3S(self): return recessive(self.stem + "ειη" + "")
+    def _1P(self): return "{}/{}".format(
+                          make_properispomenon(self.stem + "ει" + "μεν"),
+                          recessive(self.stem + "ειη" + "μεν"),
+    )
+    def _2P(self): return "{}/{}".format(
+                          make_properispomenon(self.stem + "ει" + "τε"),
+                          recessive(self.stem + "ειη" + "τε"),
+    )
+    def _3P(self): return "{}/{}".format(
+                          make_properispomenon(self.stem + "ει" + "εν"),
+                          recessive(self.stem + "ειη" + "σαν"),
+    )
+
+
 class Verb1:
 
     def PAI(self): return Endings1(self.stem1)
@@ -176,6 +245,16 @@ class Verb1:
     def AMS(self): return Endings13(self.stem1 + "σ")
     def APS(self): return Endings14(self.stem1 + "θ")
     def XAS(self): return Endings12(redup(self.stem1) + "κ")
+
+    def PAO(self): return Endings15(self.stem1)
+    def PMO(self): return Endings16(self.stem1)
+    def FAO(self): return Endings15(self.stem1 + "σ")
+    def FMO(self): return Endings16(self.stem1 + "σ")
+    def FPO(self): return Endings16(self.stem1 + "θη" + "σ")
+    def AAO(self): return Endings17(self.stem1 + "σ")
+    def AMO(self): return Endings18(self.stem1 + "σ")
+    def APO(self): return Endings19(self.stem1 + "θ")
+    def XAO(self): return Endings15(redup(self.stem1) + "κ")
 
 
 def redup(stem):
@@ -333,3 +412,66 @@ if __name__ == "__main__":
     assert luw.XAS()._1P() == "λελύκωμεν"
     assert luw.XAS()._2P() == "λελύκητε"
     assert luw.XAS()._3P() == "λελύκωσι(ν)"
+
+    assert luw.PAO()._1S() == "λύοιμι"
+    assert luw.PAO()._2S() == "λύοις"
+    assert luw.PAO()._3S() == "λύοι"
+    assert luw.PAO()._1P() == "λύοιμεν"
+    assert luw.PAO()._2P() == "λύοιτε"
+    assert luw.PAO()._3P() == "λύοιεν"
+
+    assert luw.PMO()._1S() == "λυοίμην"
+    assert luw.PMO()._2S() == "λύοιο"
+    assert luw.PMO()._3S() == "λύοιτο"
+    assert luw.PMO()._1P() == "λυοίμεθα"
+    assert luw.PMO()._2P() == "λύοισθε"
+    assert luw.PMO()._3P() == "λύοιντο"
+
+    assert luw.FAO()._1S() == "λύσοιμι"
+    assert luw.FAO()._2S() == "λύσοις"
+    assert luw.FAO()._3S() == "λύσοι"
+    assert luw.FAO()._1P() == "λύσοιμεν"
+    assert luw.FAO()._2P() == "λύσοιτε"
+    assert luw.FAO()._3P() == "λύσοιεν"
+
+    assert luw.FMO()._1S() == "λυσοίμην"
+    assert luw.FMO()._2S() == "λύσοιο"
+    assert luw.FMO()._3S() == "λύσοιτο"
+    assert luw.FMO()._1P() == "λυσοίμεθα"
+    assert luw.FMO()._2P() == "λύσοισθε"
+    assert luw.FMO()._3P() == "λύσοιντο"
+
+    assert luw.FPO()._1S() == "λυθησοίμην"
+    assert luw.FPO()._2S() == "λυθήσοιο"
+    assert luw.FPO()._3S() == "λυθήσοιτο"
+    assert luw.FPO()._1P() == "λυθησοίμεθα"
+    assert luw.FPO()._2P() == "λυθήσοισθε"
+    assert luw.FPO()._3P() == "λυθήσοιντο"
+
+    assert luw.AAO()._1S() == "λύσαιμι"
+    assert luw.AAO()._2S() == "λύσαις/λύσειας"
+    assert luw.AAO()._3S() == "λύσαι/λύσειε"
+    assert luw.AAO()._1P() == "λύσαιμεν"
+    assert luw.AAO()._2P() == "λύσαιτε"
+    assert luw.AAO()._3P() == "λύσαιεν/λύσειαν"
+
+    assert luw.AMO()._1S() == "λυσαίμην"
+    assert luw.AMO()._2S() == "λύσαιο"
+    assert luw.AMO()._3S() == "λύσαιτο"
+    assert luw.AMO()._1P() == "λυσαίμεθα"
+    assert luw.AMO()._2P() == "λύσαισθε"
+    assert luw.AMO()._3P() == "λύσαιντο"
+
+    assert luw.APO()._1S() == "λυθείην"
+    assert luw.APO()._2S() == "λυθείης"
+    assert luw.APO()._3S() == "λυθείη"
+    assert luw.APO()._1P() == "λυθεῖμεν/λυθείημεν"
+    assert luw.APO()._2P() == "λυθεῖτε/λυθείητε"
+    assert luw.APO()._3P() == "λυθεῖεν/λυθείησαν"
+
+    assert luw.XAO()._1S() == "λελύκοιμι"
+    assert luw.XAO()._2S() == "λελύκοις"
+    assert luw.XAO()._3S() == "λελύκοι"
+    assert luw.XAO()._1P() == "λελύκοιμεν"
+    assert luw.XAO()._2P() == "λελύκοιτε"
+    assert luw.XAO()._3P() == "λελύκοιεν"
