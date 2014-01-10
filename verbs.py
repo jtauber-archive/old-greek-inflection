@@ -222,6 +222,54 @@ class Endings19(Endings):
     )
 
 
+class Endings20(Endings):
+
+    def _2S(self): return recessive(self.stem + "ε")
+    def _3S(self): return recessive(self.stem + "ε" + "τω")
+    def _2P(self): return recessive(self.stem + "ε" + "τε")
+    def _3P(self): return recessive(self.stem + "ο" + "ντων")
+
+
+class Endings22(Endings):
+
+    def _2S(self): return recessive(self.stem + "ον")
+    def _3S(self): return recessive(self.stem + "α" + "τω")
+    def _2P(self): return recessive(self.stem + "α" + "τε")
+    def _3P(self): return recessive(self.stem + "α" + "ντων")
+
+
+class Endings24(Endings):
+
+    def _2S(self): return recessive(self.stem + "η" + "τι")
+    def _3S(self): return recessive(self.stem + "η" + "τω")
+    def _2P(self): return recessive(self.stem + "η" + "τε")
+    def _3P(self): return recessive(self.stem + "ε" + "ντων")
+
+
+class Endings21(Endings):
+
+    def _2S(self): return recessive(self.stem + "ου")
+    def _3S(self): return recessive(self.stem + "ε" + "σθω")
+    def _2P(self): return recessive(self.stem + "ε" + "σθε")
+    def _3P(self): return recessive(self.stem + "ε" + "σθων")
+
+
+class Endings23(Endings):
+
+    def _2S(self): return recessive(self.stem + "αι")
+    def _3S(self): return recessive(self.stem + "α" + "σθω")
+    def _2P(self): return recessive(self.stem + "α" + "σθε")
+    def _3P(self): return recessive(self.stem + "α" + "σθων")
+
+
+class Endings25(Endings):
+
+    def _2S(self): return recessive(self.stem + "σο")
+    def _3S(self): return recessive(self.stem + "σθω")
+    def _2P(self): return recessive(self.stem + "σθε")
+    def _3P(self): return recessive(self.stem + "σθων")
+
+
 class Verb1:
 
     def PAI(self): return Endings1(self.stem1)
@@ -255,6 +303,13 @@ class Verb1:
     def AMO(self): return Endings18(self.stem1 + "σ")
     def APO(self): return Endings19(self.stem1 + "θ")
     def XAO(self): return Endings15(redup(self.stem1) + "κ")
+
+    def PAD(self): return Endings20(self.stem1)
+    def PMD(self): return Endings21(self.stem1)
+    def AAD(self): return Endings22(self.stem1 + "σ")
+    def AMD(self): return Endings23(self.stem1 + "σ")
+    def APD(self): return Endings24(self.stem1 + "θ")
+    def XMD(self): return Endings25(redup(self.stem1))
 
 
 def redup(stem):
@@ -475,3 +530,33 @@ if __name__ == "__main__":
     assert luw.XAO()._1P() == "λελύκοιμεν"
     assert luw.XAO()._2P() == "λελύκοιτε"
     assert luw.XAO()._3P() == "λελύκοιεν"
+
+    assert luw.PAD()._2S() == "λῦε"
+    assert luw.PAD()._3S() == "λυέτω"
+    assert luw.PAD()._2P() == "λύετε"
+    assert luw.PAD()._3P() == "λυόντων"
+
+    assert luw.PMD()._2S() == "λύου"
+    assert luw.PMD()._3S() == "λυέσθω"
+    assert luw.PMD()._2P() == "λύεσθε"
+    assert luw.PMD()._3P() == "λυέσθων"
+
+    assert luw.AAD()._2S() == "λῦσον"
+    assert luw.AAD()._3S() == "λυσάτω"
+    assert luw.AAD()._2P() == "λύσατε"
+    assert luw.AAD()._3P() == "λυσάντων"
+
+    assert luw.AMD()._2S() == "λῦσαι"
+    assert luw.AMD()._3S() == "λυσάσθω"
+    assert luw.AMD()._2P() == "λύσασθε"
+    assert luw.AMD()._3P() == "λυσάσθων"
+
+    assert luw.APD()._2S() == "λύθητι"
+    assert luw.APD()._3S() == "λυθήτω"
+    assert luw.APD()._2P() == "λύθητε"
+    assert luw.APD()._3P() == "λυθέντων"
+
+    assert luw.XMD()._2S() == "λέλυσο"
+    assert luw.XMD()._3S() == "λελύσθω"
+    assert luw.XMD()._2P() == "λέλυσθε"
+    assert luw.XMD()._3P() == "λελύσθων"
