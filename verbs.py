@@ -311,6 +311,17 @@ class Verb1:
     def APD(self): return Endings24(self.stem1 + "θ")
     def XMD(self): return Endings25(redup(self.stem1))
 
+    def PAN(self): return recessive(self.stem1 + "ειν")
+    def PMN(self): return recessive(self.stem1 + "εσθαι")
+    def FAN(self): return recessive(self.stem1 + "σ" + "ειν")
+    def FMN(self): return recessive(self.stem1 + "σ" + "ε" + "σθαι")
+    def FPN(self): return recessive(self.stem1 + "θη" + "σ" + "ε" + "σθαι")
+    def AAN(self): return recessive(self.stem1 + "σαι")
+    def AMN(self): return recessive(self.stem1 + "σ" + "α" + "σθαι")
+    def APN(self): return make_properispomenon(self.stem1 + "θη" + "ναι")
+    def XAN(self): return make_paroxytone(redup(self.stem1) + "κ" + "ε" + "ναι")
+    def XMN(self): return make_paroxytone(redup(self.stem1) + "σθαι")
+
 
 def redup(stem):
     if is_vowel(stem[0]):
@@ -560,3 +571,14 @@ if __name__ == "__main__":
     assert luw.XMD()._3S() == "λελύσθω"
     assert luw.XMD()._2P() == "λέλυσθε"
     assert luw.XMD()._3P() == "λελύσθων"
+
+    assert luw.PAN() == "λύειν"
+    assert luw.PMN() == "λύεσθαι"
+    assert luw.FAN() == "λύσειν"
+    assert luw.FMN() == "λύσεσθαι"
+    assert luw.FPN() == "λυθήσεσθαι"
+    assert luw.AAN() == "λῦσαι"
+    assert luw.AMN() == "λύσασθαι"
+    assert luw.APN() == "λυθῆναι"
+    assert luw.XAN() == "λελυκέναι"
+    assert luw.XMN() == "λελύσθαι"
