@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 
 
-from accentuation import recessive, paroxytone, perispomenon, properispomenon
+from accentuation import recessive, oxytone, paroxytone, perispomenon, properispomenon
 from syllabify import is_vowel, syllabify
 
 
+def make_oxytone(w): return oxytone(syllabify(w))[0]
 def make_paroxytone(w): return paroxytone(syllabify(w))[0]
 def make_perispomenon(w): return perispomenon(syllabify(w))[0]
 def make_properispomenon(w): return properispomenon(syllabify(w))[0]
@@ -270,6 +271,55 @@ class Endings25(Endings):
     def _3P(self): return recessive(self.stem + "σθων")
 
 
+class Endings26(Endings):
+
+    def NSM(self): return recessive(self.stem + "ων")
+    def NSF(self): return recessive(self.stem + "ουσα")
+    def NSN(self): return recessive(self.stem + "ον")
+
+
+class Endings28(Endings):
+
+    def NSM(self): return make_paroxytone(self.stem + "ας")
+    def NSF(self): return recessive(self.stem + "ασα")
+    def NSN(self): return recessive(self.stem + "αν")
+
+
+class Endings30(Endings):
+
+    def NSM(self): return make_oxytone(self.stem + "εις")
+    def NSF(self): return make_properispomenon(self.stem + "εισα")
+    def NSN(self): return make_oxytone(self.stem + "εν")
+
+
+class Endings32(Endings):
+
+    def NSM(self): return make_paroxytone(self.stem + "μενος")
+    def NSF(self): return recessive(self.stem + "μενη")
+    def NSN(self): return make_paroxytone(self.stem + "μενον")
+
+
+class Endings27(Endings):
+
+    def NSM(self): return recessive(self.stem + "ο" + "μενος")
+    def NSF(self): return recessive(self.stem + "ο" + "μενη")
+    def NSN(self): return recessive(self.stem + "ο" + "μενον")
+
+
+class Endings29(Endings):
+
+    def NSM(self): return recessive(self.stem + "α" + "μενος")
+    def NSF(self): return recessive(self.stem + "α" + "μενη")
+    def NSN(self): return recessive(self.stem + "α" + "μενον")
+
+
+class Endings31(Endings):
+
+    def NSM(self): return make_oxytone(self.stem + "ως")
+    def NSF(self): return make_properispomenon(self.stem + "υια")
+    def NSN(self): return make_oxytone(self.stem + "ος")
+
+
 class Verb1:
 
     def PAI(self): return Endings1(self.stem1)
@@ -321,6 +371,17 @@ class Verb1:
     def APN(self): return make_properispomenon(self.stem1 + "θη" + "ναι")
     def XAN(self): return make_paroxytone(redup(self.stem1) + "κ" + "ε" + "ναι")
     def XMN(self): return make_paroxytone(redup(self.stem1) + "σθαι")
+
+    def PAP(self): return Endings26(self.stem1)
+    def PMP(self): return Endings27(self.stem1)
+    def FAP(self): return Endings26(self.stem1 + "σ")
+    def FMP(self): return Endings27(self.stem1 + "σ")
+    def FPP(self): return Endings27(self.stem1 + "θησ")
+    def AAP(self): return Endings28(self.stem1 + "σ")
+    def AMP(self): return Endings29(self.stem1 + "σ")
+    def APP(self): return Endings30(self.stem1 + "θ")
+    def XAP(self): return Endings31(redup(self.stem1) + "κ")
+    def XMP(self): return Endings32(redup(self.stem1))
 
 
 def redup(stem):
@@ -582,3 +643,43 @@ if __name__ == "__main__":
     assert luw.APN() == "λυθῆναι"
     assert luw.XAN() == "λελυκέναι"
     assert luw.XMN() == "λελύσθαι"
+
+    assert luw.PAP().NSM() == "λύων"
+    assert luw.PAP().NSF() == "λύουσα"
+    assert luw.PAP().NSN() == "λῦον"
+
+    assert luw.PMP().NSM() == "λυόμενος"
+    assert luw.PMP().NSF() == "λυομένη"
+    assert luw.PMP().NSN() == "λυόμενον"
+
+    assert luw.FAP().NSM() == "λύσων"
+    assert luw.FAP().NSF() == "λύσουσα"
+    assert luw.FAP().NSN() == "λῦσον"
+
+    assert luw.FMP().NSM() == "λυσόμενος"
+    assert luw.FMP().NSF() == "λυσομένη"
+    assert luw.FMP().NSN() == "λυσόμενον"
+
+    assert luw.FPP().NSM() == "λυθησόμενος"
+    assert luw.FPP().NSF() == "λυθησομένη"
+    assert luw.FPP().NSN() == "λυθησόμενον"
+
+    assert luw.AAP().NSM() == "λύσας"
+    assert luw.AAP().NSF() == "λύσασα"
+    assert luw.AAP().NSN() == "λῦσαν"
+
+    assert luw.AMP().NSM() == "λυσάμενος"
+    assert luw.AMP().NSF() == "λυσαμένη"
+    assert luw.AMP().NSN() == "λυσάμενον"
+
+    assert luw.APP().NSM() == "λυθείς"
+    assert luw.APP().NSF() == "λυθεῖσα"
+    assert luw.APP().NSN() == "λυθέν"
+
+    assert luw.XAP().NSM() == "λελυκώς"
+    assert luw.XAP().NSF() == "λελυκυῖα"
+    assert luw.XAP().NSN() == "λελυκός"
+
+    assert luw.XMP().NSM() == "λελυμένος"
+    assert luw.XMP().NSF() == "λελυμένη"
+    assert luw.XMP().NSN() == "λελυμένον"
