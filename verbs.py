@@ -284,10 +284,10 @@ class Endings19(Endings):
 
 class Endings20(Endings):
 
-    def _2S(self): return recessive(self.stem + "ε")
-    def _3S(self): return recessive(self.stem + "ε" + "τω")
-    def _2P(self): return recessive(self.stem + "ε" + "τε")
-    def _3P(self): return recessive(self.stem + "ο" + "ντων")
+    def _2S(self): return phon(recessive(self.stem + "ε"))
+    def _3S(self): return phon(recessive(self.stem + "ε" + "τω"))
+    def _2P(self): return phon(recessive(self.stem + "ε" + "τε"))
+    def _3P(self): return phon(recessive(self.stem + "ο" + "ντων"))
 
 
 class Endings22(Endings):
@@ -308,10 +308,10 @@ class Endings24(Endings):
 
 class Endings21(Endings):
 
-    def _2S(self): return recessive(self.stem + "ου")
-    def _3S(self): return recessive(self.stem + "ε" + "σθω")
-    def _2P(self): return recessive(self.stem + "ε" + "σθε")
-    def _3P(self): return recessive(self.stem + "ε" + "σθων")
+    def _2S(self): return phon(recessive(self.stem + "ου"))
+    def _3S(self): return phon(recessive(self.stem + "ε" + "σθω"))
+    def _2P(self): return phon(recessive(self.stem + "ε" + "σθε"))
+    def _3P(self): return phon(recessive(self.stem + "ε" + "σθων"))
 
 
 class Endings23(Endings):
@@ -810,3 +810,13 @@ if __name__ == "__main__":
     assert timaw.PMO()._1P() == "τιμῴμεθα"
     assert timaw.PMO()._2P() == "τιμῷσθε"
     assert timaw.PMO()._3P() == "τιμῷντο"
+
+    assert timaw.PAD()._2S() == "τίμα"
+    assert timaw.PAD()._3S() == "τιμάτω"
+    assert timaw.PAD()._2P() == "τιμᾶτε"
+    assert timaw.PAD()._3P() == "τιμώντων"
+
+    assert timaw.PMD()._2S() == "τιμῶ"
+    assert timaw.PMD()._3S() == "τιμάσθω"
+    assert timaw.PMD()._2P() == "τιμᾶσθε"
+    assert timaw.PMD()._3P() == "τιμάσθων"
