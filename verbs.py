@@ -31,6 +31,7 @@ def phon(w):
     w = w.replace("α+οι", "ῳ")
     w = w.replace("ά+ου", "ῶ")
 
+    w = w.replace("ᾶ+ο", "ῶ")
     w = w.replace("ά+ο", "ῶ")
     w = w.replace("α+ό", "ώ")
     w = w.replace("α+ο", "ω")
@@ -335,9 +336,9 @@ class Endings25(Endings):
 
 class Endings26(Endings):
 
-    def NSM(self): return recessive(self.stem + "ων")
-    def NSF(self): return recessive(self.stem + "ουσα")
-    def NSN(self): return recessive(self.stem + "ον")
+    def NSM(self): return phon(recessive(self.stem + "ων"))
+    def NSF(self): return phon(recessive(self.stem + "ουσα"))
+    def NSN(self): return phon(make_properispomenon(self.stem + "ον"))
 
 
 class Endings28(Endings):
@@ -363,9 +364,9 @@ class Endings32(Endings):
 
 class Endings27(Endings):
 
-    def NSM(self): return recessive(self.stem + "ο" + "μενος")
-    def NSF(self): return recessive(self.stem + "ο" + "μενη")
-    def NSN(self): return recessive(self.stem + "ο" + "μενον")
+    def NSM(self): return phon(recessive(self.stem + "ο" + "μενος"))
+    def NSF(self): return phon(recessive(self.stem + "ο" + "μενη"))
+    def NSN(self): return phon(recessive(self.stem + "ο" + "μενον"))
 
 
 class Endings29(Endings):
@@ -718,7 +719,7 @@ if __name__ == "__main__":
 
     assert luw.PAP().NSM() == "λύων"
     assert luw.PAP().NSF() == "λύουσα"
-    assert luw.PAP().NSN() == "λῦον"
+    assert luw.PAP().NSN() == "λῦον", luw.PAP().NSN()
 
     assert luw.PMP().NSM() == "λυόμενος"
     assert luw.PMP().NSF() == "λυομένη"
@@ -826,3 +827,12 @@ if __name__ == "__main__":
 
     assert timaw.PAN() == "τιμᾶν"
     assert timaw.PMN() == "τιμᾶσθαι"
+
+    assert timaw.PAP().NSM() == "τιμῶν"
+    assert timaw.PAP().NSF() == "τιμῶσα"
+    assert timaw.PAP().NSN() == "τιμῶν"
+
+    assert timaw.PMP().NSM() == "τιμώμενος"
+    assert timaw.PMP().NSF() == "τιμωμένη"
+    assert timaw.PMP().NSN() == "τιμώμενον"
+
