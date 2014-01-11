@@ -13,6 +13,11 @@ def make_properispomenon(w): return properispomenon(syllabify(w))[0]
 
 def phon(w):
     w = w.replace("ά+ω", "ῶ")
+    w = w.replace("α+ώ", "ώ")
+
+    w = w.replace("ά+ῃ", "ᾷ")
+
+    w = w.replace("ά+η", "ᾶ")
 
     w = w.replace("ά+ει", "ᾷ")
 
@@ -72,12 +77,12 @@ class Endings8(Endings5):
 
 class Endings12(Endings):
 
-    def _1S(self): return recessive(self.stem + "ω")
-    def _2S(self): return recessive(self.stem + "ῃς")
-    def _3S(self): return recessive(self.stem + "ῃ")
-    def _1P(self): return recessive(self.stem + "ω" + "μεν")
-    def _2P(self): return recessive(self.stem + "η" + "τε")
-    def _3P(self): return recessive(self.stem + "ω" + "σι(ν)")
+    def _1S(self): return phon(recessive(self.stem + "ω"))
+    def _2S(self): return phon(recessive(self.stem + "ῃς"))
+    def _3S(self): return phon(recessive(self.stem + "ῃ"))
+    def _1P(self): return phon(recessive(self.stem + "ω" + "μεν"))
+    def _2P(self): return phon(recessive(self.stem + "η" + "τε"))
+    def _3P(self): return phon(recessive(self.stem + "ω" + "σι(ν)"))
 
 
 class Endings14(Endings):
@@ -140,12 +145,12 @@ class Endings2B(Endings2):
 
 class Endings13(Endings):
 
-    def _1S(self): return recessive(self.stem + "ω" + "μαι")
-    def _2S(self): return recessive(self.stem + "ῃ")
-    def _3S(self): return recessive(self.stem + "η" + "ται")
-    def _1P(self): return recessive(self.stem + "ω" + "μεθα")
-    def _2P(self): return recessive(self.stem + "η" + "σθε")
-    def _3P(self): return recessive(self.stem + "ω" + "νται")
+    def _1S(self): return phon(recessive(self.stem + "ω" + "μαι"))
+    def _2S(self): return phon(recessive(self.stem + "ῃ"))
+    def _3S(self): return phon(recessive(self.stem + "η" + "ται"))
+    def _1P(self): return phon(recessive(self.stem + "ω" + "μεθα"))
+    def _2P(self): return phon(recessive(self.stem + "η" + "σθε"))
+    def _3P(self): return phon(recessive(self.stem + "ω" + "νται"))
 
 
 class Endings11(Endings):
@@ -745,3 +750,17 @@ if __name__ == "__main__":
     assert timaw.IMI()._1P() == "ἐτιμώμεθα"
     assert timaw.IMI()._2P() == "ἐτιμᾶσθε"
     assert timaw.IMI()._3P() == "ἐτιμῶντο"
+
+    assert timaw.PAS()._1S() == "τιμῶ"
+    assert timaw.PAS()._2S() == "τιμᾷς"
+    assert timaw.PAS()._3S() == "τιμᾷ"
+    assert timaw.PAS()._1P() == "τιμῶμεν"
+    assert timaw.PAS()._2P() == "τιμᾶτε"
+    assert timaw.PAS()._3P() == "τιμῶσι(ν)"
+
+    assert timaw.PMS()._1S() == "τιμῶμαι"
+    assert timaw.PMS()._2S() == "τιμᾷ"
+    assert timaw.PMS()._3S() == "τιμᾶται"
+    assert timaw.PMS()._1P() == "τιμώμεθα"
+    assert timaw.PMS()._2P() == "τιμᾶσθε"
+    assert timaw.PMS()._3P() == "τιμῶνται"
