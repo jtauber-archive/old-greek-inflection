@@ -13,11 +13,19 @@ def make_properispomenon(w): return properispomenon(syllabify(w))[0]
 
 def phon(w):
     w = w.replace("ά+ω", "ῶ")
+
     w = w.replace("ά+ει", "ᾷ")
+
     w = w.replace("ά+ε", "ᾶ")
+    w = w.replace("α+έ", "ά")
+    w = w.replace("α+ε", "α")
+
     w = w.replace("ά+ου", "ῶ")
+
     w = w.replace("ά+ο", "ῶ")
     w = w.replace("α+ό", "ώ")
+    w = w.replace("α+ο", "ω")
+
     return w
 
 
@@ -39,12 +47,12 @@ class Endings1(Endings):
 
 class Endings3(Endings):
 
-    def _1S(self): return recessive(self.stem + "ον")
-    def _2S(self): return recessive(self.stem + "ε" + "ς")
-    def _3S(self): return recessive(self.stem + "ε")
-    def _1P(self): return recessive(self.stem + "ο" + "μεν")
-    def _2P(self): return recessive(self.stem + "ε" + "τε")
-    def _3P(self): return recessive(self.stem + "ο" + "ν")
+    def _1S(self): return phon(recessive(self.stem + "ον"))
+    def _2S(self): return phon(recessive(self.stem + "ε" + "ς"))
+    def _3S(self): return phon(recessive(self.stem + "ε"))
+    def _1P(self): return phon(recessive(self.stem + "ο" + "μεν"))
+    def _2P(self): return phon(recessive(self.stem + "ε" + "τε"))
+    def _3P(self): return phon(recessive(self.stem + "ο" + "ν"))
 
 
 class Endings5(Endings):
@@ -152,12 +160,12 @@ class Endings11(Endings):
 
 class Endings4(Endings):
 
-    def _1S(self): return recessive(self.stem + "ο" + "μην")
-    def _2S(self): return recessive(self.stem + "ου") # ε + σο
-    def _3S(self): return recessive(self.stem + "ε" + "το")
-    def _1P(self): return recessive(self.stem + "ο" + "μεθα")
-    def _2P(self): return recessive(self.stem + "ε" + "σθε")
-    def _3P(self): return recessive(self.stem + "ο" + "ντο")
+    def _1S(self): return phon(recessive(self.stem + "ο" + "μην"))
+    def _2S(self): return phon(recessive(self.stem + "ου")) # ε + σο
+    def _3S(self): return phon(recessive(self.stem + "ε" + "το"))
+    def _1P(self): return phon(recessive(self.stem + "ο" + "μεθα"))
+    def _2P(self): return phon(recessive(self.stem + "ε" + "σθε"))
+    def _3P(self): return phon(recessive(self.stem + "ο" + "ντο"))
 
 
 class Endings6(Endings):
@@ -723,3 +731,17 @@ if __name__ == "__main__":
     assert timaw.PMI()._1P() == "τιμώμεθα"
     assert timaw.PMI()._2P() == "τιμᾶσθε"
     assert timaw.PMI()._3P() == "τιμῶνται"
+
+    assert timaw.IAI()._1S() == "ἐτίμων"
+    assert timaw.IAI()._2S() == "ἐτίμας"
+    assert timaw.IAI()._3S() == "ἐτίμα"
+    assert timaw.IAI()._1P() == "ἐτιμῶμεν"
+    assert timaw.IAI()._2P() == "ἐτιμᾶτε"
+    assert timaw.IAI()._3P() == "ἐτίμων"
+
+    assert timaw.IMI()._1S() == "ἐτιμώμην"
+    assert timaw.IMI()._2S() == "ἐτιμῶ"
+    assert timaw.IMI()._3S() == "ἐτιμᾶτο"
+    assert timaw.IMI()._1P() == "ἐτιμώμεθα"
+    assert timaw.IMI()._2P() == "ἐτιμᾶσθε"
+    assert timaw.IMI()._3P() == "ἐτιμῶντο"
