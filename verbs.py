@@ -19,7 +19,8 @@ def phon(w):
 
     w = w.replace("ά+η", "ᾶ")
 
-    w = w.replace("ά+ει", "ᾷ")
+    w = w.replace("ά+ε+ι", "ᾷ")
+    w = w.replace("ά+ει", "ᾶ")
 
     w = w.replace("ά+ε", "ᾶ")
     w = w.replace("α+έ", "ά")
@@ -34,6 +35,8 @@ def phon(w):
     w = w.replace("α+ό", "ώ")
     w = w.replace("α+ο", "ω")
 
+    w = w.replace("ε+ι", "ει")
+
     return w
 
 
@@ -46,8 +49,8 @@ class Endings:
 class Endings1(Endings):
 
     def _1S(self): return phon(recessive(self.stem + "ω"))
-    def _2S(self): return phon(recessive(self.stem + "εις"))
-    def _3S(self): return phon(recessive(self.stem + "ει"))
+    def _2S(self): return phon(recessive(self.stem + "ε+ις"))
+    def _3S(self): return phon(recessive(self.stem + "ε+ι"))
     def _1P(self): return phon(recessive(self.stem + "ο" + "μεν"))
     def _2P(self): return phon(recessive(self.stem + "ε" + "τε"))
     def _3P(self): return phon(recessive(self.stem + "ου" + "σι(ν)"))
@@ -132,7 +135,7 @@ class Endings2(Endings):
 
     def _1S(self): return phon(recessive(self.stem + "ο" + "μαι"))
     def _2S(self): return "{}/{}".format(
-                          phon(recessive(self.stem + "ει")), # ε + σαι
+                          phon(recessive(self.stem + "ε+ι")), # ε + σαι
                           phon(recessive(self.stem + "ῃ"))   # ε + σαι
     )
     def _3S(self): return phon(recessive(self.stem + "ε" + "ται"))
@@ -143,7 +146,7 @@ class Endings2(Endings):
 
 class Endings2B(Endings2):
 
-    def _2S(self): return phon(recessive(self.stem + "ει")) # ε + σαι
+    def _2S(self): return phon(recessive(self.stem + "ε+ι")) # ε + σαι
 
 
 class Endings13(Endings):
@@ -420,8 +423,8 @@ class Verb1:
     def APD(self): return Endings24(self.stem1 + "θ")
     def XMD(self): return Endings25(redup(self.stem1))
 
-    def PAN(self): return recessive(self.stem1 + "ειν")
-    def PMN(self): return recessive(self.stem1 + "εσθαι")
+    def PAN(self): return phon(recessive(self.stem1 + "ειν"))
+    def PMN(self): return phon(recessive(self.stem1 + "εσθαι"))
     def FAN(self): return recessive(self.stem1 + "σ" + "ειν")
     def FMN(self): return recessive(self.stem1 + "σ" + "ε" + "σθαι")
     def FPN(self): return recessive(self.stem1 + "θη" + "σ" + "ε" + "σθαι")
@@ -820,3 +823,6 @@ if __name__ == "__main__":
     assert timaw.PMD()._3S() == "τιμάσθω"
     assert timaw.PMD()._2P() == "τιμᾶσθε"
     assert timaw.PMD()._3P() == "τιμάσθων"
+
+    assert timaw.PAN() == "τιμᾶν"
+    assert timaw.PMN() == "τιμᾶσθαι"
