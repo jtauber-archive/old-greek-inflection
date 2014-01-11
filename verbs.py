@@ -17,6 +17,7 @@ def phon(w):
     w = w.replace("ά+ε", "ᾶ")
     w = w.replace("ά+ου", "ῶ")
     w = w.replace("ά+ο", "ῶ")
+    w = w.replace("α+ό", "ώ")
     return w
 
 
@@ -113,15 +114,20 @@ class Endings9(Endings):
 
 class Endings2(Endings):
 
-    def _1S(self): return recessive(self.stem + "ο" + "μαι")
+    def _1S(self): return phon(recessive(self.stem + "ο" + "μαι"))
     def _2S(self): return "{}/{}".format(
-                          recessive(self.stem + "ει"), # ε + σαι
-                          recessive(self.stem + "ῃ")   # ε + σαι
+                          phon(recessive(self.stem + "ει")), # ε + σαι
+                          phon(recessive(self.stem + "ῃ"))   # ε + σαι
     )
-    def _3S(self): return recessive(self.stem + "ε" + "ται")
-    def _1P(self): return recessive(self.stem + "ο" + "μεθα")
-    def _2P(self): return recessive(self.stem + "ε" + "σθε")
-    def _3P(self): return recessive(self.stem + "ο" + "νται")
+    def _3S(self): return phon(recessive(self.stem + "ε" + "ται"))
+    def _1P(self): return phon(recessive(self.stem + "ο" + "μεθα"))
+    def _2P(self): return phon(recessive(self.stem + "ε" + "σθε"))
+    def _3P(self): return phon(recessive(self.stem + "ο" + "νται"))
+
+
+class Endings2B(Endings2):
+
+    def _2S(self): return phon(recessive(self.stem + "ει")) # ε + σαι
 
 
 class Endings13(Endings):
@@ -393,6 +399,11 @@ class Verb1:
     def XMP(self): return Endings32(redup(self.stem1))
 
 
+class Verb1B(Verb1):
+
+    def PMI(self): return Endings2B(self.stem1)
+
+
 def redup(stem):
     if is_vowel(stem[0]):
         raise NotImplemented()
@@ -405,7 +416,7 @@ class LUW(Verb1):
     stem1 = "λυ"
 
 
-class TIMAW(Verb1):
+class TIMAW(Verb1B):
 
     stem1 = "τιμα+"
 
@@ -705,3 +716,10 @@ if __name__ == "__main__":
     assert timaw.PAI()._1P() == "τιμῶμεν"
     assert timaw.PAI()._2P() == "τιμᾶτε"
     assert timaw.PAI()._3P() == "τιμῶσι(ν)"
+
+    assert timaw.PMI()._1S() == "τιμῶμαι"
+    assert timaw.PMI()._2S() == "τιμᾷ"
+    assert timaw.PMI()._3S() == "τιμᾶται"
+    assert timaw.PMI()._1P() == "τιμώμεθα"
+    assert timaw.PMI()._2P() == "τιμᾶσθε"
+    assert timaw.PMI()._3P() == "τιμῶνται"
