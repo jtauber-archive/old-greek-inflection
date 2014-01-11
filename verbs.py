@@ -25,6 +25,9 @@ def phon(w):
     w = w.replace("α+έ", "ά")
     w = w.replace("α+ε", "α")
 
+    w = w.replace("ά+οι", "ῷ")
+    w = w.replace("α+οί", "ῴ")
+    w = w.replace("α+οι", "ῳ")
     w = w.replace("ά+ου", "ῶ")
 
     w = w.replace("ά+ο", "ῶ")
@@ -185,19 +188,47 @@ class Endings6(Endings):
 
 class Endings15(Endings):
 
-    def _1S(self): return recessive(self.stem + "οι" + "μι")
-    def _2S(self): return make_paroxytone(self.stem + "οι" + "ς")
+    def _1S(self): return phon(recessive(self.stem + "οι" + "μι"))
+    def _2S(self): return recessive(self.stem + "οι" + "ς")
     def _3S(self): return make_paroxytone(self.stem + "οι" + "")
     def _1P(self): return recessive(self.stem + "οι" + "μεν")
     def _2P(self): return recessive(self.stem + "οι" + "τε")
     def _3P(self): return recessive(self.stem + "οι" + "εν")
 
 
+class Endings15B(Endings15):
+
+    def _1S(self): return "{}/{}".format(
+                          phon(recessive(self.stem + "οι" + "ην")),
+                          phon(recessive(self.stem + "οι" + "μι")),
+    )
+    def _2S(self): return "{}/{}".format(
+                          phon(recessive(self.stem + "οι" + "ης")),
+                          phon(recessive(self.stem + "οι" + "ς")),
+    )
+    def _3S(self): return "{}/{}".format(
+                          phon(recessive(self.stem + "οι" + "η")),
+                          phon(make_paroxytone(self.stem + "οι" + "")),
+    )
+    def _1P(self): return "{}/{}".format(
+                          phon(recessive(self.stem + "οι" + "μεν")),
+                          phon(recessive(self.stem + "οι" + "ημεν")),
+    )
+    def _2P(self): return "{}/{}".format(
+                          phon(recessive(self.stem + "οι" + "τε")),
+                          phon(recessive(self.stem + "οι" + "ητε")),
+    )
+    def _3P(self): return "{}/{}".format(
+                          phon(recessive(self.stem + "οι" + "εν")),
+                          phon(recessive(self.stem + "οι" + "ησαν")),
+    )
+
+
 class Endings17(Endings):
 
     def _1S(self): return recessive(self.stem + "αι" + "μι")
     def _2S(self): return "{}/{}".format(
-                          make_paroxytone(self.stem + "αι" + "ς"),
+                          recessive(self.stem + "αι" + "ς"),
                           recessive(self.stem + "ει" + "ας"),
     )
     def _3S(self): return "{}/{}".format(
@@ -214,12 +245,12 @@ class Endings17(Endings):
 
 class Endings16(Endings):
 
-    def _1S(self): return recessive(self.stem + "οι" + "μην")
-    def _2S(self): return recessive(self.stem + "οι" + "ο")
-    def _3S(self): return recessive(self.stem + "οι" + "το")
-    def _1P(self): return recessive(self.stem + "οι" + "μεθα")
-    def _2P(self): return recessive(self.stem + "οι" + "σθε")
-    def _3P(self): return recessive(self.stem + "οι" + "ντο")
+    def _1S(self): return phon(recessive(self.stem + "οι" + "μην"))
+    def _2S(self): return phon(recessive(self.stem + "οι" + "ο"))
+    def _3S(self): return phon(recessive(self.stem + "οι" + "το"))
+    def _1P(self): return phon(recessive(self.stem + "οι" + "μεθα"))
+    def _2P(self): return phon(recessive(self.stem + "οι" + "σθε"))
+    def _3P(self): return phon(recessive(self.stem + "οι" + "ντο"))
 
 
 class Endings18(Endings):
@@ -415,6 +446,7 @@ class Verb1:
 class Verb1B(Verb1):
 
     def PMI(self): return Endings2B(self.stem1)
+    def PAO(self): return Endings15B(self.stem1)
 
 
 def redup(stem):
@@ -764,3 +796,17 @@ if __name__ == "__main__":
     assert timaw.PMS()._1P() == "τιμώμεθα"
     assert timaw.PMS()._2P() == "τιμᾶσθε"
     assert timaw.PMS()._3P() == "τιμῶνται"
+
+    assert timaw.PAO()._1S() == "τιμῴην/τιμῷμι"
+    assert timaw.PAO()._2S() == "τιμῴης/τιμῷς"
+    assert timaw.PAO()._3S() == "τιμῴη/τιμῷ"
+    assert timaw.PAO()._1P() == "τιμῷμεν/τιμῴημεν"
+    assert timaw.PAO()._2P() == "τιμῷτε/τιμῴητε"
+    assert timaw.PAO()._3P() == "τιμῷεν/τιμῴησαν"
+
+    assert timaw.PMO()._1S() == "τιμῴμην"
+    assert timaw.PMO()._2S() == "τιμῷο"
+    assert timaw.PMO()._3S() == "τιμῷτο"
+    assert timaw.PMO()._1P() == "τιμῴμεθα"
+    assert timaw.PMO()._2P() == "τιμῷσθε"
+    assert timaw.PMO()._3P() == "τιμῷντο"
