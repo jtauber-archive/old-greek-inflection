@@ -11,6 +11,15 @@ def make_perispomenon(w): return perispomenon(syllabify(w))[0]
 def make_properispomenon(w): return properispomenon(syllabify(w))[0]
 
 
+def phon(w):
+    w = w.replace("ά+ω", "ῶ")
+    w = w.replace("ά+ει", "ᾷ")
+    w = w.replace("ά+ε", "ᾶ")
+    w = w.replace("ά+ου", "ῶ")
+    w = w.replace("ά+ο", "ῶ")
+    return w
+
+
 class Endings:
 
     def __init__(self, stem):
@@ -19,12 +28,12 @@ class Endings:
 
 class Endings1(Endings):
 
-    def _1S(self): return recessive(self.stem + "ω")
-    def _2S(self): return recessive(self.stem + "εις")
-    def _3S(self): return recessive(self.stem + "ει")
-    def _1P(self): return recessive(self.stem + "ο" + "μεν")
-    def _2P(self): return recessive(self.stem + "ε" + "τε")
-    def _3P(self): return recessive(self.stem + "ου" + "σι(ν)")
+    def _1S(self): return phon(recessive(self.stem + "ω"))
+    def _2S(self): return phon(recessive(self.stem + "εις"))
+    def _3S(self): return phon(recessive(self.stem + "ει"))
+    def _1P(self): return phon(recessive(self.stem + "ο" + "μεν"))
+    def _2P(self): return phon(recessive(self.stem + "ε" + "τε"))
+    def _3P(self): return phon(recessive(self.stem + "ου" + "σι(ν)"))
 
 
 class Endings3(Endings):
@@ -396,6 +405,10 @@ class LUW(Verb1):
     stem1 = "λυ"
 
 
+class TIMAW(Verb1):
+
+    stem1 = "τιμα+"
+
 
 if __name__ == "__main__":
     luw = LUW()
@@ -683,3 +696,12 @@ if __name__ == "__main__":
     assert luw.XMP().NSM() == "λελυμένος"
     assert luw.XMP().NSF() == "λελυμένη"
     assert luw.XMP().NSN() == "λελυμένον"
+
+    timaw = TIMAW()
+
+    assert timaw.PAI()._1S() == "τιμῶ"
+    assert timaw.PAI()._2S() == "τιμᾷς"
+    assert timaw.PAI()._3S() == "τιμᾷ"
+    assert timaw.PAI()._1P() == "τιμῶμεν"
+    assert timaw.PAI()._2P() == "τιμᾶτε"
+    assert timaw.PAI()._3P() == "τιμῶσι(ν)"
