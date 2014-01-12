@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
 
+import sys
+
 from accentuation import recessive, make_oxytone, make_paroxytone, make_perispomenon, make_properispomenon
 from syllabify import is_vowel
 
@@ -53,6 +55,29 @@ def phon(w):
     w = w.replace("έ+ο", "οῦ")
     w = w.replace("ε+ό", "ού")
     w = w.replace("ε+ο", "ου")
+
+    w = w.replace("ό+ω", "ῶ")
+    w = w.replace("ο+ώ", "ώ")
+
+    w = w.replace("ό+ῃ", "οῖ")
+
+    w = w.replace("ό+η", "ῶ")
+
+    w = w.replace("ό+ε+ι", "οῖ")
+    w = w.replace("ό+ει", "οῦ")
+
+    w = w.replace("ό+ε", "οῦ")
+    w = w.replace("ο+έ", "ού")
+    w = w.replace("ο+ε", "ου")
+
+    w = w.replace("ό+ου", "οῦ")
+
+    w = w.replace("ό+οι", "οῖ")
+    w = w.replace("ο+οί", "οί")
+
+    w = w.replace("ό+ο", "οῦ")
+    w = w.replace("ο+ό", "ού")
+    w = w.replace("ο+ο", "ου")
 
     w = w.replace("ε+ι", "ει")
 
@@ -497,12 +522,23 @@ class POIEW(Verb1C):
     stem1 = "ποιε+"
 
 
+class DHLOW(Verb1B):
+
+    stem1 = "δηλο+"
+
+
 if __name__ == "__main__":
+
+    if len(sys.argv) == 2:
+        lemma_filter = sys.argv[1]
+    else:
+        lemma_filter = None
 
     VERBS = {
         "λύω": LUW(),
         "τιμῶ": TIMAW(),
         "ποιῶ": POIEW(),
+        "δηλῶ": DHLOW(),
     }
 
     passed = 0
@@ -513,6 +549,8 @@ if __name__ == "__main__":
             if not record:
                 continue
             lemma, parse, form = record.split()
+            if lemma_filter and lemma_filter != lemma:
+                continue
             c = VERBS[lemma]
             for step in parse.split("."):
                 if step[0] in "123":
