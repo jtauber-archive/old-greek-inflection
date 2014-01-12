@@ -1,14 +1,8 @@
 #!/usr/bin/env python3
 
 
-from accentuation import recessive, oxytone, paroxytone, perispomenon, properispomenon
-from syllabify import is_vowel, syllabify
-
-
-def make_oxytone(w): return oxytone(syllabify(w))[0]
-def make_paroxytone(w): return paroxytone(syllabify(w))[0]
-def make_perispomenon(w): return perispomenon(syllabify(w))[0]
-def make_properispomenon(w): return properispomenon(syllabify(w))[0]
+from accentuation import recessive, make_oxytone, make_paroxytone, make_perispomenon, make_properispomenon
+from syllabify import is_vowel
 
 
 def phon(w):
@@ -29,12 +23,36 @@ def phon(w):
     w = w.replace("ά+οι", "ῷ")
     w = w.replace("α+οί", "ῴ")
     w = w.replace("α+οι", "ῳ")
+
     w = w.replace("ά+ου", "ῶ")
 
     w = w.replace("ᾶ+ο", "ῶ")
     w = w.replace("ά+ο", "ῶ")
     w = w.replace("α+ό", "ώ")
     w = w.replace("α+ο", "ω")
+
+    w = w.replace("έ+ω", "ῶ")
+    w = w.replace("ε+ώ", "ώ")
+
+    w = w.replace("έ+ῃ", "ῇ")
+
+    w = w.replace("έ+η", "ῆ")
+
+    w = w.replace("έ+ε+ι", "εῖ")
+    w = w.replace("έ+ει", "εῖ")
+
+    w = w.replace("έ+ε", "εῖ")
+    w = w.replace("ε+έ", "εί")
+    w = w.replace("ε+ε", "ει")
+
+    w = w.replace("έ+οι", "οῖ")
+    w = w.replace("ε+οί", "οί")
+
+    w = w.replace("έ+ου", "οῦ")
+
+    w = w.replace("έ+ο", "οῦ")
+    w = w.replace("ε+ό", "ού")
+    w = w.replace("ε+ο", "ου")
 
     w = w.replace("ε+ι", "ει")
 
@@ -447,10 +465,14 @@ class Verb1:
     def XMP(self): return Endings32(redup(self.stem1))
 
 
-class Verb1B(Verb1):
+class Verb1C(Verb1):
+
+    def PAO(self): return Endings15B(self.stem1)
+
+
+class Verb1B(Verb1C):
 
     def PMI(self): return Endings2B(self.stem1)
-    def PAO(self): return Endings15B(self.stem1)
 
 
 def redup(stem):
@@ -470,11 +492,17 @@ class TIMAW(Verb1B):
     stem1 = "τιμα+"
 
 
+class POIEW(Verb1C):
+
+    stem1 = "ποιε+"
+
+
 if __name__ == "__main__":
 
     VERBS = {
         "λύω": LUW(),
         "τιμῶ": TIMAW(),
+        "ποιῶ": POIEW(),
     }
 
     passed = 0

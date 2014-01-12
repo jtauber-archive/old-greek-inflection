@@ -1,1 +1,1 @@
-greek-accentuation==0.2
+greek-accentuation==0.3
