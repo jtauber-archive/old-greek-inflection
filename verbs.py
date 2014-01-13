@@ -56,6 +56,8 @@ def phon(w):
     w = w.replace("ε+ό", "ού")
     w = w.replace("ε+ο", "ου")
 
+    w = w.replace("έ+α", "ᾶ")
+
     w = w.replace("ό+ω", "ῶ")
     w = w.replace("ο+ώ", "ώ")
 
@@ -136,6 +138,11 @@ class Endings1mi(Endings):
     def _3P(self): return recessive(phon3(self.stem) + "α" + "σι(ν)")
 
 
+class Endings1miB(Endings1mi):
+
+    def _3P(self): return phon(recessive(self.stem + "α" + "σι(ν)"))
+
+
 class Endings3(Endings):
 
     def _1S(self): return phon(recessive(self.stem + "ον"))
@@ -159,6 +166,14 @@ class Endings3mi(Endings):
 class Endings3miB(Endings3mi):
 
     def _1S(self): return phon3(recessive(phon2(self.stem) + "ν")) # @@@
+
+
+class Endings3miC(Endings3mi):
+
+    def _1S(self): return "{}/{}".format(
+                          phon(recessive(self.stem + "εν")),
+                          phon3(recessive(phon2(self.stem) + "ν")))
+
 
 
 class Endings5(Endings):
@@ -551,18 +566,18 @@ class Verb1:
 
     def PAI(self): return Endings1(self.stem1)
     def PMI(self): return Endings2(self.stem1)
-    def IAI(self): return Endings3("ἐ" + self.stem1)
-    def IMI(self): return Endings4("ἐ" + self.stem1)
+    def IAI(self): return Endings3(aug(self.stem1))
+    def IMI(self): return Endings4(aug(self.stem1))
     def FAI(self): return Endings1(self.stem1 + "σ")
     def FMI(self): return Endings2(self.stem1 + "σ")
     def FPI(self): return Endings2(self.stem1 + "θη" + "σ")
-    def AAI(self): return Endings5("ἐ" + self.stem1 + "σ")
-    def AMI(self): return Endings6("ἐ" + self.stem1 + "σ")
-    def API(self): return Endings7("ἐ" + self.stem1 + "θη")
+    def AAI(self): return Endings5(aug(self.stem1 + "σ"))
+    def AMI(self): return Endings6(aug(self.stem1 + "σ"))
+    def API(self): return Endings7(aug(self.stem1 + "θη"))
     def XAI(self): return Endings8(redup(self.stem1) + "κ")
     def XMI(self): return Endings9(redup(self.stem1))
-    def YAI(self): return Endings10("ἐ" + redup(self.stem1) + "κ")
-    def YMI(self): return Endings11("ἐ" + redup(self.stem1))
+    def YAI(self): return Endings10(aug(redup(self.stem1) + "κ"))
+    def YMI(self): return Endings11(aug(redup(self.stem1)))
 
     def PAS(self): return Endings12(self.stem1)
     def PMS(self): return Endings13(self.stem1)
@@ -625,8 +640,8 @@ class Verb2(Verb1):
 
     def PAI(self): return Endings1mi(self.stem1)
     def PMI(self): return Endings9(self.stem1)
-    def IAI(self): return Endings3mi("ἐ" + self.stem1)
-    def IMI(self): return Endings11("ἐ" + self.stem1)
+    def IAI(self): return Endings3mi(aug(self.stem1))
+    def IMI(self): return Endings11(aug(self.stem1))
     def PAS(self): return Endings12mi(self.stem1)
     def PMS(self): return Endings13mi(self.stem1)
     def PAO(self): return Endings15mi(self.stem1)
@@ -641,12 +656,28 @@ class Verb2(Verb1):
 
 class Verb2B(Verb2):
 
-    def IAI(self): return Endings3miB("ἐ" + self.stem1)
+    def IAI(self): return Endings3miB(aug(self.stem1))
+
+
+class Verb2C(Verb2B):
+
+    def PAI(self): return Endings1miB(self.stem1)
+    def IAI(self): return Endings3miC(self.stem1)
+
+
+def aug(stem):
+    if is_vowel(stem[0]):
+        if stem[0] == "ἱ":
+            return stem
+        else:
+            raise NotImplementedError(stem)
+    else:
+        return "ἐ" + stem
 
 
 def redup(stem):
     if is_vowel(stem[0]):
-        raise NotImplemented()
+        raise NotImplementedError(stem)
     else:
         return stem[0] + "ε" + stem
 
@@ -681,6 +712,11 @@ class TIQHMI(Verb2B):
     stem1 = "τιθε+"
 
 
+class hIHMI(Verb2C):
+
+    stem1 = "ἱε+"
+
+
 if __name__ == "__main__":
 
     if len(sys.argv) == 2:
@@ -695,6 +731,7 @@ if __name__ == "__main__":
         "δηλῶ": DHLOW,
         "δίδωμι": DIDWMI,
         "τίθημι": TIQHMI,
+        "ἵημι": hIHMI,
     }
 
     passed = 0
