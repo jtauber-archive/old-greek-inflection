@@ -79,9 +79,17 @@ def phon(w):
     w = w.replace("ο+ό", "ού")
     w = w.replace("ο+ο", "ου")
 
+    w = w.replace("ό+ι", "οῖ")
+    w = w.replace("ο+ί", "οί")
+
     w = w.replace("ώ+ῃ", "ῷ") # @@@
 
+    w = w.replace("ή+ῃ", "ῇ")
+
     w = w.replace("ω+ι", "ῳ")
+
+    w = w.replace("έ+ι", "εῖ")
+    w = w.replace("ε+ί", "εί")
     w = w.replace("ε+ι", "ει")
 
     return w
@@ -89,6 +97,7 @@ def phon(w):
 
 def phon2(w):
 
+    w = w.replace("ε+", "η+")
     w = w.replace("ο+", "ω+")
 
     return w
@@ -145,6 +154,11 @@ class Endings3mi(Endings):
     def _1P(self): return phon3(recessive(self.stem + "μεν"))
     def _2P(self): return phon3(recessive(self.stem + "τε"))
     def _3P(self): return phon3(recessive(self.stem + "σαν"))
+
+
+class Endings3miB(Endings3mi):
+
+    def _1S(self): return phon3(recessive(phon2(self.stem) + "ν")) # @@@
 
 
 class Endings5(Endings):
@@ -321,9 +335,21 @@ class Endings15B(Endings15):
 
 class Endings15mi(Endings15B):
 
-    def _1S(self): return phon(recessive(self.stem + "οι" + "ην"))
-    def _2S(self): return phon(recessive(self.stem + "οι" + "ης"))
-    def _3S(self): return phon(recessive(self.stem + "οι" + "η"))
+    def _1S(self): return phon(recessive(self.stem + "ι" + "ην"))
+    def _2S(self): return phon(recessive(self.stem + "ι" + "ης"))
+    def _3S(self): return phon(recessive(self.stem + "ι" + "η"))
+    def _1P(self): return "{}/{}".format(
+                          phon(recessive(self.stem + "ι" + "μεν")),
+                          phon(recessive(self.stem + "ι" + "ημεν")),
+    )
+    def _2P(self): return "{}/{}".format(
+                          phon(recessive(self.stem + "ι" + "τε")),
+                          phon(recessive(self.stem + "ι" + "ητε")),
+    )
+    def _3P(self): return "{}/{}".format(
+                          phon(recessive(self.stem + "ι" + "εν")),
+                          phon(recessive(self.stem + "ι" + "ησαν")),
+    )
 
 
 class Endings17(Endings):
@@ -353,6 +379,16 @@ class Endings16(Endings):
     def _1P(self): return phon(recessive(self.stem + "οι" + "μεθα"))
     def _2P(self): return phon(recessive(self.stem + "οι" + "σθε"))
     def _3P(self): return phon(recessive(self.stem + "οι" + "ντο"))
+
+
+class Endings16mi(Endings):
+
+    def _1S(self): return phon(recessive(self.stem + "ι" + "μην"))
+    def _2S(self): return phon(recessive(self.stem + "ι" + "ο"))
+    def _3S(self): return phon(recessive(self.stem + "ι" + "το"))
+    def _1P(self): return phon(recessive(self.stem + "ι" + "μεθα"))
+    def _2P(self): return phon(recessive(self.stem + "ι" + "σθε"))
+    def _3P(self): return phon(recessive(self.stem + "ι" + "ντο"))
 
 
 class Endings18(Endings):
@@ -457,8 +493,8 @@ class Endings26(Endings):
 
 class Endings26mi(Endings):
 
-    def NSM(self): return phon(make_oxytone(self.stem + "ος"))
-    def NSF(self): return phon(recessive(self.stem + "ουσα"))
+    def NSM(self): return phon(make_oxytone(self.stem + "ες"))
+    def NSF(self): return phon(recessive(self.stem + "εσα"))
     def NSN(self): return phon(make_oxytone(phon3(self.stem) + "ν"))
 
 
@@ -594,12 +630,18 @@ class Verb2(Verb1):
     def PAS(self): return Endings12mi(self.stem1)
     def PMS(self): return Endings13mi(self.stem1)
     def PAO(self): return Endings15mi(self.stem1)
+    def PMO(self): return Endings16mi(self.stem1)
     def PAD(self): return Endings20mi(self.stem1)
     def PMD(self): return Endings21mi(self.stem1)
     def PAN(self): return make_paroxytone(phon3(self.stem1) + "ναι")
     def PMN(self): return recessive(phon3(self.stem1) + "σθαι")
     def PAP(self): return Endings26mi(self.stem1)
     def PMP(self): return Endings27mi(self.stem1)
+
+
+class Verb2B(Verb2):
+
+    def IAI(self): return Endings3miB("ἐ" + self.stem1)
 
 
 def redup(stem):
@@ -634,6 +676,11 @@ class DIDWMI(Verb2):
     stem1 = "διδο+"
 
 
+class TIQHMI(Verb2B):
+
+    stem1 = "τιθε+"
+
+
 if __name__ == "__main__":
 
     if len(sys.argv) == 2:
@@ -647,6 +694,7 @@ if __name__ == "__main__":
         "ποιῶ": POIEW,
         "δηλῶ": DHLOW,
         "δίδωμι": DIDWMI,
+        "τίθημι": TIQHMI,
     }
 
     passed = 0
