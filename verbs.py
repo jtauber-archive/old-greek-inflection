@@ -84,6 +84,20 @@ def phon(w):
     return w
 
 
+def phon2(w):
+
+    w = w.replace("ο+", "ω")
+
+    return w
+
+
+def phon3(w):
+
+    w = w.replace("+", "")
+
+    return w
+
+
 class Endings:
 
     def __init__(self, stem):
@@ -100,6 +114,16 @@ class Endings1(Endings):
     def _3P(self): return phon(recessive(self.stem + "ου" + "σι(ν)"))
 
 
+class Endings1mi(Endings):
+
+    def _1S(self): return recessive(phon2(self.stem) + "μι")
+    def _2S(self): return recessive(phon2(self.stem) + "ς")
+    def _3S(self): return recessive(phon2(self.stem) + "σι(ν)")
+    def _1P(self): return recessive(phon3(self.stem) + "μεν")
+    def _2P(self): return recessive(phon3(self.stem) + "τε")
+    def _3P(self): return recessive(phon3(self.stem) + "α" + "σι(ν)")
+
+
 class Endings3(Endings):
 
     def _1S(self): return phon(recessive(self.stem + "ον"))
@@ -108,6 +132,16 @@ class Endings3(Endings):
     def _1P(self): return phon(recessive(self.stem + "ο" + "μεν"))
     def _2P(self): return phon(recessive(self.stem + "ε" + "τε"))
     def _3P(self): return phon(recessive(self.stem + "ο" + "ν"))
+
+
+class Endings3mi(Endings):
+
+    def _1S(self): return phon(recessive(self.stem + "ον"))
+    def _2S(self): return phon(recessive(self.stem + "ε" + "ς"))
+    def _3S(self): return phon(recessive(self.stem + "ε"))
+    def _1P(self): return phon3(recessive(self.stem + "μεν"))
+    def _2P(self): return phon3(recessive(self.stem + "τε"))
+    def _3P(self): return phon3(recessive(self.stem + "σαν"))
 
 
 class Endings5(Endings):
@@ -500,6 +534,12 @@ class Verb1B(Verb1C):
     def PMI(self): return Endings2B(self.stem1)
 
 
+class Verb2:
+
+    def PAI(self): return Endings1mi(self.stem1)
+    def IAI(self): return Endings3mi("ἐ" + self.stem1)
+
+
 def redup(stem):
     if is_vowel(stem[0]):
         raise NotImplemented()
@@ -527,6 +567,11 @@ class DHLOW(Verb1B):
     stem1 = "δηλο+"
 
 
+class DIDWMI(Verb2):
+
+    stem1 = "διδο+"
+
+
 if __name__ == "__main__":
 
     if len(sys.argv) == 2:
@@ -539,6 +584,7 @@ if __name__ == "__main__":
         "τιμῶ": TIMAW(),
         "ποιῶ": POIEW(),
         "δηλῶ": DHLOW(),
+        "δίδωμι": DIDWMI(),
     }
 
     passed = 0
