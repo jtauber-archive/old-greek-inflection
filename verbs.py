@@ -103,7 +103,6 @@ def phon(w):
 
     w = w.replace("ω+ι", "ῳ")
 
-
     w = w.replace("έ+ι", "εῖ")
     w = w.replace("ε+ί", "εί")
     w = w.replace("ε+ι", "ει")
@@ -213,6 +212,16 @@ class Endings5(Endings):
     def _1P(self): return recessive(self.stem + "α" + "μεν")
     def _2P(self): return recessive(self.stem + "α" + "τε")
     def _3P(self): return recessive(self.stem + "α" + "ν")
+
+
+class Endings5B(Endings):
+
+    def _1S(self): return phon3(recessive(phon2(self.stem) + "κ" + "α"))
+    def _2S(self): return phon3(recessive(phon2(self.stem) + "κ" + "α" + "ς"))
+    def _3S(self): return phon3(recessive(phon2(self.stem) + "κ" + "ε"))
+    def _1P(self): return phon3(recessive(self.stem + "μεν"))
+    def _2P(self): return phon3(recessive(self.stem + "τε"))
+    def _3P(self): return phon3(recessive(self.stem + "σαν"))
 
 
 class Endings8(Endings5):
@@ -340,6 +349,16 @@ class Endings6(Endings):
     def _1P(self): return recessive(self.stem + "α" + "μεθα")
     def _2P(self): return recessive(self.stem + "α" + "σθε")
     def _3P(self): return recessive(self.stem + "α" + "ντο")
+
+
+class Endings6B(Endings):
+
+    def _1S(self): return phon3(recessive(self.stem + "μην"))
+    def _2S(self): return phon(recessive(self.stem + "ο")) # σο
+    def _3S(self): return phon3(recessive(self.stem + "το"))
+    def _1P(self): return phon3(recessive(self.stem + "μεθα"))
+    def _2P(self): return phon3(recessive(self.stem + "σθε"))
+    def _3P(self): return phon3(recessive(self.stem + "ντο"))
 
 
 class Endings15(Endings):
@@ -679,14 +698,21 @@ class Verb2(Verb1):
     def PMI(self): return Endings9(self.stem1)
     def IAI(self): return Endings3mi(aug(self.stem1))
     def IMI(self): return Endings11(aug(self.stem1))
+    def AAI(self): return Endings5B(aug(self.stem2))
+    def AMI(self): return Endings6B(aug(self.stem2))
+
     def PAS(self): return Endings12mi(self.stem1)
     def PMS(self): return Endings13mi(self.stem1)
+
     def PAO(self): return Endings15mi(self.stem1)
     def PMO(self): return Endings16mi(self.stem1)
+
     def PAD(self): return Endings20mi(self.stem1)
     def PMD(self): return Endings21mi(self.stem1)
+
     def PAN(self): return make_paroxytone(phon3(self.stem1) + "ναι")
     def PMN(self): return recessive(phon3(self.stem1) + "σθαι")
+
     def PAP(self): return Endings26mi(self.stem1)
     def PMP(self): return Endings27mi(self.stem1)
 
@@ -757,11 +783,13 @@ class DHLOW(Verb1B):
 class DIDWMI(Verb2):
 
     stem1 = "διδο+"
+    stem2 = "δο+"
 
 
 class TIQHMI(Verb2B):
 
     stem1 = "τιθε+"
+    stem2 = "θε+"
 
 
 class hIHMI(Verb2C):
