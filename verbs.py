@@ -120,13 +120,6 @@ def phon2(w):
     return w
 
 
-def phon3(w):
-
-    w = w.replace("+", "")
-
-    return strip_length(w)
-
-
 def phon4(w):
     w = w.replace("ά+α", "ᾶ")
     w = w.replace("έ+α", "έα")
@@ -832,24 +825,35 @@ class DEIKNUMI(Verb2E):
     stem1 = "δεικνυ+"
 
 
+VERBS = {
+    "λύω": LUW,
+    "τιμῶ": TIMAW,
+    "ποιῶ": POIEW,
+    "δηλῶ": DHLOW,
+    "δίδωμι": DIDWMI,
+    "τίθημι": TIQHMI,
+    "ἵημι": hIHMI,
+    "ἵστημι": hISTHMI,
+    "δείκνυμι": DEIKNUMI,
+}
+
+
+def calculate_form(lemma, parse):
+    c = VERBS[lemma]
+    for step in parse.split("."):
+        if step[0] in "123":
+            step = "_" + step
+        c = getattr(c(), step)
+
+    return strip_length(c().replace("+", "")), c.__qualname__
+
+
 if __name__ == "__main__":
 
     if len(sys.argv) == 2:
         lemma_filter = sys.argv[1]
     else:
         lemma_filter = None
-
-    VERBS = {
-        "λύω": LUW,
-        "τιμῶ": TIMAW,
-        "ποιῶ": POIEW,
-        "δηλῶ": DHLOW,
-        "δίδωμι": DIDWMI,
-        "τίθημι": TIQHMI,
-        "ἵημι": hIHMI,
-        "ἵστημι": hISTHMI,
-        "δείκνυμι": DEIKNUMI,
-    }
 
     passed = 0
     fails = []
@@ -861,16 +865,13 @@ if __name__ == "__main__":
             lemma, parse, form = record.split()
             if lemma_filter and lemma_filter != lemma:
                 continue
-            c = VERBS[lemma]
-            for step in parse.split("."):
-                if step[0] in "123":
-                    step = "_" + step
-                c = getattr(c(), step)
-            prediction = phon3(c())
+
+            prediction, rule = calculate_form(lemma, parse)
+
             if prediction == form:
                 passed += 1
             else:
-                fails.append("{} != {} {}".format(record, prediction, c.__qualname__))
+                fails.append("{} != {} {}".format(record, prediction, rule))
 
     print("{} passed".format(passed))
     if fails:
