@@ -9,6 +9,17 @@ from characters import strip_length
 
 
 def phon(w):
+
+    w = w.replace("α#σο", "ω")
+
+    w = w.replace("έ#σο", "οῦ")
+    w = w.replace("ε#σο", "ου")
+
+    w = w.replace("ό#σο", "οῦ")
+    w = w.replace("ο#σο", "ου")
+
+    w = w.replace("#", "")
+
     w = w.replace("ά+ω", "ῶ")
     w = w.replace("α+ώ", "ώ")
 
@@ -382,7 +393,7 @@ class Endings4(PluralBase2):
     conn = ["+ο", "+ε", "+ο"]
 
     def _1S(self): return phon(recessive(self.stem + "+ο" + "μην"))
-    def _2S(self): return phon(recessive(self.stem + "+ου")) # ε + σο
+    def _2S(self): return phon(recessive(self.stem + "+ε" + "#σο"))
     def _3S(self): return phon(recessive(self.stem + "+ε" + "το"))
 
 
@@ -391,14 +402,14 @@ class Endings6(PluralBase2):
     conn = ["α", "α", "α"]
 
     def _1S(self): return phon(recessive(self.stem + "α" + "μην"))
-    def _2S(self): return phon(recessive(self.stem + "ω")) # α + σο
+    def _2S(self): return phon(recessive(self.stem + "α" + "#σο"))
     def _3S(self): return phon(recessive(self.stem + "α" + "το"))
 
 
 class Endings6B(PluralBase2):
 
     def _1S(self): return phon(recessive(self.stem + "μην"))
-    def _2S(self): return phon(recessive(self.stem + "+ο")) # σο
+    def _2S(self): return phon(recessive(self.stem + "#σο"))
     def _3S(self): return phon(recessive(self.stem + "το"))
 
 
@@ -555,7 +566,7 @@ class Endings21(MDBase1):
 
     conn = ["+ε", "+ε", "+ε"]
 
-    def _2S(self): return phon(recessive(self.stem + "+ου")) # ε + σο
+    def _2S(self): return phon(recessive(self.stem + "+ε" + "#σο"))
 
 
 class Endings23(MDBase1):
@@ -572,7 +583,7 @@ class Endings25(MDBase1):
 
 class Endings25B(MDBase1):
 
-    def _2S(self): return phon(recessive(self.stem + "+ο")) # σο
+    def _2S(self): return phon(recessive(self.stem + "#σο"))
 
 
 class Endings26(Endings):
