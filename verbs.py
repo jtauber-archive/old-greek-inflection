@@ -154,11 +154,11 @@ class Endings1(Endings):
 
 class Endings1mi(Endings):
 
-    def _1S(self): return phon3(recessive(phon2(self.stem) + "μι"))
-    def _2S(self): return phon3(recessive(phon2(self.stem) + "ς"))
-    def _3S(self): return phon3(recessive(phon2(self.stem) + "σι(ν)"))
-    def _1P(self): return recessive(phon3(self.stem) + "μεν")
-    def _2P(self): return recessive(phon3(self.stem) + "τε")
+    def _1S(self): return recessive(phon2(self.stem) + "μι")
+    def _2S(self): return recessive(phon2(self.stem) + "ς")
+    def _3S(self): return recessive(phon2(self.stem) + "σι(ν)")
+    def _1P(self): return recessive(self.stem + "μεν")
+    def _2P(self): return recessive(self.stem + "τε")
     def _3P(self): return phon4(recessive(self.stem + "α" + "σι(ν)"))
 
 
@@ -182,26 +182,26 @@ class Endings3mi(Endings):
     def _1S(self): return phon(recessive(self.stem + "ον"))
     def _2S(self): return phon(recessive(self.stem + "ε" + "ς"))
     def _3S(self): return phon(recessive(self.stem + "ε"))
-    def _1P(self): return phon3(recessive(self.stem + "μεν"))
-    def _2P(self): return phon3(recessive(self.stem + "τε"))
-    def _3P(self): return phon3(recessive(self.stem + "σαν"))
+    def _1P(self): return recessive(self.stem + "μεν")
+    def _2P(self): return recessive(self.stem + "τε")
+    def _3P(self): return recessive(self.stem + "σαν")
 
 
 class Endings3miB(Endings3mi):
 
-    def _1S(self): return phon3(recessive(phon2(self.stem) + "ν"))
+    def _1S(self): return recessive(phon2(self.stem) + "ν")
 
 
 class Endings3miC(Endings3mi):
 
     def _1S(self): return "{}/{}".format(
                           phon(recessive(self.stem + "εν")),
-                          phon3(recessive(phon2(self.stem) + "ν")))
+                          recessive(phon2(self.stem) + "ν"))
 
 class Endings3miD(Endings3miB):
 
-    def _2S(self): return phon3(recessive(phon2(self.stem) + "ς"))
-    def _3S(self): return phon3(recessive(phon2(self.stem) + ""))
+    def _2S(self): return recessive(phon2(self.stem) + "ς")
+    def _3S(self): return recessive(phon2(self.stem) + "")
 
 
 class Endings5(Endings):
@@ -216,12 +216,12 @@ class Endings5(Endings):
 
 class Endings5B(Endings):
 
-    def _1S(self): return phon3(recessive(phon2(self.stem) + "κ" + "α"))
-    def _2S(self): return phon3(recessive(phon2(self.stem) + "κ" + "α" + "ς"))
-    def _3S(self): return phon3(recessive(phon2(self.stem) + "κ" + "ε"))
-    def _1P(self): return phon3(recessive(self.stem + "μεν"))
-    def _2P(self): return phon3(recessive(self.stem + "τε"))
-    def _3P(self): return phon3(recessive(self.stem + "σαν"))
+    def _1S(self): return recessive(phon2(self.stem) + "κ" + "α")
+    def _2S(self): return recessive(phon2(self.stem) + "κ" + "α" + "ς")
+    def _3S(self): return recessive(phon2(self.stem) + "κ" + "ε")
+    def _1P(self): return recessive(self.stem + "μεν")
+    def _2P(self): return recessive(self.stem + "τε")
+    def _3P(self): return recessive(self.stem + "σαν")
 
 
 class Endings8(Endings5):
@@ -231,12 +231,12 @@ class Endings8(Endings5):
 
 class Endings12(Endings):
 
-    def _1S(self): return phon3(phon(recessive(self.stem + "ω")))
-    def _2S(self): return phon3(phon(recessive(self.stem + "ῃς")))
-    def _3S(self): return phon3(phon(recessive(self.stem + "ῃ")))
-    def _1P(self): return phon3(phon(recessive(self.stem + "ω" + "μεν")))
-    def _2P(self): return phon3(phon(recessive(self.stem + "η" + "τε")))
-    def _3P(self): return phon3(phon(recessive(self.stem + "ω" + "σι(ν)")))
+    def _1S(self): return phon(recessive(self.stem + "ω"))
+    def _2S(self): return phon(recessive(self.stem + "ῃς"))
+    def _3S(self): return phon(recessive(self.stem + "ῃ"))
+    def _1P(self): return phon(recessive(self.stem + "ω" + "μεν"))
+    def _2P(self): return phon(recessive(self.stem + "η" + "τε"))
+    def _3P(self): return phon(recessive(self.stem + "ω" + "σι(ν)"))
 
 
 class Endings12mi(Endings12):
@@ -278,12 +278,12 @@ class Endings10(Endings):
 
 class Endings9(Endings):
 
-    def _1S(self): return phon3(recessive(self.stem + "μαι"))
-    def _2S(self): return phon3(recessive(self.stem + "σαι"))
-    def _3S(self): return phon3(recessive(self.stem + "ται"))
-    def _1P(self): return phon3(recessive(self.stem + "μεθα"))
-    def _2P(self): return phon3(recessive(self.stem + "σθε"))
-    def _3P(self): return phon3(recessive(self.stem + "νται"))
+    def _1S(self): return recessive(self.stem + "μαι")
+    def _2S(self): return recessive(self.stem + "σαι")
+    def _3S(self): return recessive(self.stem + "ται")
+    def _1P(self): return recessive(self.stem + "μεθα")
+    def _2P(self): return recessive(self.stem + "σθε")
+    def _3P(self): return recessive(self.stem + "νται")
 
 
 class Endings2(Endings):
@@ -306,29 +306,29 @@ class Endings2B(Endings2):
 
 class Endings13(Endings):
 
-    def _1S(self): return phon3(phon(recessive(self.stem + "ω" + "μαι")))
-    def _2S(self): return phon3(phon(recessive(self.stem + "ῃ")))
-    def _3S(self): return phon3(phon(recessive(self.stem + "η" + "ται")))
-    def _1P(self): return phon3(phon(recessive(self.stem + "ω" + "μεθα")))
-    def _2P(self): return phon3(phon(recessive(self.stem + "η" + "σθε")))
-    def _3P(self): return phon3(phon(recessive(self.stem + "ω" + "νται")))
+    def _1S(self): return phon(recessive(self.stem + "ω" + "μαι"))
+    def _2S(self): return phon(recessive(self.stem + "ῃ"))
+    def _3S(self): return phon(recessive(self.stem + "η" + "ται"))
+    def _1P(self): return phon(recessive(self.stem + "ω" + "μεθα"))
+    def _2P(self): return phon(recessive(self.stem + "η" + "σθε"))
+    def _3P(self): return phon(recessive(self.stem + "ω" + "νται"))
 
 
 class Endings13mi(Endings13):
 
-    def _2S(self): return phon3(phon(recessive(phon2(self.stem) + "ῃ")))
-    def _3S(self): return phon3(phon(recessive(phon2(self.stem) + "η" + "ται")))
-    def _2P(self): return phon3(phon(recessive(phon2(self.stem) + "η" + "σθε")))
+    def _2S(self): return phon(recessive(phon2(self.stem) + "ῃ"))
+    def _3S(self): return phon(recessive(phon2(self.stem) + "η" + "ται"))
+    def _2P(self): return phon(recessive(phon2(self.stem) + "η" + "σθε"))
 
 
 class Endings11(Endings):
 
-    def _1S(self): return phon3(recessive(self.stem + "μην"))
-    def _2S(self): return phon3(recessive(self.stem + "σο"))
-    def _3S(self): return phon3(recessive(self.stem + "το"))
-    def _1P(self): return phon3(recessive(self.stem + "μεθα"))
-    def _2P(self): return phon3(recessive(self.stem + "σθε"))
-    def _3P(self): return phon3(recessive(self.stem + "ντο"))
+    def _1S(self): return recessive(self.stem + "μην")
+    def _2S(self): return recessive(self.stem + "σο")
+    def _3S(self): return recessive(self.stem + "το")
+    def _1P(self): return recessive(self.stem + "μεθα")
+    def _2P(self): return recessive(self.stem + "σθε")
+    def _3P(self): return recessive(self.stem + "ντο")
 
 
 class Endings4(Endings):
@@ -353,22 +353,22 @@ class Endings6(Endings):
 
 class Endings6B(Endings):
 
-    def _1S(self): return phon3(recessive(self.stem + "μην"))
+    def _1S(self): return recessive(self.stem + "μην")
     def _2S(self): return phon(recessive(self.stem + "ο")) # σο
-    def _3S(self): return phon3(recessive(self.stem + "το"))
-    def _1P(self): return phon3(recessive(self.stem + "μεθα"))
-    def _2P(self): return phon3(recessive(self.stem + "σθε"))
-    def _3P(self): return phon3(recessive(self.stem + "ντο"))
+    def _3S(self): return recessive(self.stem + "το")
+    def _1P(self): return recessive(self.stem + "μεθα")
+    def _2P(self): return recessive(self.stem + "σθε")
+    def _3P(self): return recessive(self.stem + "ντο")
 
 
 class Endings15(Endings):
 
-    def _1S(self): return phon3(phon(recessive(self.stem + "οι" + "μι")))
-    def _2S(self): return phon3(phon(recessive(self.stem + "οι" + "ς")))
-    def _3S(self): return phon3(make_paroxytone(self.stem + "οι" + ""))
-    def _1P(self): return phon3(recessive(self.stem + "οι" + "μεν"))
-    def _2P(self): return phon3(recessive(self.stem + "οι" + "τε"))
-    def _3P(self): return phon3(recessive(self.stem + "οι" + "εν"))
+    def _1S(self): return phon(recessive(self.stem + "οι" + "μι"))
+    def _2S(self): return phon(recessive(self.stem + "οι" + "ς"))
+    def _3S(self): return make_paroxytone(self.stem + "οι" + "")
+    def _1P(self): return recessive(self.stem + "οι" + "μεν")
+    def _2P(self): return recessive(self.stem + "οι" + "τε")
+    def _3P(self): return recessive(self.stem + "οι" + "εν")
 
 
 class Endings15B(Endings15):
@@ -439,12 +439,12 @@ class Endings17(Endings):
 
 class Endings16(Endings):
 
-    def _1S(self): return phon3(phon(recessive(self.stem + "οι" + "μην")))
-    def _2S(self): return phon3(phon(recessive(self.stem + "οι" + "ο")))
-    def _3S(self): return phon3(phon(recessive(self.stem + "οι" + "το")))
-    def _1P(self): return phon3(phon(recessive(self.stem + "οι" + "μεθα")))
-    def _2P(self): return phon3(phon(recessive(self.stem + "οι" + "σθε")))
-    def _3P(self): return phon3(phon(recessive(self.stem + "οι" + "ντο")))
+    def _1S(self): return phon(recessive(self.stem + "οι" + "μην"))
+    def _2S(self): return phon(recessive(self.stem + "οι" + "ο"))
+    def _3S(self): return phon(recessive(self.stem + "οι" + "το"))
+    def _1P(self): return phon(recessive(self.stem + "οι" + "μεθα"))
+    def _2P(self): return phon(recessive(self.stem + "οι" + "σθε"))
+    def _3P(self): return phon(recessive(self.stem + "οι" + "ντο"))
 
 
 class Endings16mi(Endings):
@@ -489,19 +489,19 @@ class Endings19(Endings):
 class Endings20mi(Endings):
 
     def _2S(self): return phon(recessive(self.stem + "ε"))
-    def _3S(self): return phon(recessive(phon3(self.stem) + "τω"))
-    def _2P(self): return phon(recessive(phon3(self.stem) + "τε"))
-    def _3P(self): return phon(recessive(phon3(self.stem) + "ντων"))
+    def _3S(self): return phon(recessive(self.stem + "τω"))
+    def _2P(self): return phon(recessive(self.stem + "τε"))
+    def _3P(self): return phon(recessive(self.stem + "ντων"))
 
 
 class Endings20miB(Endings20mi):
 
-    def _2S(self): return phon3(phon(recessive(phon2(self.stem) + "ε")))
+    def _2S(self): return phon(recessive(phon2(self.stem) + "ε"))
 
 
 class Endings20miC(Endings20mi):
 
-    def _2S(self): return phon(recessive(phon3(self.stem) + "ς"))
+    def _2S(self): return phon(recessive(self.stem + "ς"))
 
 
 class Endings20(Endings):
@@ -538,10 +538,10 @@ class Endings21(Endings):
 
 class Endings21mi(Endings21):
 
-    def _2S(self): return phon(recessive(phon3(self.stem) + "σο"))
-    def _3S(self): return phon(recessive(phon3(self.stem) + "σθω"))
-    def _2P(self): return phon(recessive(phon3(self.stem) + "σθε"))
-    def _3P(self): return phon(recessive(phon3(self.stem) + "σθων"))
+    def _2S(self): return phon(recessive(self.stem + "σο"))
+    def _3S(self): return phon(recessive(self.stem + "σθω"))
+    def _2P(self): return phon(recessive(self.stem + "σθε"))
+    def _3P(self): return phon(recessive(self.stem + "σθων"))
 
 
 class Endings21miB(Endings21mi):
@@ -576,7 +576,7 @@ class Endings26mi(Endings):
 
     def NSM(self): return phon(make_oxytone(self.stem + "ες"))
     def NSF(self): return phon(recessive(self.stem + "εσα"))
-    def NSN(self): return phon(make_oxytone(phon3(self.stem) + "ν"))
+    def NSN(self): return phon(make_oxytone(self.stem + "ν"))
 
 
 class Endings28(Endings):
@@ -609,9 +609,9 @@ class Endings27(Endings):
 
 class Endings27mi(Endings):
 
-    def NSM(self): return phon(recessive(phon3(self.stem) + "μενος"))
-    def NSF(self): return phon(recessive(phon3(self.stem) + "μενη"))
-    def NSN(self): return phon(recessive(phon3(self.stem) + "μενον"))
+    def NSM(self): return phon(recessive(self.stem + "μενος"))
+    def NSF(self): return phon(recessive(self.stem + "μενη"))
+    def NSN(self): return phon(recessive(self.stem + "μενον"))
 
 
 class Endings29(Endings):
@@ -720,8 +720,8 @@ class Verb2(Verb1):
     def PAD(self): return Endings20mi(self.stem1)
     def PMD(self): return Endings21mi(self.stem1)
 
-    def PAN(self): return make_paroxytone(phon3(self.stem1) + "ναι")
-    def PMN(self): return recessive(phon3(self.stem1) + "σθαι")
+    def PAN(self): return make_paroxytone(self.stem1 + "ναι")
+    def PMN(self): return recessive(self.stem1 + "σθαι")
 
     def PAP(self): return Endings26mi(self.stem1)
     def PMP(self): return Endings27mi(self.stem1)
@@ -736,7 +736,7 @@ class Verb2(Verb1):
     def AMD(self): return Endings21miB(self.stem2)
 
     def AAN(self): return phon(recessive(self.stem2 + "εναι"))
-    def AMN(self): return phon3(recessive(self.stem2 + "σθαι"))
+    def AMN(self): return recessive(self.stem2 + "σθαι")
 
     def AAP(self): return Endings26mi(self.stem2)
     def AMP(self): return Endings27mi(self.stem2)
@@ -866,10 +866,11 @@ if __name__ == "__main__":
                 if step[0] in "123":
                     step = "_" + step
                 c = getattr(c(), step)
-            if c() == form:
+            prediction = phon3(c())
+            if prediction == form:
                 passed += 1
             else:
-                fails.append("{} != {} {}".format(record, c(), c.__qualname__))
+                fails.append("{} != {} {}".format(record, prediction, c.__qualname__))
 
     print("{} passed".format(passed))
     if fails:
