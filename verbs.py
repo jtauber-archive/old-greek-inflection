@@ -499,6 +499,11 @@ class Endings20miB(Endings20mi):
     def _2S(self): return phon3(phon(recessive(phon2(self.stem) + "ε")))
 
 
+class Endings20miC(Endings20mi):
+
+    def _2S(self): return phon(recessive(phon3(self.stem) + "ς"))
+
+
 class Endings20(Endings):
 
     def _2S(self): return phon(recessive(self.stem + "ε"))
@@ -537,6 +542,11 @@ class Endings21mi(Endings21):
     def _3S(self): return phon(recessive(phon3(self.stem) + "σθω"))
     def _2P(self): return phon(recessive(phon3(self.stem) + "σθε"))
     def _3P(self): return phon(recessive(phon3(self.stem) + "σθων"))
+
+
+class Endings21miB(Endings21mi):
+
+    def _2S(self): return phon(recessive(self.stem + "ο")) # σο
 
 
 class Endings23(Endings):
@@ -721,6 +731,9 @@ class Verb2(Verb1):
 
     def AAO(self): return Endings15mi(self.stem2)
     def AMO(self): return Endings16mi(self.stem2)
+
+    def AAD(self): return Endings20miC(self.stem2)
+    def AMD(self): return Endings21miB(self.stem2)
 
 
 class Verb2B(Verb2):
