@@ -535,19 +535,6 @@ class Endings21(Endings):
     def _3P(self): return phon(recessive(self.stem + "ε" + "σθων"))
 
 
-class Endings21mi(Endings21):
-
-    def _2S(self): return phon(recessive(self.stem + "σο"))
-    def _3S(self): return phon(recessive(self.stem + "σθω"))
-    def _2P(self): return phon(recessive(self.stem + "σθε"))
-    def _3P(self): return phon(recessive(self.stem + "σθων"))
-
-
-class Endings21miB(Endings21mi):
-
-    def _2S(self): return phon(recessive(self.stem + "ο")) # σο
-
-
 class Endings23(Endings):
 
     def _2S(self): return recessive(self.stem + "αι")
@@ -562,6 +549,11 @@ class Endings25(Endings):
     def _3S(self): return recessive(self.stem + "σθω")
     def _2P(self): return recessive(self.stem + "σθε")
     def _3P(self): return recessive(self.stem + "σθων")
+
+
+class Endings25B(Endings25):
+
+    def _2S(self): return phon(recessive(self.stem + "ο")) # σο
 
 
 class Endings26(Endings):
@@ -717,7 +709,7 @@ class Verb2(Verb1):
     def PMO(self): return Endings16mi(self.stem1)
 
     def PAD(self): return Endings20mi(self.stem1)
-    def PMD(self): return Endings21mi(self.stem1)
+    def PMD(self): return Endings25(self.stem1)
 
     def PAN(self): return make_paroxytone(self.stem1 + "ναι")
     def PMN(self): return recessive(self.stem1 + "σθαι")
@@ -732,7 +724,7 @@ class Verb2(Verb1):
     def AMO(self): return Endings16mi(self.stem2)
 
     def AAD(self): return Endings20miC(self.stem2)
-    def AMD(self): return Endings21miB(self.stem2)
+    def AMD(self): return Endings25B(self.stem2)
 
     def AAN(self): return phon(recessive(self.stem2 + "εναι"))
     def AMN(self): return recessive(self.stem2 + "σθαι")
