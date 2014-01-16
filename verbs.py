@@ -591,25 +591,28 @@ class Endings32(Endings):
     def NSN(self): return make_paroxytone(self.stem + "μενον")
 
 
-class Endings27(Endings):
+class ParticipleBase1(Endings):
 
-    def NSM(self): return phon(recessive(self.stem + "ο" + "μενος"))
-    def NSF(self): return phon(recessive(self.stem + "ο" + "μενη"))
-    def NSN(self): return phon(recessive(self.stem + "ο" + "μενον"))
+    conn = ""
 
-
-class Endings27mi(Endings):
-
-    def NSM(self): return phon(recessive(self.stem + "μενος"))
-    def NSF(self): return phon(recessive(self.stem + "μενη"))
-    def NSN(self): return phon(recessive(self.stem + "μενον"))
+    def NSM(self): return phon(recessive(self.stem + self.conn + "μενος"))
+    def NSF(self): return phon(recessive(self.stem + self.conn + "μενη"))
+    def NSN(self): return phon(recessive(self.stem + self.conn + "μενον"))
 
 
-class Endings29(Endings):
+class Endings27mi(ParticipleBase1):
 
-    def NSM(self): return recessive(self.stem + "α" + "μενος")
-    def NSF(self): return recessive(self.stem + "α" + "μενη")
-    def NSN(self): return recessive(self.stem + "α" + "μενον")
+    pass
+
+
+class Endings27(ParticipleBase1):
+
+    conn = "ο"
+
+
+class Endings29(ParticipleBase1):
+
+    conn = "α"
 
 
 class Endings31(Endings):
