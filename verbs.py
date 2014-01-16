@@ -719,6 +719,9 @@ class Verb2(Verb1):
     def AAS(self): return Endings12mi(self.stem2)
     def AMS(self): return Endings13mi(self.stem2)
 
+    def AAO(self): return Endings15mi(self.stem2)
+    def AMO(self): return Endings16mi(self.stem2)
+
 
 class Verb2B(Verb2):
 
