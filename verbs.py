@@ -138,6 +138,22 @@ class Endings:
         self.stem = stem
 
 
+class SingularBase1(Endings):
+
+    def _1S(self): return phon(recessive(self.stem + "+ο" + "ν"))
+    def _2S(self): return phon(recessive(self.stem + "+ε" + "ς"))
+    def _3S(self): return phon(recessive(self.stem + "+ε"))
+
+
+class SingularBase2(Endings):
+
+    sg_conn = ["", "", ""]
+
+    def _1S(self): return phon(recessive(self.stem + self.sg_conn[0] + "μην"))
+    def _2S(self): return phon(recessive(self.stem + self.sg_conn[1] + "ο"))
+    def _3S(self): return phon(recessive(self.stem + self.sg_conn[2] + "το"))
+
+
 class PluralBase1(Endings):
 
     conn = ["", "", ""]
@@ -156,46 +172,82 @@ class PluralBase2(Endings):
     def _3P(self): return phon(recessive(self.stem + self.conn[2] + "ντο"))
 
 
-class Endings1(Endings):
+class PluralBase3(Endings):
+
+    conn = ["", "", ""]
+
+    def _1P(self): return phon(recessive(self.stem + self.conn[0] + "μεν"))
+    def _2P(self): return phon(recessive(self.stem + self.conn[1] + "τε"))
+    def _3P(self): return phon(recessive(self.stem + self.conn[2] + "σι(ν)"))
+
+
+class PluralBase4(Endings):
+
+    conn = ["", "", ""]
+
+    def _1P(self): return phon(recessive(self.stem + self.conn[0] + "μεν"))
+    def _2P(self): return phon(recessive(self.stem + self.conn[1] + "τε"))
+    def _3P(self): return phon(recessive(self.stem + self.conn[2] + "ν"))
+
+
+class PluralBase5(Endings):
+
+    conn = ["", "", ""]
+
+    def _1P(self): return phon(recessive(self.stem + self.conn[0] + "μεθα"))
+    def _2P(self): return phon(recessive(self.stem + self.conn[1] + "σθε"))
+    def _3P(self): return phon(recessive(self.stem + self.conn[2] + "νται"))
+
+
+class MDBase1(Endings):
+
+    conn = ["", "", ""]
+
+    def _3S(self): return phon(recessive(self.stem + self.conn[0] + "σθω"))
+    def _2P(self): return phon(recessive(self.stem + self.conn[0] + "σθε"))
+    def _3P(self): return phon(recessive(self.stem + self.conn[0] + "σθων"))
+
+
+class ADBase1(Endings):
+
+    conn = ["", "", ""]
+
+    def _3S(self): return phon(recessive(self.stem + self.conn[0] + "τω"))
+    def _2P(self): return phon(recessive(self.stem + self.conn[1] + "τε"))
+    def _3P(self): return phon(recessive(self.stem + self.conn[2] + "ντων"))
+
+
+class Endings1(PluralBase3):
+
+    conn = ["+ο", "+ε", "+ου"]
 
     def _1S(self): return phon(recessive(self.stem + "+ω"))
     def _2S(self): return phon(recessive(self.stem + "+ε+ις"))
     def _3S(self): return phon(recessive(self.stem + "+ε+ι"))
-    def _1P(self): return phon(recessive(self.stem + "+ο" + "μεν"))
-    def _2P(self): return phon(recessive(self.stem + "+ε" + "τε"))
-    def _3P(self): return phon(recessive(self.stem + "+ου" + "σι(ν)"))
 
 
-class Endings1mi(Endings):
+class Endings1mi(PluralBase3):
+
+    conn = ["", "", "~α"]
 
     def _1S(self): return phon(recessive(phon2(self.stem) + "μι"))
     def _2S(self): return phon(recessive(phon2(self.stem) + "ς"))
     def _3S(self): return phon(recessive(phon2(self.stem) + "σι(ν)"))
-    def _1P(self): return phon(recessive(self.stem + "μεν"))
-    def _2P(self): return phon(recessive(self.stem + "τε"))
-    def _3P(self): return phon(recessive(self.stem + "~α" + "σι(ν)"))
 
 
 class Endings1miB(Endings1mi):
 
-    def _3P(self): return phon(recessive(self.stem + "+α" + "σι(ν)"))
+    conn = ["", "", "+α"]
 
 
-class Endings3(Endings):
+class Endings3(PluralBase4, SingularBase1):
 
-    def _1S(self): return phon(recessive(self.stem + "+ον"))
-    def _2S(self): return phon(recessive(self.stem + "+ε" + "ς"))
-    def _3S(self): return phon(recessive(self.stem + "+ε"))
-    def _1P(self): return phon(recessive(self.stem + "+ο" + "μεν"))
-    def _2P(self): return phon(recessive(self.stem + "+ε" + "τε"))
-    def _3P(self): return phon(recessive(self.stem + "+ο" + "ν"))
+    conn = ["+ο", "+ε", "+ο"]
 
 
-class Endings3mi(PluralBase1):
+class Endings3mi(PluralBase1, SingularBase1):
 
-    def _1S(self): return phon(recessive(self.stem + "+ον"))
-    def _2S(self): return phon(recessive(self.stem + "+ε" + "ς"))
-    def _3S(self): return phon(recessive(self.stem + "+ε"))
+    pass
 
 
 class Endings3miB(Endings3mi):
@@ -215,14 +267,13 @@ class Endings3miD(Endings3miB):
     def _3S(self): return phon(recessive(phon2(self.stem) + ""))
 
 
-class Endings5(Endings):
+class Endings5(PluralBase4):
+
+    conn = ["α", "α", "α"]
 
     def _1S(self): return phon(recessive(self.stem + "α"))
     def _2S(self): return phon(recessive(self.stem + "α" + "ς"))
     def _3S(self): return phon(recessive(self.stem + "ε"))
-    def _1P(self): return phon(recessive(self.stem + "α" + "μεν"))
-    def _2P(self): return phon(recessive(self.stem + "α" + "τε"))
-    def _3P(self): return phon(recessive(self.stem + "α" + "ν"))
 
 
 class Endings5B(PluralBase1):
@@ -237,14 +288,13 @@ class Endings8(Endings5):
     def _3P(self): return phon(recessive(self.stem + "α" + "σι(ν)"))
 
 
-class Endings12(Endings):
+class Endings12(PluralBase3):
+
+    conn = ["+ω", "+η", "+ω"]
 
     def _1S(self): return phon(recessive(self.stem + "+ω"))
     def _2S(self): return phon(recessive(self.stem + "+ῃς"))
     def _3S(self): return phon(recessive(self.stem + "+ῃ"))
-    def _1P(self): return phon(recessive(self.stem + "+ω" + "μεν"))
-    def _2P(self): return phon(recessive(self.stem + "+η" + "τε"))
-    def _3P(self): return phon(recessive(self.stem + "+ω" + "σι(ν)"))
 
 
 class Endings12mi(Endings12):
@@ -280,17 +330,16 @@ class Endings10(PluralBase1):
     def _3S(self): return phon(recessive(self.stem + "ει"))
 
 
-class Endings9(Endings):
+class Endings9(PluralBase5):
 
     def _1S(self): return phon(recessive(self.stem + "μαι"))
     def _2S(self): return phon(recessive(self.stem + "σαι"))
     def _3S(self): return phon(recessive(self.stem + "ται"))
-    def _1P(self): return phon(recessive(self.stem + "μεθα"))
-    def _2P(self): return phon(recessive(self.stem + "σθε"))
-    def _3P(self): return phon(recessive(self.stem + "νται"))
 
 
-class Endings2(Endings):
+class Endings2(PluralBase5):
+
+    conn = ["+ο", "+ε", "+ο"]
 
     def _1S(self): return phon(recessive(self.stem + "+ο" + "μαι"))
     def _2S(self): return "{}/{}".format(
@@ -298,9 +347,6 @@ class Endings2(Endings):
                           phon(recessive(self.stem + "+ῃ"))   # ε + σαι
     )
     def _3S(self): return phon(recessive(self.stem + "+ε" + "ται"))
-    def _1P(self): return phon(recessive(self.stem + "+ο" + "μεθα"))
-    def _2P(self): return phon(recessive(self.stem + "+ε" + "σθε"))
-    def _3P(self): return phon(recessive(self.stem + "+ο" + "νται"))
 
 
 class Endings2B(Endings2):
@@ -308,14 +354,13 @@ class Endings2B(Endings2):
     def _2S(self): return phon(recessive(self.stem + "+ε+ι")) # ε + σαι
 
 
-class Endings13(Endings):
+class Endings13(PluralBase5):
+
+    conn = ["+ω", "+η", "+ω"]
 
     def _1S(self): return phon(recessive(self.stem + "+ω" + "μαι"))
     def _2S(self): return phon(recessive(self.stem + "+ῃ"))
     def _3S(self): return phon(recessive(self.stem + "+η" + "ται"))
-    def _1P(self): return phon(recessive(self.stem + "+ω" + "μεθα"))
-    def _2P(self): return phon(recessive(self.stem + "+η" + "σθε"))
-    def _3P(self): return phon(recessive(self.stem + "+ω" + "νται"))
 
 
 class Endings13mi(Endings13):
@@ -433,31 +478,22 @@ class Endings17(Endings):
     )
 
 
-class Endings16(PluralBase2):
+class Endings16(PluralBase2, SingularBase2):
 
+    sg_conn = ["+οι", "+οι", "+οι"]
     conn = ["+οι", "+οι", "+οι"]
 
-    def _1S(self): return phon(recessive(self.stem + "+οι" + "μην"))
-    def _2S(self): return phon(recessive(self.stem + "+οι" + "ο"))
-    def _3S(self): return phon(recessive(self.stem + "+οι" + "το"))
+
+class Endings16mi(PluralBase2, SingularBase2):
+
+    sg_conn = ["+ι", "+ι", "+ι"]
+    conn = ["+ι", "+ι", "+ι"]
 
 
-class Endings16mi(PluralBase2):
+class Endings18(PluralBase2, SingularBase2):
 
-    conn = ["ι", "+ι", "+ι"]
-
-    def _1S(self): return phon(recessive(self.stem + "ι" + "μην"))
-    def _2S(self): return phon(recessive(self.stem + "+ι" + "ο"))
-    def _3S(self): return phon(recessive(self.stem + "+ι" + "το"))
-
-
-class Endings18(PluralBase2):
-
+    sg_conn = ["αι", "αι", "αι"]
     conn = ["αι", "αι", "αι"]
-
-    def _1S(self): return phon(recessive(self.stem + "αι" + "μην"))
-    def _2S(self): return phon(recessive(self.stem + "αι" + "ο"))
-    def _3S(self): return phon(recessive(self.stem + "αι" + "το"))
 
 
 class Endings19(Endings):
@@ -479,55 +515,40 @@ class Endings19(Endings):
     )
 
 
-class Endings20mi(Endings):
+class Endings20mi(ADBase1):
 
     def _2S(self): return phon(recessive(self.stem + "+ε"))
-    def _3S(self): return phon(recessive(self.stem + "τω"))
-    def _2P(self): return phon(recessive(self.stem + "τε"))
-    def _3P(self): return phon(recessive(self.stem + "ντων"))
 
 
-class Endings20miB(Endings20mi):
+class Endings20miB(ADBase1):
 
     def _2S(self): return phon(recessive(phon2(self.stem) + "+ε"))
 
 
-class Endings20miC(Endings20mi):
+class Endings20miC(ADBase1):
 
     def _2S(self): return phon(recessive(self.stem + "ς"))
 
 
-class Endings20(Endings):
+class Endings20(ADBase1):
+
+    conn = ["+ε", "+ε", "+ο"]
 
     def _2S(self): return phon(recessive(self.stem + "+ε"))
-    def _3S(self): return phon(recessive(self.stem + "+ε" + "τω"))
-    def _2P(self): return phon(recessive(self.stem + "+ε" + "τε"))
-    def _3P(self): return phon(recessive(self.stem + "+ο" + "ντων"))
 
 
-class Endings22(Endings):
+class Endings22(ADBase1):
+
+    conn = ["α", "α", "α"]
 
     def _2S(self): return phon(recessive(self.stem + "ον"))
-    def _3S(self): return phon(recessive(self.stem + "α" + "τω"))
-    def _2P(self): return phon(recessive(self.stem + "α" + "τε"))
-    def _3P(self): return phon(recessive(self.stem + "α" + "ντων"))
 
 
-class Endings24(Endings):
+class Endings24(ADBase1):
+
+    conn = ["η", "η", "ε"]
 
     def _2S(self): return phon(recessive(self.stem + "η" + "τι"))
-    def _3S(self): return phon(recessive(self.stem + "η" + "τω"))
-    def _2P(self): return phon(recessive(self.stem + "η" + "τε"))
-    def _3P(self): return phon(recessive(self.stem + "ε" + "ντων"))
-
-
-class MDBase1(Endings):
-
-    conn = ["", "", ""]
-
-    def _3S(self): return phon(recessive(self.stem + self.conn[0] + "σθω"))
-    def _2P(self): return phon(recessive(self.stem + self.conn[0] + "σθε"))
-    def _3P(self): return phon(recessive(self.stem + self.conn[0] + "σθων"))
 
 
 class Endings21(MDBase1):
@@ -549,7 +570,7 @@ class Endings25(MDBase1):
     def _2S(self): return phon(recessive(self.stem + "σο"))
 
 
-class Endings25B(Endings25):
+class Endings25B(MDBase1):
 
     def _2S(self): return phon(recessive(self.stem + "+ο")) # σο
 
