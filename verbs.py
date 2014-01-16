@@ -735,6 +735,12 @@ class Verb2(Verb1):
     def AAD(self): return Endings20miC(self.stem2)
     def AMD(self): return Endings21miB(self.stem2)
 
+    def AAN(self): return phon(recessive(self.stem2 + "εναι"))
+    def AMN(self): return phon3(recessive(self.stem2 + "σθαι"))
+
+    def AAP(self): return Endings26mi(self.stem2)
+    def AMP(self): return Endings27mi(self.stem2)
+
 
 class Verb2B(Verb2):
 
