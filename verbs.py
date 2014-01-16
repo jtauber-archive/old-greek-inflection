@@ -716,6 +716,9 @@ class Verb2(Verb1):
     def PAP(self): return Endings26mi(self.stem1)
     def PMP(self): return Endings27mi(self.stem1)
 
+    def AAS(self): return Endings12mi(self.stem2)
+    def AMS(self): return Endings13mi(self.stem2)
+
 
 class Verb2B(Verb2):
 
