@@ -12,6 +12,7 @@ def phon(w):
 
     w = w.replace("ἕ", "hέ")
     w = w.replace("ἑ", "hε")
+    w = w.replace("εἷ", "hεῖ")
 
     w = w.replace("α#σο", "ω")
 
@@ -25,6 +26,8 @@ def phon(w):
     w = w.replace("αι#σο", "αιο")
 
     w = w.replace("έ+ι#σο", "έ+ιο")
+
+    w = w.replace("εῖ#σο", "εῖο")
 
     w = w.replace("ό+ι#σο", "ό+ιο")
     w = w.replace("οι#σο", "οιο")
@@ -147,9 +150,12 @@ def phon(w):
     w = w.replace("hεί", "εἵ")
     w = w.replace("hεῖ", "εἷ")
     w = w.replace("hέ", "ἕ")
+    w = w.replace("hε", "ἑ")
     w = w.replace("hῆ", "ἧ")
     w = w.replace("hῇ", "ᾗ")
     w = w.replace("hῶ", "ὧ")
+    w = w.replace("hώ", "ὥ")
+    w = w.replace("hοῦ", "οὗ")
 
     return w
 
@@ -832,6 +838,7 @@ class Verb2C(Verb2B):
 
     def PAI(self): return Endings1miB(self.stem1)
     def IAI(self): return Endings3miC(self.stem1)
+    def AMI(self): return Endings11(aug(self.stem2))
 
 
 class Verb2D(Verb2):
