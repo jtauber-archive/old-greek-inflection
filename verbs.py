@@ -555,6 +555,13 @@ class Endings20miC(ADBase1):
     ending_2S = "ς"
 
 
+class Endings20miD(ADBase1):
+
+    def _2S(self): return phon(recessive(phon2(self.stem) + "+θι"))
+    def _3S(self): return phon(recessive(phon2(self.stem) + self.ending_3S))
+    def _2P(self): return phon(recessive(phon2(self.stem) + self.ending_2P))
+
+
 class Endings20(ADBase1):
 
     sg_conn = [None, "", "+ε"]
@@ -801,6 +808,8 @@ class Verb2D(Verb2):
     def IAI(self): return Endings3miD(self.stem1)
     def AAI(self): return Endings7B(aug(self.stem2))
     def PAD(self): return Endings20miB(self.stem1)
+    def AAD(self): return Endings20miD(self.stem2)
+    def AAN(self): return phon(recessive(phon2(self.stem2) + "+ναι"))
 
 
 class Verb2E(Verb2):
@@ -897,7 +906,7 @@ def calculate_form(lemma, parse):
             step = "_" + step
         c = getattr(c(), step)
 
-    return strip_length(c().replace("+", "")), c.__qualname__
+    return strip_length(c().replace("+", "")), (c.__self__.__class__.__name__, c.__qualname__)
 
 
 if __name__ == "__main__":
