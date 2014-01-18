@@ -10,6 +10,9 @@ from characters import strip_length
 
 def phon(w):
 
+    w = w.replace("ἕ", "hέ")
+    w = w.replace("ἑ", "hε")
+
     w = w.replace("α#σο", "ω")
 
     w = w.replace("έ#σο", "οῦ")
@@ -141,12 +144,19 @@ def phon(w):
     w = w.replace("ό~α", "όα")
     w = w.replace("ύ~α", "ύα")
 
+    w = w.replace("hεί", "εἵ")
+    w = w.replace("hεῖ", "εἷ")
+    w = w.replace("hέ", "ἕ")
+    w = w.replace("hῆ", "ἧ")
+    w = w.replace("hῇ", "ᾗ")
+    w = w.replace("hῶ", "ὧ")
+
     return w
 
 
 def replace_final(w, a, b):
-    if w[-1] == a:
-        return w[:-1] + b
+    if w[-len(a):] == a:
+        return w[:-len(a)] + b
     else:
         return w
 
@@ -155,6 +165,7 @@ def phon2(w):
 
     w = replace_final(w, "α", "η")
     w = replace_final(w, "ε", "η")
+    w = replace_final(w, "εἱ", "ἡ")
     w = replace_final(w, "ο", "ω")
     w = replace_final(w, "υ", "ῡ")
 
@@ -845,6 +856,8 @@ def aug(stem):
     if is_vowel(stem[0]):
         if stem[0] == "ἱ":
             return stem
+        elif stem[0] == "ἑ":
+            return "εἱ" + stem[1:]
         else:
             raise NotImplementedError(stem)
     else:
@@ -893,6 +906,7 @@ class TIQHMI(Verb2B):
 class hIHMI(Verb2C):
 
     stem1 = "ἱε"
+    stem2 = "ἑ"
 
 
 class hISTHMI(Verb2D):
