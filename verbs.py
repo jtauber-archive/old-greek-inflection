@@ -906,6 +906,11 @@ class DEIKNUMI(Verb2E):
     stem1 = "δεικνυ"
 
 
+class GIGNWSKW(Verb2D):
+
+    stem2 = "γνο"
+
+
 VERBS = {
     "λύω": LUW,
     "τιμῶ": TIMAW,
@@ -916,6 +921,7 @@ VERBS = {
     "ἵημι": hIHMI,
     "ἵστημι": hISTHMI,
     "δείκνυμι": DEIKNUMI,
+    "γιγνώσκω": GIGNWSKW,
 }
 
 
