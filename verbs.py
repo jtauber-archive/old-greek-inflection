@@ -157,9 +157,11 @@ class Endings:
 
 class SingularBase1(Endings):
 
-    def _1S(self): return phon(recessive(self.stem + "+ο" + "ν"))
-    def _2S(self): return phon(recessive(self.stem + "+ε" + "ς"))
-    def _3S(self): return phon(recessive(self.stem + "+ε"))
+    sg_conn = ["", "", ""]
+
+    def _1S(self): return phon(recessive(self.stem + self.sg_conn[0] + "ν"))
+    def _2S(self): return phon(recessive(self.stem + self.sg_conn[1] + "ς"))
+    def _3S(self): return phon(recessive(self.stem + self.sg_conn[2] + ""))
 
 
 class SingularBase2(Endings):
@@ -268,12 +270,28 @@ class Endings1miB(Endings1mi):
 
 class Endings3(PluralBase4, SingularBase1):
 
+    sg_conn = ["+ο", "+ε", "+ε"]
     conn = ["+ο", "+ε", "+ο"]
+
+
+class Endings7(PluralBase1, SingularBase1):
+
+    pass
+
+
+class Endings7B(Endings):
+
+    def _1S(self): return phon(recessive(phon2(self.stem) + "ν"))
+    def _2S(self): return phon(recessive(phon2(self.stem) + "ς"))
+    def _3S(self): return phon(recessive(phon2(self.stem) + ""))
+    def _1P(self): return phon(recessive(phon2(self.stem) + "μεν"))
+    def _2P(self): return phon(recessive(phon2(self.stem) + "τε"))
+    def _3P(self): return phon(recessive(phon2(self.stem) + "σαν"))
 
 
 class Endings3mi(PluralBase1, SingularBase1):
 
-    pass
+    sg_conn = ["+ο", "+ε", "+ε"]
 
 
 class Endings3miB(Endings3mi):
@@ -338,13 +356,6 @@ class Endings14(Endings):
     def _1P(self): return phon(make_properispomenon(self.stem + "ω" + "μεν"))
     def _2P(self): return phon(make_properispomenon(self.stem + "η" + "τε"))
     def _3P(self): return phon(make_properispomenon(self.stem + "ω" + "σι(ν)"))
-
-
-class Endings7(PluralBase1):
-
-    def _1S(self): return phon(recessive(self.stem + "ν"))
-    def _2S(self): return phon(recessive(self.stem + "ς"))
-    def _3S(self): return phon(recessive(self.stem + ""))
 
 
 class Endings10(PluralBase1):
@@ -456,11 +467,10 @@ class Endings15B(Endings15):
     )
 
 
-class Endings15mi(Endings15B):
+class Endings15mi(SingularBase1):
 
-    def _1S(self): return phon(recessive(self.stem + "ι" + "ην"))
-    def _2S(self): return phon(recessive(self.stem + "ι" + "ης"))
-    def _3S(self): return phon(recessive(self.stem + "ι" + "η"))
+    sg_conn = ["ιη", "ιη", "ιη"]
+
     def _1P(self): return "{}/{}".format(
                           phon(recessive(self.stem + "+ι" + "μεν")),
                           phon(recessive(self.stem + "ι" + "ημεν")),
@@ -512,11 +522,10 @@ class Endings18(PluralBase2, SingularBase2):
     conn = ["αι", "αι", "αι"]
 
 
-class Endings19(Endings):
+class Endings19(SingularBase1):
 
-    def _1S(self): return phon(recessive(self.stem + "ειη" + "ν"))
-    def _2S(self): return phon(recessive(self.stem + "ειη" + "ς"))
-    def _3S(self): return phon(recessive(self.stem + "ειη" + ""))
+    sg_conn = ["ειη", "ειη", "ειη"]
+
     def _1P(self): return "{}/{}".format(
                           phon(make_properispomenon(self.stem + "ει" + "μεν")),
                           phon(recessive(self.stem + "ειη" + "μεν")),
@@ -785,6 +794,7 @@ class Verb2C(Verb2B):
 class Verb2D(Verb2):
 
     def IAI(self): return Endings3miD(self.stem1)
+    def AAI(self): return Endings7B(aug(self.stem2))
     def PAD(self): return Endings20miB(self.stem1)
 
 
@@ -854,6 +864,7 @@ class hIHMI(Verb2C):
 class hISTHMI(Verb2D):
 
     stem1 = "ἱστα"
+    stem2 = "στα"
 
 
 class DEIKNUMI(Verb2E):
