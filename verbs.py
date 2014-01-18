@@ -878,110 +878,11 @@ def redup(stem):
         return stem[0] + "ε" + stem
 
 
-class LUW(Verb1):
-
-    stem1 = "λυ+"
-
-
-class TIMAW(Verb1B):
-
-    stem1 = "τιμα"
-
-
-class POIEW(Verb1C):
-
-    stem1 = "ποιε"
-
-
-class DHLOW(Verb1B):
-
-    stem1 = "δηλο"
-
-
-class DIDWMI(Verb2):
-
-    stem1 = "διδο"
-    stem2 = "δο"
-
-
-class TIQHMI(Verb2B):
-
-    stem1 = "τιθε"
-    stem2 = "θε"
-
-
-class hIHMI(Verb2C):
-
-    stem1 = "ἱε"
-    stem2 = "ἑ"
-
-
-class hISTHMI(Verb2D):
-
-    stem1 = "ἱστα"
-    stem2 = "στα"
-
-
-class DEIKNUMI(Verb2E):
-
-    stem1 = "δεικνυ"
-
-
-class GIGNWSKW(Verb2D):
-
-    stem2 = "γνο"
-
-
-VERBS = {
-    "λύω": LUW,
-    "τιμῶ": TIMAW,
-    "ποιῶ": POIEW,
-    "δηλῶ": DHLOW,
-    "δίδωμι": DIDWMI,
-    "τίθημι": TIQHMI,
-    "ἵημι": hIHMI,
-    "ἵστημι": hISTHMI,
-    "δείκνυμι": DEIKNUMI,
-    "γιγνώσκω": GIGNWSKW,
-}
-
-
-def calculate_form(lemma, parse):
-    c = VERBS[lemma]
+def calculate_form(entry, parse):
+    c = entry
     for step in parse.split("."):
         if step[0] in "123":
             step = "_" + step
         c = getattr(c(), step)
 
     return strip_length(c().replace("+", "")), (c.__self__.__class__.__name__, c.__qualname__)
-
-
-if __name__ == "__main__":
-
-    if len(sys.argv) == 2:
-        lemma_filter = sys.argv[1]
-    else:
-        lemma_filter = None
-
-    passed = 0
-    fails = []
-    with open("test.txt") as f:
-        for line in f:
-            record = line.strip().split("#")[0]
-            if not record:
-                continue
-            lemma, parse, form = record.split()
-            if lemma_filter and lemma_filter != lemma:
-                continue
-
-            prediction, rule = calculate_form(lemma, parse)
-
-            if prediction == form:
-                passed += 1
-            else:
-                fails.append("{} != {} {}".format(record, prediction, rule))
-
-    print("{} passed".format(passed))
-    if fails:
-        print("{} failed".format(len(fails)))
-        print(fails[0])
