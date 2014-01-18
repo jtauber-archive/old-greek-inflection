@@ -1,8 +1,3 @@
-#!/usr/bin/env python3
-
-
-import sys
-
 from accentuation import recessive, make_oxytone, make_paroxytone, make_perispomenon, make_properispomenon
 from syllabify import is_vowel
 from characters import strip_length
@@ -136,6 +131,7 @@ def phon(w):
     w = w.replace("ύ+ε", "ῦ")
     w = w.replace("υ+έ", "ύ")
 
+    w = w.replace("ῶ+ι", "ῷ")
     w = w.replace("ω+ι", "ῳ")
 
     w = w.replace("έ+ι", "εῖ")
@@ -178,39 +174,35 @@ def phon2(w):
     return w
 
 
+def nothing(self, stem):
+    return stem
+
+
+def lengthen(self, stem):
+    return phon2(stem)
+
 class Endings:
 
     sg_conn = ["", "", ""]
     pl_conn = ["", "", ""]
 
+    prep_stem_1S = nothing
+    prep_stem_2S = nothing
+    prep_stem_3S = nothing
+    prep_stem_1P = nothing
+    prep_stem_2P = nothing
+    prep_stem_3P = nothing
+
     def __init__(self, stem):
         self.stem = stem
 
-    def sg_prep_stem(self, stem):
-        return stem
+    def _1S(self): return phon(recessive(self.prep_stem_1S(self.stem) + self.sg_conn[0] + self.ending_1S))
+    def _2S(self): return phon(recessive(self.prep_stem_2S(self.stem) + self.sg_conn[1] + self.ending_2S))
+    def _3S(self): return phon(recessive(self.prep_stem_3S(self.stem) + self.sg_conn[2] + self.ending_3S))
 
-    def pl_prep_stem(self, stem):
-        return stem
-
-    def _1S(self): return phon(recessive(self.sg_prep_stem(self.stem) + self.sg_conn[0] + self.ending_1S))
-    def _2S(self): return phon(recessive(self.sg_prep_stem(self.stem) + self.sg_conn[1] + self.ending_2S))
-    def _3S(self): return phon(recessive(self.sg_prep_stem(self.stem) + self.sg_conn[2] + self.ending_3S))
-
-    def _1P(self): return phon(recessive(self.pl_prep_stem(self.stem) + self.pl_conn[0] + self.ending_1P))
-    def _2P(self): return phon(recessive(self.pl_prep_stem(self.stem) + self.pl_conn[1] + self.ending_2P))
-    def _3P(self): return phon(recessive(self.pl_prep_stem(self.stem) + self.pl_conn[2] + self.ending_3P))
-
-
-class SinglePhon2:
-
-    def sg_prep_stem(self, stem):
-        return phon2(stem)
-
-
-class PluralPhon2:
-
-    def pl_prep_stem(self, stem):
-        return phon2(stem)
+    def _1P(self): return phon(recessive(self.prep_stem_1P(self.stem) + self.pl_conn[0] + self.ending_1P))
+    def _2P(self): return phon(recessive(self.prep_stem_2P(self.stem) + self.pl_conn[1] + self.ending_2P))
+    def _3P(self): return phon(recessive(self.prep_stem_3P(self.stem) + self.pl_conn[2] + self.ending_3P))
 
 
 class PrimaryActive(Endings):
@@ -300,7 +292,11 @@ class Endings1(PrimaryActive):
 
 
 
-class Endings1mi(SinglePhon2, PrimaryActive):
+class Endings1mi(PrimaryActive):
+
+    prep_stem_1S = lengthen
+    prep_stem_2S = lengthen
+    prep_stem_3S = lengthen
 
     pl_conn = ["", "", "~α"]
 
@@ -325,9 +321,14 @@ class Endings7(SecondaryActive2):
     pass
 
 
-class Endings7B(SinglePhon2, PluralPhon2, SecondaryActive2):
+class Endings7B(SecondaryActive2):
 
-    pass
+    prep_stem_1S = lengthen
+    prep_stem_2S = lengthen
+    prep_stem_3S = lengthen
+    prep_stem_1P = lengthen
+    prep_stem_2P = lengthen
+    prep_stem_3P = lengthen
 
 
 class Endings3mi(SecondaryActive2):
@@ -337,7 +338,11 @@ class Endings3mi(SecondaryActive2):
 
 class Endings3miB(Endings3mi):
 
-    def _1S(self): return phon(recessive(phon2(self.stem) + "ν"))
+    prep_stem_1S = lengthen
+
+    sg_conn = ["", "+ε", "+ε"]
+
+    ending_1S = "ν"
 
 
 class Endings3miC(Endings3mi):
@@ -346,9 +351,11 @@ class Endings3miC(Endings3mi):
                           phon(recessive(self.stem + "+εν")),
                           phon(recessive(phon2(self.stem) + "ν")))
 
-class Endings3miD(SinglePhon2, SecondaryActive2):
+class Endings3miD(SecondaryActive2):
 
-    pass
+    prep_stem_1S = lengthen
+    prep_stem_2S = lengthen
+    prep_stem_3S = lengthen
 
 
 class Endings5(SecondaryActive):
@@ -360,7 +367,11 @@ class Endings5(SecondaryActive):
     ending_3S = "ε"
 
 
-class Endings5B(SinglePhon2, SecondaryActive2):
+class Endings5B(SecondaryActive2):
+
+    prep_stem_1S = lengthen
+    prep_stem_2S = lengthen
+    prep_stem_3S = lengthen
 
     sg_conn = ["κ", "κ", "κ"]
 
@@ -382,9 +393,9 @@ class Endings12(PrimaryActive):
 
 class Endings12mi(Endings12):
 
-    def _2S(self): return phon(recessive(phon2(self.stem) + "+ῃς"))
-    def _3S(self): return phon(recessive(phon2(self.stem) + "+ῃ"))
-    def _2P(self): return phon(recessive(phon2(self.stem) + "+η" + "τε"))
+    prep_stem_2S = lengthen
+    prep_stem_3S = lengthen
+    prep_stem_2P = lengthen
 
 
 class Endings14(Endings):
@@ -437,9 +448,9 @@ class Endings13(PrimaryMiddle):
 
 class Endings13mi(Endings13):
 
-    def _2S(self): return phon(recessive(phon2(self.stem) + "+ῃ"))
-    def _3S(self): return phon(recessive(phon2(self.stem) + "+η" + "ται"))
-    def _2P(self): return phon(recessive(phon2(self.stem) + "+η" + "σθε"))
+    prep_stem_2S = lengthen
+    prep_stem_3S = lengthen
+    prep_stem_2P = lengthen
 
 
 class Endings11(SecondaryMiddle2):
@@ -586,9 +597,9 @@ class Endings20mi(ImperativeActive):
     ending_2S = "+ε"
 
 
-class Endings20miB(ImperativeActive):
+class Endings20miB(Endings20mi):
 
-    def _2S(self): return phon(recessive(phon2(self.stem) + "+ε"))
+    prep_stem_2S = lengthen
 
 
 class Endings20miC(ImperativeActive):
@@ -598,9 +609,11 @@ class Endings20miC(ImperativeActive):
 
 class Endings20miD(ImperativeActive):
 
-    def _2S(self): return phon(recessive(phon2(self.stem) + "+θι"))
-    def _3S(self): return phon(recessive(phon2(self.stem) + self.ending_3S))
-    def _2P(self): return phon(recessive(phon2(self.stem) + self.ending_2P))
+    prep_stem_2S = lengthen
+    prep_stem_3S = lengthen
+    prep_stem_2P = lengthen
+
+    ending_2S = "+θι"
 
 
 class Endings20(ImperativeActive):
@@ -636,7 +649,7 @@ class Endings23(ImperativeMiddle):
     sg_conn = [None, "α", "α"]
     pl_conn = [None, "α", "α"]
 
-    def _2S(self): return phon(recessive(self.stem + "αι"))
+    ending_2S = "ι"
 
 
 class Endings25(ImperativeMiddle2):
