@@ -293,6 +293,13 @@ class PrimaryActive(Endings):
     ending_3P = "σι(ν)"
 
 
+class PrimaryActiveMI(PrimaryActive):
+
+    ending_1S = "μι"
+    ending_2S = "ς"
+    ending_3S = "σι(ν)"
+
+
 class SecondaryActive(Endings):
 
     ending_1S = "ν"
@@ -368,17 +375,13 @@ class Endings1(ConnectiveOEEOEO, PrimaryActive):
     conn_3P = "+ου"
 
 
-class Endings1mi(PrimaryActive):
+class Endings1mi(PrimaryActiveMI):
 
     prep_stem_1S = lengthen
     prep_stem_2S = lengthen
     prep_stem_3S = lengthen
 
     conn_3P = "~α"
-
-    ending_1S = "μι"
-    ending_2S = "ς"
-    ending_3S = "σι(ν)"
 
 
 class Endings1miB(Endings1mi):
@@ -413,19 +416,16 @@ class Endings3mi(SecondaryActive2):
     conn_3S = "+ε"
 
 
-class Endings3miB(SecondaryActive2):
+class Endings3miB(Endings3mi):
 
     prep_stem_1S = lengthen
 
-    conn_2S = "+ε"
-    conn_3S = "+ε"
+    conn_1S = ""
 
 
-class Endings3miB2(SecondaryActive2):
+class Endings3miB2(Endings3mi):
 
     conn_1S = "+ε"
-    conn_2S = "+ε"
-    conn_3S = "+ε"
 
 
 class Endings3miC(Endings3mi):
@@ -440,14 +440,11 @@ class Endings3miD(SecondaryActive2):
     prep_stem_3S = lengthen
 
 
-class Endings5(SecondaryActive):
+class Endings5(Connective("+α"), SecondaryActive):
 
-    conn_1P = "+α"
-    conn_2P = "+α"
-    conn_3P = "+α"
+    conn_3S = ""
 
-    ending_1S = "α"
-    ending_2S = "ας"
+    ending_1S = ""
     ending_3S = "ε"
 
 
@@ -489,6 +486,7 @@ class Endings12mi(Endings12):
 
 class Endings14(Endings12):
 
+    # @@@ why is this necessary?
     accentuation_1S = perispomenon
     accentuation_2S = perispomenon
     accentuation_3S = perispomenon
@@ -574,6 +572,7 @@ class Endings15(Connective("+οι"), Endings):
     ending_2P = "τε"
     ending_3P = "εν"
 
+    # necessary because accentuation doesn't yet handle optatitve οι
     accentuation_3S = paroxytone
 
 
@@ -616,6 +615,7 @@ class Endings17A(Connective("+αι"), Endings):
     ending_3S = ""
     ending_3P = "εν"
 
+    # necessary because accentuation doesn't yet handle optatitve αι
     accentuation_3S = paroxytone
 
 
