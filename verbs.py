@@ -223,14 +223,28 @@ def properispomenon(self, stem):
     return make_properispomenon(stem)
 
 
-class Endings:
+def Connective(connective):
 
-    conn_1S = ""
-    conn_2S = ""
-    conn_3S = ""
-    conn_1P = ""
-    conn_2P = ""
-    conn_3P = ""
+    class _:
+
+        conn_1S = connective
+        conn_2S = connective
+        conn_3S = connective
+        conn_1P = connective
+        conn_2P = connective
+        conn_3P = connective
+
+        conn_NSM = connective
+        conn_GSM = connective
+        conn_NSF = connective
+        conn_GSF = connective
+        conn_NSN = connective
+        conn_GSN = connective
+
+    return _
+
+
+class Endings(Connective("")):
 
     prep_stem_1S = nothing
     prep_stem_2S = nothing
@@ -426,9 +440,9 @@ class Endings3miD(SecondaryActive2):
 
 class Endings5(SecondaryActive):
 
-    conn_1P = "α"
-    conn_2P = "α"
-    conn_3P = "α"
+    conn_1P = "+α"
+    conn_2P = "+α"
+    conn_3P = "+α"
 
     ending_1S = "α"
     ending_2S = "ας"
@@ -483,9 +497,9 @@ class Endings14(Endings12):
 
 class Endings10(SecondaryActive2):
 
-    conn_1P = "ε"
-    conn_2P = "ε"
-    conn_3P = "ε"
+    conn_1P = "+ε"
+    conn_2P = "+ε"
+    conn_3P = "+ε"
 
     ending_1S = "η"
     ending_2S = "ης"
@@ -551,14 +565,9 @@ class Endings4(SecondaryMiddle):
     conn_3P = "+ο"
 
 
-class Endings6(SecondaryMiddle):
+class Endings6(Connective("+α"), SecondaryMiddle):
 
-    conn_1S = "α"
-    conn_2S = "α"
-    conn_3S = "α"
-    conn_1P = "α"
-    conn_2P = "α"
-    conn_3P = "α"
+    pass
 
 
 class Endings6B(SecondaryMiddle):
@@ -566,14 +575,7 @@ class Endings6B(SecondaryMiddle):
     pass
 
 
-class Endings15(Endings):
-
-    conn_1S = "+οι"
-    conn_2S = "+οι"
-    conn_3S = "+οι"
-    conn_1P = "+οι"
-    conn_2P = "+οι"
-    conn_3P = "+οι"
+class Endings15(Connective("+οι"), Endings):
 
     ending_1S = "μι"
     ending_2S = "ς"
@@ -585,14 +587,7 @@ class Endings15(Endings):
     accentuation_3S = paroxytone
 
 
-class Endings15C(Endings15):
-
-    conn_1S = "+οιη"
-    conn_2S = "+οιη"
-    conn_3S = "+οιη"
-    conn_1P = "+οιη"
-    conn_2P = "+οιη"
-    conn_3P = "+οιη"
+class Endings15C(Connective("+οιη"), Endings15):
 
     ending_1S = "ν"
     ending_3P = "σαν"
@@ -608,40 +603,24 @@ class Endings15B(Endings15):
     def _3P(self): return alt(self, Endings15, Endings15C, "_3P")
 
 
-class Endings15miA(SecondaryActive):
-
-    conn_1P = "+ι"
-    conn_2P = "+ι"
-    conn_3P = "+ι"
+class Endings15miA(Connective("+ι"), SecondaryActive):
 
     ending_3P = "εν"
 
 
-class Endings15miB(SecondaryActive):
-
-    conn_1P = "ιη"
-    conn_2P = "ιη"
-    conn_3P = "ιη"
+class Endings15miB(Connective("+ιη"), SecondaryActive):
 
     ending_3P = "σαν"
 
 
-class Endings15mi(SecondaryActive):
-
-    conn_1S = "ιη"
-    conn_2S = "ιη"
-    conn_3S = "ιη"
+class Endings15mi(Connective("+ιη"), SecondaryActive):
 
     def _1P(self): return alt(self, Endings15miA, Endings15miB, "_1P")
     def _2P(self): return alt(self, Endings15miA, Endings15miB, "_2P")
     def _3P(self): return alt(self, Endings15miA, Endings15miB, "_3P")
 
 
-class Endings17A(Endings):
-
-    conn_2S = "+αι"
-    conn_3S = "+αι"
-    conn_3P = "+αι"
+class Endings17A(Connective("+αι"), Endings):
 
     ending_2S = "ς"
     ending_3S = ""
@@ -650,25 +629,14 @@ class Endings17A(Endings):
     accentuation_3S = paroxytone
 
 
-class Endings17B(Endings):
-
-    conn_2S = "+ει"
-    conn_3S = "+ει"
-    conn_3P = "+ει"
+class Endings17B(Connective("+ει"), Endings):
 
     ending_2S = "ας"
     ending_3S = "ε"
     ending_3P = "αν"
 
 
-class Endings17(Endings):
-
-    conn_1S = "+αι"
-    conn_2S = "+αι"
-    conn_3S = "+αι"
-    conn_1P = "+αι"
-    conn_2P = "+αι"
-    conn_3P = "+αι"
+class Endings17(Connective("+αι"), Endings):
 
     ending_1S = "μι"
     def _2S(self): return alt(self, Endings17A, Endings17B, "_2S")
@@ -678,41 +646,22 @@ class Endings17(Endings):
     def _3P(self): return alt(self, Endings17A, Endings17B, "_3P")
 
 
-class Endings16(SecondaryMiddle):
+class Endings16(Connective("+οι"), SecondaryMiddle):
 
-    conn_1S = "+οι"
-    conn_2S = "+οι"
-    conn_3S = "+οι"
-    conn_1P = "+οι"
-    conn_2P = "+οι"
-    conn_3P = "+οι"
+    pass
 
 
-class Endings16mi(SecondaryMiddle):
+class Endings16mi(Connective("+ι"), SecondaryMiddle):
 
-    conn_1S = "+ι"
-    conn_2S = "+ι"
-    conn_3S = "+ι"
-    conn_1P = "+ι"
-    conn_2P = "+ι"
-    conn_3P = "+ι"
+    pass
 
 
-class Endings18(SecondaryMiddle):
+class Endings18(Connective("+αι"), SecondaryMiddle):
 
-    conn_1S = "αι"
-    conn_2S = "αι"
-    conn_3S = "αι"
-    conn_1P = "αι"
-    conn_2P = "αι"
-    conn_3P = "αι"
+    pass
 
 
-class Endings19A(SecondaryActive):
-
-    conn_1P = "ει"
-    conn_2P = "ει"
-    conn_3P = "ει"
+class Endings19A(Connective("ει"), SecondaryActive):
 
     ending_3P = "εν"
 
@@ -721,22 +670,12 @@ class Endings19A(SecondaryActive):
     accentuation_3P = properispomenon
 
 
-class Endings19B(SecondaryActive):
+class Endings19B(Connective("ειη"), SecondaryActive):
 
-    conn_1P = "ειη"
-    conn_2P = "ειη"
-    conn_3P = "ειη"
-
-    ending_1P = "μεν"
-    ending_2P = "τε"
     ending_3P = "σαν"
 
 
-class Endings19(SecondaryActive):
-
-    conn_1S = "ειη"
-    conn_2S = "ειη"
-    conn_3S = "ειη"
+class Endings19(Connective("ειη"), SecondaryActive):
 
     def _1P(self): return alt(self, Endings19A, Endings19B, "_1P")
     def _2P(self): return alt(self, Endings19A, Endings19B, "_2P")
@@ -775,11 +714,9 @@ class Endings20(ImperativeActive):
     conn_3P = "+ο"
 
 
-class Endings22(ImperativeActive):
+class Endings22(Connective("+α"), ImperativeActive):
 
-    conn_3S = "α"
-    conn_2P = "α"
-    conn_3P = "α"
+    conn_2S = "" # exception to alpha
 
     ending_2S = "ον"
 
@@ -802,12 +739,7 @@ class Endings21(ImperativeMiddle):
     conn_3P = "+ε"
 
 
-class Endings23(ImperativeMiddle):
-
-    conn_2S = "α"
-    conn_3S = "α"
-    conn_2P = "α"
-    conn_3P = "α"
+class Endings23(Connective("+α"), ImperativeMiddle):
 
     ending_2S = "ι"
 
@@ -822,14 +754,7 @@ class Endings25B(ImperativeMiddle):
     pass
 
 
-class ParticipleEndings:
-
-    conn_NSM = ""
-    conn_GSM = ""
-    conn_NSF = ""
-    conn_GSF = ""
-    conn_NSN = ""
-    conn_GSN = ""
+class ParticipleEndings(Connective("")):
 
     prep_stem_NSM = nothing
     prep_stem_GSM = nothing
@@ -895,13 +820,9 @@ class MiddleParticiple(ParticipleEndings):
     ending_NSN = "μενον"
 
 
-class Endings26(ActiveParticiple):
+class Endings26(Connective("+ο"), ActiveParticiple):
 
-    conn_GSM = "+ο"
-    conn_NSF = "+ο"
-    conn_GSF = "+ο"
-    conn_NSN = "+ο"
-    conn_GSN = "+ο"
+    conn_NSM = "" # exception to omicron
 
     accentuation_NSM = paroxytone
     accentuation_GSM = proparoxytone
@@ -931,14 +852,7 @@ class Endings26mi(ActiveParticiple2):
     accentuation_GSN = paroxytone
 
 
-class Endings28(ActiveParticiple2):
-
-    conn_NSM = "+α"
-    conn_GSM = "+α"
-    conn_NSF = "+α"
-    conn_GSF = "+α"
-    conn_NSN = "+α"
-    conn_GSN = "+α"
+class Endings28(Connective("+α"), ActiveParticiple2):
 
     accentuation_NSM = paroxytone
     accentuation_GSM = proparoxytone
@@ -948,11 +862,7 @@ class Endings28(ActiveParticiple2):
     accentuation_GSN = proparoxytone
 
 
-class Endings30(ActiveParticiple2):
-
-    conn_NSM = "+ε"
-    conn_NSF = "+ε"
-    conn_NSN = "+ε"
+class Endings30(Connective("+ε"), ActiveParticiple2):
 
     accentuation_NSM = oxytone
     accentuation_NSF = properispomenon
@@ -973,22 +883,14 @@ class Endings27mi(MiddleParticiple):
     accentuation_NSN = proparoxytone
 
 
-class Endings27(MiddleParticiple):
-
-    conn_NSM = "+ο"
-    conn_NSF = "+ο"
-    conn_NSN = "+ο"
+class Endings27(Connective("+ο"), MiddleParticiple):
 
     accentuation_NSM = proparoxytone
     accentuation_NSF = paroxytone
     accentuation_NSN = proparoxytone
 
 
-class Endings29(MiddleParticiple):
-
-    conn_NSM = "+α"
-    conn_NSF = "+α"
-    conn_NSN = "+α"
+class Endings29(Connective("+α"), MiddleParticiple):
 
     accentuation_NSM = proparoxytone
     accentuation_NSF = paroxytone
