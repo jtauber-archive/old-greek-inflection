@@ -191,8 +191,12 @@ def alt(self, endings1, endings2, attr):
 
 class Endings:
 
-    sg_conn = ["", "", ""]
-    pl_conn = ["", "", ""]
+    conn_1S = ""
+    conn_2S = ""
+    conn_3S = ""
+    conn_1P = ""
+    conn_2P = ""
+    conn_3P = ""
 
     prep_stem_1S = nothing
     prep_stem_2S = nothing
@@ -204,13 +208,13 @@ class Endings:
     def __init__(self, stem):
         self.stem = stem
 
-    def _1S(self): return phon(recessive(self.prep_stem_1S(self.stem) + self.sg_conn[0] + self.ending_1S))
-    def _2S(self): return phon(recessive(self.prep_stem_2S(self.stem) + self.sg_conn[1] + self.ending_2S))
-    def _3S(self): return phon(recessive(self.prep_stem_3S(self.stem) + self.sg_conn[2] + self.ending_3S))
+    def _1S(self): return phon(recessive(self.prep_stem_1S(self.stem) + self.conn_1S + self.ending_1S))
+    def _2S(self): return phon(recessive(self.prep_stem_2S(self.stem) + self.conn_2S + self.ending_2S))
+    def _3S(self): return phon(recessive(self.prep_stem_3S(self.stem) + self.conn_3S + self.ending_3S))
 
-    def _1P(self): return phon(recessive(self.prep_stem_1P(self.stem) + self.pl_conn[0] + self.ending_1P))
-    def _2P(self): return phon(recessive(self.prep_stem_2P(self.stem) + self.pl_conn[1] + self.ending_2P))
-    def _3P(self): return phon(recessive(self.prep_stem_3P(self.stem) + self.pl_conn[2] + self.ending_3P))
+    def _1P(self): return phon(recessive(self.prep_stem_1P(self.stem) + self.conn_1P + self.ending_1P))
+    def _2P(self): return phon(recessive(self.prep_stem_2P(self.stem) + self.conn_2P + self.ending_2P))
+    def _3P(self): return phon(recessive(self.prep_stem_3P(self.stem) + self.conn_3P + self.ending_3P))
 
 
 class PrimaryActive(Endings):
@@ -295,9 +299,11 @@ class ImperativeMiddle2(ImperativeMiddle):
 
 class Endings1(PrimaryActive):
 
-    sg_conn = ["", "+ε", "+ε"]
-    pl_conn = ["+ο", "+ε", "+ου"]
-
+    conn_2S = "+ε"
+    conn_3S = "+ε"
+    conn_1P = "+ο"
+    conn_2P = "+ε"
+    conn_3P =  "+ου"
 
 
 class Endings1mi(PrimaryActive):
@@ -306,7 +312,7 @@ class Endings1mi(PrimaryActive):
     prep_stem_2S = lengthen
     prep_stem_3S = lengthen
 
-    pl_conn = ["", "", "~α"]
+    conn_3P = "~α"
 
     ending_1S = "μι"
     ending_2S = "ς"
@@ -315,13 +321,17 @@ class Endings1mi(PrimaryActive):
 
 class Endings1miB(Endings1mi):
 
-    pl_conn = ["", "", "+α"]
+    conn_3P = "+α"
 
 
 class Endings3(SecondaryActive):
 
-    sg_conn = ["+ο", "+ε", "+ε"]
-    pl_conn = ["+ο", "+ε", "+ο"]
+    conn_1S = "+ο"
+    conn_2S = "+ε"
+    conn_3S = "+ε"
+    conn_1P = "+ο"
+    conn_2P = "+ε"
+    conn_3P = "+ο"
 
 
 class Endings7(SecondaryActive2):
@@ -341,19 +351,24 @@ class Endings7B(SecondaryActive2):
 
 class Endings3mi(SecondaryActive2):
 
-    sg_conn = ["+ο", "+ε", "+ε"]
+    conn_1S = "+ο"
+    conn_2S = "+ε"
+    conn_3S = "+ε"
 
 
 class Endings3miB(SecondaryActive2):
 
     prep_stem_1S = lengthen
 
-    sg_conn = ["", "+ε", "+ε"]
+    conn_2S = "+ε"
+    conn_3S = "+ε"
 
 
 class Endings3miB2(SecondaryActive2):
 
-    sg_conn = ["+ε", "+ε", "+ε"]
+    conn_1S = "+ε"
+    conn_2S = "+ε"
+    conn_3S = "+ε"
 
 
 class Endings3miC(Endings3mi):
@@ -370,7 +385,9 @@ class Endings3miD(SecondaryActive2):
 
 class Endings5(SecondaryActive):
 
-    pl_conn = ["α", "α", "α"]
+    conn_1P = "α"
+    conn_2P = "α"
+    conn_3P = "α"
 
     ending_1S = "α"
     ending_2S = "ας"
@@ -383,7 +400,9 @@ class Endings5B(SecondaryActive2):
     prep_stem_2S = lengthen
     prep_stem_3S = lengthen
 
-    sg_conn = ["κ", "κ", "κ"]
+    conn_1S = "κ"
+    conn_2S = "κ"
+    conn_3S = "κ"
 
     ending_1S = "α"
     ending_2S = "ας"
@@ -397,8 +416,11 @@ class Endings8(Endings5):
 
 class Endings12(PrimaryActive):
 
-    sg_conn = ["", "+η", "+η"]
-    pl_conn = ["+ω", "+η", "+ω"]
+    conn_2S = "+η"
+    conn_3S = "+η"
+    conn_1P = "+ω"
+    conn_2P = "+η"
+    conn_3P = "+ω"
 
 
 class Endings12mi(Endings12):
@@ -420,7 +442,9 @@ class Endings14(Endings):
 
 class Endings10(SecondaryActive2):
 
-    pl_conn = ["ε", "ε", "ε"]
+    conn_1P = "ε"
+    conn_2P = "ε"
+    conn_3P = "ε"
 
     ending_1S = "η"
     ending_2S = "ης"
@@ -434,8 +458,12 @@ class Endings9(PrimaryMiddle2):
 
 class Endings2B(PrimaryMiddle):
 
-    sg_conn = ["+ο", "+ε", "+ε"]
-    pl_conn = ["+ο", "+ε", "+ο"]
+    conn_1S = "+ο"
+    conn_2S = "+ε"
+    conn_3S = "+ε"
+    conn_1P = "+ο"
+    conn_2P = "+ε"
+    conn_3P = "+ο"
 
     ending_2S = "#σαι"
 
@@ -450,8 +478,12 @@ class Endings2(Endings2B):
 
 class Endings13(PrimaryMiddle):
 
-    sg_conn = ["+ω", "+η", "+η"]
-    pl_conn = ["+ω", "+η", "+ω"]
+    conn_1S = "+ω"
+    conn_2S = "+η"
+    conn_3S = "+η"
+    conn_1P = "+ω"
+    conn_2P = "+η"
+    conn_3P = "+ω"
 
     ending_2S = "#σαι"
 
@@ -470,14 +502,22 @@ class Endings11(SecondaryMiddle2):
 
 class Endings4(SecondaryMiddle):
 
-    sg_conn = ["+ο", "+ε", "+ε"]
-    pl_conn = ["+ο", "+ε", "+ο"]
+    conn_1S = "+ο"
+    conn_2S = "+ε"
+    conn_3S = "+ε"
+    conn_1P = "+ο"
+    conn_2P = "+ε"
+    conn_3P = "+ο"
 
 
 class Endings6(SecondaryMiddle):
 
-    sg_conn = ["α", "α", "α"]
-    pl_conn = ["α", "α", "α"]
+    conn_1S = "α"
+    conn_2S = "α"
+    conn_3S = "α"
+    conn_1P = "α"
+    conn_2P = "α"
+    conn_3P = "α"
 
 
 class Endings6B(SecondaryMiddle):
@@ -487,12 +527,16 @@ class Endings6B(SecondaryMiddle):
 
 class Endings15(Endings):
 
-    sg_conn = ["+οι", "+οι", "+οι"]
-    pl_conn = ["+οι", "+οι", "+οι"]
+    conn_1S = "+οι"
+    conn_2S = "+οι"
+    conn_3S = "+οι"
+    conn_1P = "+οι"
+    conn_2P = "+οι"
+    conn_3P = "+οι"
 
     ending_1S = "μι"
     ending_2S = "ς"
-    def _3S(self): return phon(make_paroxytone(self.stem + self.sg_conn[2] + ""))
+    def _3S(self): return phon(make_paroxytone(self.stem + self.conn_3S + ""))
     ending_1P = "μεν"
     ending_2P = "τε"
     ending_3P = "εν"
@@ -500,8 +544,12 @@ class Endings15(Endings):
 
 class Endings15C(Endings15):
 
-    sg_conn = ["+οιη", "+οιη", "+οιη"]
-    pl_conn = ["+οιη", "+οιη", "+οιη"]
+    conn_1S = "+οιη"
+    conn_2S = "+οιη"
+    conn_3S = "+οιη"
+    conn_1P = "+οιη"
+    conn_2P = "+οιη"
+    conn_3P = "+οιη"
 
     ending_1S = "ν"
     ending_3P = "σαν"
@@ -519,21 +567,27 @@ class Endings15B(Endings15):
 
 class Endings15miA(SecondaryActive):
 
-    pl_conn = ["+ι", "+ι", "+ι"]
+    conn_1P = "+ι"
+    conn_2P = "+ι"
+    conn_3P = "+ι"
 
     ending_3P = "εν"
 
 
 class Endings15miB(SecondaryActive):
 
-    pl_conn = ["ιη", "ιη", "ιη"]
+    conn_1P = "ιη"
+    conn_2P = "ιη"
+    conn_3P = "ιη"
 
     ending_3P = "σαν"
 
 
 class Endings15mi(SecondaryActive):
 
-    sg_conn = ["ιη", "ιη", "ιη"]
+    conn_1S = "ιη"
+    conn_2S = "ιη"
+    conn_3S = "ιη"
 
     def _1P(self): return alt(self, Endings15miA, Endings15miB, "_1P")
     def _2P(self): return alt(self, Endings15miA, Endings15miB, "_2P")
@@ -542,8 +596,12 @@ class Endings15mi(SecondaryActive):
 
 class Endings17A(Endings):
 
-    sg_conn = ["αι", "αι", "αι"]
-    pl_conn = ["αι", "αι", "αι"]
+    conn_1S = "+αι"
+    conn_2S = "+αι"
+    conn_3S = "+αι"
+    conn_1P = "+αι"
+    conn_2P = "+αι"
+    conn_3P = "+αι"
 
     ending_2S = "ς"
     def _3S(self): return phon(make_paroxytone(self.stem + "αι" + ""))
@@ -552,8 +610,12 @@ class Endings17A(Endings):
 
 class Endings17B(Endings):
 
-    sg_conn = ["αι", "ει", "ει"]
-    pl_conn = ["αι", "αι", "ει"]
+    conn_1S = "+αι"
+    conn_2S = "+ει"
+    conn_3S = "+ει"
+    conn_1P = "+αι"
+    conn_2P = "+αι"
+    conn_3P = "+ει"
 
     ending_2S = "ας"
     ending_3S = "ε"
@@ -562,8 +624,12 @@ class Endings17B(Endings):
 
 class Endings17(Endings):
 
-    sg_conn = ["αι", "αι", "αι"]
-    pl_conn = ["αι", "αι", "αι"]
+    conn_1S = "+αι"
+    conn_2S = "+αι"
+    conn_3S = "+αι"
+    conn_1P = "+αι"
+    conn_2P = "+αι"
+    conn_3P = "+αι"
 
     ending_1S = "μι"
     def _2S(self): return alt(self, Endings17A, Endings17B, "_2S")
@@ -575,36 +641,52 @@ class Endings17(Endings):
 
 class Endings16(SecondaryMiddle):
 
-    sg_conn = ["+οι", "+οι", "+οι"]
-    pl_conn = ["+οι", "+οι", "+οι"]
+    conn_1S = "+οι"
+    conn_2S = "+οι"
+    conn_3S = "+οι"
+    conn_1P = "+οι"
+    conn_2P = "+οι"
+    conn_3P = "+οι"
 
 
 class Endings16mi(SecondaryMiddle):
 
-    sg_conn = ["+ι", "+ι", "+ι"]
-    pl_conn = ["+ι", "+ι", "+ι"]
+    conn_1S = "+ι"
+    conn_2S = "+ι"
+    conn_3S = "+ι"
+    conn_1P = "+ι"
+    conn_2P = "+ι"
+    conn_3P = "+ι"
 
 
 class Endings18(SecondaryMiddle):
 
-    sg_conn = ["αι", "αι", "αι"]
-    pl_conn = ["αι", "αι", "αι"]
+    conn_1S = "αι"
+    conn_2S = "αι"
+    conn_3S = "αι"
+    conn_1P = "αι"
+    conn_2P = "αι"
+    conn_3P = "αι"
 
 
 class Endings19A(SecondaryActive):
 
-    pl_conn = ["ει", "ει", "ει"]
+    conn_1P = "ει"
+    conn_2P = "ει"
+    conn_3P = "ει"
 
     ending_3P = "εν"
 
-    def _1P(self): return phon(make_properispomenon(self.stem + self.pl_conn[0] + self.ending_1P))
-    def _2P(self): return phon(make_properispomenon(self.stem + self.pl_conn[1] + self.ending_2P))
-    def _3P(self): return phon(make_properispomenon(self.stem + self.pl_conn[2] + self.ending_3P))
+    def _1P(self): return phon(make_properispomenon(self.stem + self.conn_1P + self.ending_1P))
+    def _2P(self): return phon(make_properispomenon(self.stem + self.conn_2P + self.ending_2P))
+    def _3P(self): return phon(make_properispomenon(self.stem + self.conn_3P + self.ending_3P))
 
 
 class Endings19B(SecondaryActive):
 
-    pl_conn = ["ειη", "ειη", "ειη"]
+    conn_1P = "ειη"
+    conn_2P = "ειη"
+    conn_3P = "ειη"
 
     ending_1P = "μεν"
     ending_2P = "τε"
@@ -613,7 +695,9 @@ class Endings19B(SecondaryActive):
 
 class Endings19(SecondaryActive):
 
-    sg_conn = ["ειη", "ειη", "ειη"]
+    conn_1S = "ειη"
+    conn_2S = "ειη"
+    conn_3S = "ειη"
 
     def _1P(self): return alt(self, Endings19A, Endings19B, "_1P")
     def _2P(self): return alt(self, Endings19A, Endings19B, "_2P")
@@ -646,36 +730,45 @@ class Endings20miD(ImperativeActive):
 
 class Endings20(ImperativeActive):
 
-    sg_conn = [None, "+ε", "+ε"]
-    pl_conn = [None, "+ε", "+ο"]
+    conn_2S = "+ε"
+    conn_3S = "+ε"
+    conn_2P = "+ε"
+    conn_3P = "+ο"
 
 
 class Endings22(ImperativeActive):
 
-    sg_conn = [None, "", "α"]
-    pl_conn = [None, "α", "α"]
+    conn_3S = "α"
+    conn_2P = "α"
+    conn_3P = "α"
 
     ending_2S = "ον"
 
 
 class Endings24(ImperativeActive):
 
-    sg_conn = [None, "η", "η"]
-    pl_conn = [None, "η", "ε"]
+    conn_2S = "+η"
+    conn_3S = "+η"
+    conn_2P = "+η"
+    conn_3P = "+ε"
 
     ending_2S = "τι"
 
 
 class Endings21(ImperativeMiddle):
 
-    sg_conn = [None, "+ε", "+ε"]
-    pl_conn = [None, "+ε", "+ε"]
+    conn_2S = "+ε"
+    conn_3S = "+ε"
+    conn_2P = "+ε"
+    conn_3P = "+ε"
 
 
 class Endings23(ImperativeMiddle):
 
-    sg_conn = [None, "α", "α"]
-    pl_conn = [None, "α", "α"]
+    conn_2S = "α"
+    conn_3S = "α"
+    conn_2P = "α"
+    conn_3P = "α"
 
     ending_2S = "ι"
 
