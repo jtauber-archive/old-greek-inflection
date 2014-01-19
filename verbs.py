@@ -122,6 +122,7 @@ def phon(w):
     w = w.replace("ή+ῃ", "ῇ")
 
     w = w.replace("ῆ+ι", "ῇ")
+    w = w.replace("η+ῖ", "ῇ")
     w = w.replace("η+ι", "ῃ")
 
     w = w.replace("η+ε", "η") # @@@
@@ -189,6 +190,18 @@ def alt(self, endings1, endings2, attr):
     )
 
 
+def paroxytone(self, stem):
+    return make_paroxytone(stem)
+
+
+def perispomenon(self, stem):
+    return make_perispomenon(stem)
+
+
+def properispomenon(self, stem):
+    return make_properispomenon(stem)
+
+
 class Endings:
 
     conn_1S = ""
@@ -205,16 +218,23 @@ class Endings:
     prep_stem_2P = nothing
     prep_stem_3P = nothing
 
+    accentuation_1S = lambda self, stem: recessive(stem)
+    accentuation_2S = lambda self, stem: recessive(stem)
+    accentuation_3S = lambda self, stem: recessive(stem)
+    accentuation_1P = lambda self, stem: recessive(stem)
+    accentuation_2P = lambda self, stem: recessive(stem)
+    accentuation_3P = lambda self, stem: recessive(stem)
+
     def __init__(self, stem):
         self.stem = stem
 
-    def _1S(self): return phon(recessive(self.prep_stem_1S(self.stem) + self.conn_1S + self.ending_1S))
-    def _2S(self): return phon(recessive(self.prep_stem_2S(self.stem) + self.conn_2S + self.ending_2S))
-    def _3S(self): return phon(recessive(self.prep_stem_3S(self.stem) + self.conn_3S + self.ending_3S))
+    def _1S(self): return phon(self.accentuation_1S(self.prep_stem_1S(self.stem) + self.conn_1S + self.ending_1S))
+    def _2S(self): return phon(self.accentuation_2S(self.prep_stem_2S(self.stem) + self.conn_2S + self.ending_2S))
+    def _3S(self): return phon(self.accentuation_3S(self.prep_stem_3S(self.stem) + self.conn_3S + self.ending_3S))
 
-    def _1P(self): return phon(recessive(self.prep_stem_1P(self.stem) + self.conn_1P + self.ending_1P))
-    def _2P(self): return phon(recessive(self.prep_stem_2P(self.stem) + self.conn_2P + self.ending_2P))
-    def _3P(self): return phon(recessive(self.prep_stem_3P(self.stem) + self.conn_3P + self.ending_3P))
+    def _1P(self): return phon(self.accentuation_1P(self.prep_stem_1P(self.stem) + self.conn_1P + self.ending_1P))
+    def _2P(self): return phon(self.accentuation_2P(self.prep_stem_2P(self.stem) + self.conn_2P + self.ending_2P))
+    def _3P(self): return phon(self.accentuation_3P(self.prep_stem_3P(self.stem) + self.conn_3P + self.ending_3P))
 
 
 class PrimaryActive(Endings):
@@ -430,14 +450,14 @@ class Endings12mi(Endings12):
     prep_stem_2P = lengthen
 
 
-class Endings14(Endings):
+class Endings14(Endings12):
 
-    def _1S(self): return phon(make_perispomenon(self.stem + "ω"))
-    def _2S(self): return phon(make_perispomenon(self.stem + "ῃς"))
-    def _3S(self): return phon(make_perispomenon(self.stem + "ῃ"))
-    def _1P(self): return phon(make_properispomenon(self.stem + "ω" + "μεν"))
-    def _2P(self): return phon(make_properispomenon(self.stem + "η" + "τε"))
-    def _3P(self): return phon(make_properispomenon(self.stem + "ω" + "σι(ν)"))
+    accentuation_1S = perispomenon
+    accentuation_2S = perispomenon
+    accentuation_3S = perispomenon
+    accentuation_1P = properispomenon
+    accentuation_2P = properispomenon
+    accentuation_3P = properispomenon
 
 
 class Endings10(SecondaryActive2):
@@ -536,10 +556,12 @@ class Endings15(Endings):
 
     ending_1S = "μι"
     ending_2S = "ς"
-    def _3S(self): return phon(make_paroxytone(self.stem + self.conn_3S + ""))
+    ending_3S = ""
     ending_1P = "μεν"
     ending_2P = "τε"
     ending_3P = "εν"
+
+    accentuation_3S = paroxytone
 
 
 class Endings15C(Endings15):
@@ -596,25 +618,21 @@ class Endings15mi(SecondaryActive):
 
 class Endings17A(Endings):
 
-    conn_1S = "+αι"
     conn_2S = "+αι"
     conn_3S = "+αι"
-    conn_1P = "+αι"
-    conn_2P = "+αι"
     conn_3P = "+αι"
 
     ending_2S = "ς"
-    def _3S(self): return phon(make_paroxytone(self.stem + "αι" + ""))
+    ending_3S = ""
     ending_3P = "εν"
+
+    accentuation_3S = paroxytone
 
 
 class Endings17B(Endings):
 
-    conn_1S = "+αι"
     conn_2S = "+ει"
     conn_3S = "+ει"
-    conn_1P = "+αι"
-    conn_2P = "+αι"
     conn_3P = "+ει"
 
     ending_2S = "ας"
@@ -677,9 +695,9 @@ class Endings19A(SecondaryActive):
 
     ending_3P = "εν"
 
-    def _1P(self): return phon(make_properispomenon(self.stem + self.conn_1P + self.ending_1P))
-    def _2P(self): return phon(make_properispomenon(self.stem + self.conn_2P + self.ending_2P))
-    def _3P(self): return phon(make_properispomenon(self.stem + self.conn_3P + self.ending_3P))
+    accentuation_1P = properispomenon
+    accentuation_2P = properispomenon
+    accentuation_3P = properispomenon
 
 
 class Endings19B(SecondaryActive):
