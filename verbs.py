@@ -35,6 +35,7 @@ def phon(w):
 
     w = w.replace("ά+ω", "ῶ")
     w = w.replace("α+ώ", "ώ")
+    w = w.replace("α+ω", "ω")
 
     w = w.replace("ά+ῃ", "ᾷ")
 
@@ -54,6 +55,7 @@ def phon(w):
     w = w.replace("ά+ου", "ῶ")
 
     w = w.replace("α+ό+ε", "ῶ")
+    w = w.replace("α+ο+ε", "ω")
 
     w = w.replace("ᾶ+ο", "ῶ")
     w = w.replace("ά+ο", "ῶ")
@@ -67,6 +69,7 @@ def phon(w):
 
     w = w.replace("έ+ω", "ῶ")
     w = w.replace("ε+ώ", "ώ")
+    w = w.replace("ε+ω", "ω")
 
     w = w.replace("έ+ῃ", "ῇ")
 
@@ -82,6 +85,8 @@ def phon(w):
     w = w.replace("έ+οι", "οῖ")
     w = w.replace("ε+οί", "οί")
 
+    w = w.replace("ε+ο+ε", "ου")
+
     w = w.replace("έ+ου", "οῦ")
 
     w = w.replace("έ+ο", "οῦ")
@@ -92,6 +97,7 @@ def phon(w):
 
     w = w.replace("ό+ω", "ῶ")
     w = w.replace("ο+ώ", "ώ")
+    w = w.replace("ο+ω", "ω")
 
     w = w.replace("ό+η+ι", "οῖ")
     w = w.replace("ό+ῃ", "οῖ")
@@ -102,6 +108,7 @@ def phon(w):
     w = w.replace("ό+ει", "οῦ")
 
     w = w.replace("ο+ό+ε", "οῦ")
+    w = w.replace("ο+ο+ε", "ου")
 
     w = w.replace("ό+ε", "οῦ")
     w = w.replace("ο+έ", "ού")
@@ -135,6 +142,7 @@ def phon(w):
 
     w = w.replace("ύ+ε", "ῦ")
     w = w.replace("υ+έ", "ύ")
+    w = w.replace("υ+ε", "υ")
 
     w = w.replace("ῶ+ι", "ῷ")
     w = w.replace("ω+ι", "ῳ")
@@ -150,6 +158,7 @@ def phon(w):
 
     w = w.replace("hεί", "εἵ")
     w = w.replace("hεῖ", "εἷ")
+    w = w.replace("hει", "εἱ")
     w = w.replace("hέ", "ἕ")
     w = w.replace("hε", "ἑ")
     w = w.replace("hῆ", "ἧ")
@@ -829,22 +838,22 @@ class ParticipleEndings:
     prep_stem_NSN = nothing
     prep_stem_GSN = nothing
 
-    accentuation_NSM = lambda self, stem: recessive(stem)
-    accentuation_GSM = lambda self, stem: recessive(stem)
-    accentuation_NSF = lambda self, stem: recessive(stem)
-    accentuation_GSF = lambda self, stem: recessive(stem)
-    accentuation_NSN = lambda self, stem: recessive(stem)
-    accentuation_GSN = lambda self, stem: recessive(stem)
+    accentuation_NSM = lambda self, stem: stem
+    accentuation_GSM = lambda self, stem: stem
+    accentuation_NSF = lambda self, stem: stem
+    accentuation_GSF = lambda self, stem: stem
+    accentuation_NSN = lambda self, stem: stem
+    accentuation_GSN = lambda self, stem: stem
 
     def __init__(self, stem):
         self.stem = stem
 
-    def NSM(self): return phon(self.accentuation_NSM(self.prep_stem_NSM(self.stem) + self.conn_NSM + self.ending_NSM))
-    def GSM(self): return phon(self.accentuation_GSM(self.prep_stem_GSM(self.stem) + self.conn_GSM + self.ending_GSM))
-    def NSF(self): return phon(self.accentuation_NSF(self.prep_stem_NSF(self.stem) + self.conn_NSF + self.ending_NSF))
-    def GSF(self): return phon(self.accentuation_GSF(self.prep_stem_GSF(self.stem) + self.conn_GSF + self.ending_GSF))
-    def NSN(self): return phon(self.accentuation_NSN(self.prep_stem_NSN(self.stem) + self.conn_NSN + self.ending_NSN))
-    def GSN(self): return phon(self.accentuation_GSN(self.prep_stem_GSN(self.stem) + self.conn_GSN + self.ending_GSN))
+    def NSM(self): return self.accentuation_NSM(phon(self.prep_stem_NSM(self.stem) + self.conn_NSM + self.ending_NSM))
+    def GSM(self): return self.accentuation_GSM(phon(self.prep_stem_GSM(self.stem) + self.conn_GSM + self.ending_GSM))
+    def NSF(self): return self.accentuation_NSF(phon(self.prep_stem_NSF(self.stem) + self.conn_NSF + self.ending_NSF))
+    def GSF(self): return self.accentuation_GSF(phon(self.prep_stem_GSF(self.stem) + self.conn_GSF + self.ending_GSF))
+    def NSN(self): return self.accentuation_NSN(phon(self.prep_stem_NSN(self.stem) + self.conn_NSN + self.ending_NSN))
+    def GSN(self): return self.accentuation_GSN(phon(self.prep_stem_GSN(self.stem) + self.conn_GSN + self.ending_GSN))
 
 
 class ActiveParticiple(ParticipleEndings):
@@ -894,15 +903,30 @@ class Endings26(ActiveParticiple):
     conn_NSN = "+ο"
     conn_GSN = "+ο"
 
-    accentuation2_NSF = proparoxytone
+    accentuation_NSM = paroxytone
+    accentuation_GSM = proparoxytone
+    accentuation_NSF = proparoxytone
     accentuation_GSF = proparoxytone
     accentuation_NSN = properispomenon
+    accentuation_GSN = proparoxytone
+
+
+class Endings26Contract(Endings26):
+
+    accentuation_NSM = perispomenon
+    accentuation_GSM = properispomenon
+    accentuation_NSF = properispomenon
+    accentuation_GSF = properispomenon
+    accentuation_NSN = perispomenon
+    accentuation_GSN = properispomenon
 
 
 class Endings26mi(ActiveParticiple2):
 
     accentuation_NSM = oxytone
     accentuation_GSM = paroxytone
+    accentuation_NSF = properispomenon
+    accentuation_GSF = paroxytone
     accentuation_NSN = oxytone
     accentuation_GSN = paroxytone
 
@@ -917,7 +941,11 @@ class Endings28(ActiveParticiple2):
     conn_GSN = "+α"
 
     accentuation_NSM = paroxytone
+    accentuation_GSM = proparoxytone
+    accentuation_NSF = proparoxytone
     accentuation_GSF = proparoxytone
+    accentuation_NSN = properispomenon
+    accentuation_GSN = proparoxytone
 
 
 class Endings30(ActiveParticiple2):
@@ -926,15 +954,23 @@ class Endings30(ActiveParticiple2):
     conn_NSF = "+ε"
     conn_NSN = "+ε"
 
+    accentuation_NSM = oxytone
+    accentuation_NSF = properispomenon
+    accentuation_NSN = oxytone
+
 
 class Endings32(MiddleParticiple):
 
-    pass
+    accentuation_NSM = paroxytone
+    accentuation_NSF = paroxytone
+    accentuation_NSN = paroxytone
 
 
 class Endings27mi(MiddleParticiple):
 
-    pass
+    accentuation_NSM = proparoxytone
+    accentuation_NSF = paroxytone
+    accentuation_NSN = proparoxytone
 
 
 class Endings27(MiddleParticiple):
@@ -943,12 +979,20 @@ class Endings27(MiddleParticiple):
     conn_NSF = "+ο"
     conn_NSN = "+ο"
 
+    accentuation_NSM = proparoxytone
+    accentuation_NSF = paroxytone
+    accentuation_NSN = proparoxytone
+
 
 class Endings29(MiddleParticiple):
 
     conn_NSM = "+α"
     conn_NSF = "+α"
     conn_NSN = "+α"
+
+    accentuation_NSM = proparoxytone
+    accentuation_NSF = paroxytone
+    accentuation_NSN = proparoxytone
 
 
 class Endings31(PerfectActiveParticiple):
@@ -1023,11 +1067,13 @@ class Verb1:
 class Verb1C(Verb1):
 
     def PAO(self): return Endings15B(self.stem1)
+    def PAP(self): return Endings26Contract(self.stem1)
 
 
 class Verb1B(Verb1C):
 
     def PMI(self): return Endings2B(self.stem1)
+    def PAP(self): return Endings26Contract(self.stem1)
 
 
 class Verb2(Verb1):
