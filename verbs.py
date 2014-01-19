@@ -181,6 +181,14 @@ def nothing(self, stem):
 def lengthen(self, stem):
     return phon2(stem)
 
+
+def alt(self, endings1, endings2, attr):
+    return "{}/{}".format(
+        getattr(endings1(self.stem), attr)(),
+        getattr(endings2(self.stem), attr)(),
+    )
+
+
 class Endings:
 
     sg_conn = ["", "", ""]
@@ -336,20 +344,22 @@ class Endings3mi(SecondaryActive2):
     sg_conn = ["+ο", "+ε", "+ε"]
 
 
-class Endings3miB(Endings3mi):
+class Endings3miB(SecondaryActive2):
 
     prep_stem_1S = lengthen
 
     sg_conn = ["", "+ε", "+ε"]
 
-    ending_1S = "ν"
+
+class Endings3miB2(SecondaryActive2):
+
+    sg_conn = ["+ε", "+ε", "+ε"]
 
 
 class Endings3miC(Endings3mi):
 
-    def _1S(self): return "{}/{}".format(
-                          phon(recessive(self.stem + "+εν")),
-                          phon(recessive(phon2(self.stem) + "ν")))
+    def _1S(self): return alt(self, Endings3miB2, Endings3miB, "_1S")
+
 
 class Endings3miD(SecondaryActive2):
 
@@ -477,61 +487,77 @@ class Endings6B(SecondaryMiddle):
 
 class Endings15(Endings):
 
-    sg_conn = ["οι", "οι", "οι"]
-    pl_conn = ["οι", "οι", "οι"]
+    sg_conn = ["+οι", "+οι", "+οι"]
+    pl_conn = ["+οι", "+οι", "+οι"]
 
     ending_1S = "μι"
     ending_2S = "ς"
-    def _3S(self): return phon(make_paroxytone(self.stem + "οι" + ""))
+    def _3S(self): return phon(make_paroxytone(self.stem + self.sg_conn[2] + ""))
     ending_1P = "μεν"
     ending_2P = "τε"
     ending_3P = "εν"
 
 
+class Endings15C(Endings15):
+
+    sg_conn = ["+οιη", "+οιη", "+οιη"]
+    pl_conn = ["+οιη", "+οιη", "+οιη"]
+
+    ending_1S = "ν"
+    ending_3P = "σαν"
+
+
 class Endings15B(Endings15):
 
-    def _1S(self): return "{}/{}".format(
-                          phon(recessive(self.stem + "+οι" + "ην")),
-                          phon(recessive(self.stem + "+οι" + "μι")),
-    )
-    def _2S(self): return "{}/{}".format(
-                          phon(recessive(self.stem + "+οι" + "ης")),
-                          phon(recessive(self.stem + "+οι" + "ς")),
-    )
-    def _3S(self): return "{}/{}".format(
-                          phon(recessive(self.stem + "+οι" + "η")),
-                          phon(make_paroxytone(self.stem + "+οι" + "")),
-    )
-    def _1P(self): return "{}/{}".format(
-                          phon(recessive(self.stem + "+οι" + "μεν")),
-                          phon(recessive(self.stem + "+οι" + "ημεν")),
-    )
-    def _2P(self): return "{}/{}".format(
-                          phon(recessive(self.stem + "+οι" + "τε")),
-                          phon(recessive(self.stem + "+οι" + "ητε")),
-    )
-    def _3P(self): return "{}/{}".format(
-                          phon(recessive(self.stem + "+οι" + "εν")),
-                          phon(recessive(self.stem + "+οι" + "ησαν")),
-    )
+    def _1S(self): return alt(self, Endings15C, Endings15, "_1S")
+    def _2S(self): return alt(self, Endings15C, Endings15, "_2S")
+    def _3S(self): return alt(self, Endings15C, Endings15, "_3S")
+    def _1P(self): return alt(self, Endings15, Endings15C, "_1P")
+    def _2P(self): return alt(self, Endings15, Endings15C, "_2P")
+    def _3P(self): return alt(self, Endings15, Endings15C, "_3P")
+
+
+class Endings15miA(SecondaryActive):
+
+    pl_conn = ["+ι", "+ι", "+ι"]
+
+    ending_3P = "εν"
+
+
+class Endings15miB(SecondaryActive):
+
+    pl_conn = ["ιη", "ιη", "ιη"]
+
+    ending_3P = "σαν"
 
 
 class Endings15mi(SecondaryActive):
 
     sg_conn = ["ιη", "ιη", "ιη"]
 
-    def _1P(self): return "{}/{}".format(
-                          phon(recessive(self.stem + "+ι" + "μεν")),
-                          phon(recessive(self.stem + "ι" + "ημεν")),
-    )
-    def _2P(self): return "{}/{}".format(
-                          phon(recessive(self.stem + "+ι" + "τε")),
-                          phon(recessive(self.stem + "ι" + "ητε")),
-    )
-    def _3P(self): return "{}/{}".format(
-                          phon(recessive(self.stem + "+ι" + "εν")),
-                          phon(recessive(self.stem + "ι" + "ησαν")),
-    )
+    def _1P(self): return alt(self, Endings15miA, Endings15miB, "_1P")
+    def _2P(self): return alt(self, Endings15miA, Endings15miB, "_2P")
+    def _3P(self): return alt(self, Endings15miA, Endings15miB, "_3P")
+
+
+class Endings17A(Endings):
+
+    sg_conn = ["αι", "αι", "αι"]
+    pl_conn = ["αι", "αι", "αι"]
+
+    ending_2S = "ς"
+    def _3S(self): return phon(make_paroxytone(self.stem + "αι" + ""))
+    ending_3P = "εν"
+
+
+class Endings17B(Endings):
+
+    sg_conn = ["αι", "ει", "ει"]
+    pl_conn = ["αι", "αι", "ει"]
+
+    ending_2S = "ας"
+    ending_3S = "ε"
+    ending_3P = "αν"
 
 
 class Endings17(Endings):
@@ -540,20 +566,11 @@ class Endings17(Endings):
     pl_conn = ["αι", "αι", "αι"]
 
     ending_1S = "μι"
-    def _2S(self): return "{}/{}".format(
-                          phon(recessive(self.stem + "αι" + "ς")),
-                          phon(recessive(self.stem + "ει" + "ας")),
-    )
-    def _3S(self): return "{}/{}".format(
-                          phon(make_paroxytone(self.stem + "αι" + "")),
-                          phon(recessive(self.stem + "ει" + "ε")),
-    )
+    def _2S(self): return alt(self, Endings17A, Endings17B, "_2S")
+    def _3S(self): return alt(self, Endings17A, Endings17B, "_3S")
     ending_1P = "μεν"
     ending_2P = "τε"
-    def _3P(self): return "{}/{}".format(
-                          phon(recessive(self.stem + "αι" + "εν")),
-                          phon(recessive(self.stem + "ει" + "αν")),
-    )
+    def _3P(self): return alt(self, Endings17A, Endings17B, "_3P")
 
 
 class Endings16(SecondaryMiddle):
@@ -574,22 +591,33 @@ class Endings18(SecondaryMiddle):
     pl_conn = ["αι", "αι", "αι"]
 
 
+class Endings19A(SecondaryActive):
+
+    pl_conn = ["ει", "ει", "ει"]
+
+    ending_3P = "εν"
+
+    def _1P(self): return phon(make_properispomenon(self.stem + self.pl_conn[0] + self.ending_1P))
+    def _2P(self): return phon(make_properispomenon(self.stem + self.pl_conn[1] + self.ending_2P))
+    def _3P(self): return phon(make_properispomenon(self.stem + self.pl_conn[2] + self.ending_3P))
+
+
+class Endings19B(SecondaryActive):
+
+    pl_conn = ["ειη", "ειη", "ειη"]
+
+    ending_1P = "μεν"
+    ending_2P = "τε"
+    ending_3P = "σαν"
+
+
 class Endings19(SecondaryActive):
 
     sg_conn = ["ειη", "ειη", "ειη"]
 
-    def _1P(self): return "{}/{}".format(
-                          phon(make_properispomenon(self.stem + "ει" + "μεν")),
-                          phon(recessive(self.stem + "ειη" + "μεν")),
-    )
-    def _2P(self): return "{}/{}".format(
-                          phon(make_properispomenon(self.stem + "ει" + "τε")),
-                          phon(recessive(self.stem + "ειη" + "τε")),
-    )
-    def _3P(self): return "{}/{}".format(
-                          phon(make_properispomenon(self.stem + "ει" + "εν")),
-                          phon(recessive(self.stem + "ειη" + "σαν")),
-    )
+    def _1P(self): return alt(self, Endings19A, Endings19B, "_1P")
+    def _2P(self): return alt(self, Endings19A, Endings19B, "_2P")
+    def _3P(self): return alt(self, Endings19A, Endings19B, "_3P")
 
 
 class Endings20mi(ImperativeActive):
