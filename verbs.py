@@ -838,12 +838,12 @@ class ParticipleEndings:
     prep_stem_NSN = nothing
     prep_stem_GSN = nothing
 
-    accentuation_NSM = lambda self, stem: stem
-    accentuation_GSM = lambda self, stem: stem
-    accentuation_NSF = lambda self, stem: stem
-    accentuation_GSF = lambda self, stem: stem
-    accentuation_NSN = lambda self, stem: stem
-    accentuation_GSN = lambda self, stem: stem
+    accentuation_NSM = nothing
+    accentuation_GSM = nothing
+    accentuation_NSF = nothing
+    accentuation_GSF = nothing
+    accentuation_NSN = nothing
+    accentuation_GSN = nothing
 
     def __init__(self, stem):
         self.stem = stem
@@ -873,12 +873,12 @@ class ActiveParticiple2(ActiveParticiple):
 
 class PerfectActiveParticiple(ParticipleEndings):
 
-    ending_NSM = "ως"
-    ending_GSM = "οτος"
-    ending_NSF = "υια"
-    ending_GSF = "υιας"
-    ending_NSN = "ος"
-    ending_GSN = "οτος"
+    ending_NSM = "+ως"
+    ending_GSM = "+οτος"
+    ending_NSF = "+υια"
+    ending_GSF = "+υιας"
+    ending_NSN = "+ος"
+    ending_GSN = "+οτος"
 
     accentuation_NSM = oxytone
     accentuation_GSM = paroxytone
