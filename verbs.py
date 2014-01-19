@@ -244,6 +244,16 @@ def Connective(connective):
     return _
 
 
+class ConnectiveOEEOEO:
+
+    conn_1S = "+ο"
+    conn_2S = "+ε"
+    conn_3S = "+ε"
+    conn_1P = "+ο"
+    conn_2P = "+ε"
+    conn_3P = "+ο"
+
+
 class Endings(Connective("")):
 
     prep_stem_1S = nothing
@@ -352,13 +362,10 @@ class ImperativeMiddle2(ImperativeMiddle):
     ending_2S = "σο"
 
 
-class Endings1(PrimaryActive):
+class Endings1(ConnectiveOEEOEO, PrimaryActive):
 
-    conn_2S = "+ε"
-    conn_3S = "+ε"
-    conn_1P = "+ο"
-    conn_2P = "+ε"
-    conn_3P =  "+ου"
+    conn_1S = ""
+    conn_3P = "+ου"
 
 
 class Endings1mi(PrimaryActive):
@@ -379,14 +386,9 @@ class Endings1miB(Endings1mi):
     conn_3P = "+α"
 
 
-class Endings3(SecondaryActive):
+class Endings3(ConnectiveOEEOEO, SecondaryActive):
 
-    conn_1S = "+ο"
-    conn_2S = "+ε"
-    conn_3S = "+ε"
-    conn_1P = "+ο"
-    conn_2P = "+ε"
-    conn_3P = "+ο"
+    pass
 
 
 class Endings7(SecondaryActive2):
@@ -511,14 +513,7 @@ class Endings9(PrimaryMiddle2):
     pass
 
 
-class Endings2B(PrimaryMiddle):
-
-    conn_1S = "+ο"
-    conn_2S = "+ε"
-    conn_3S = "+ε"
-    conn_1P = "+ο"
-    conn_2P = "+ε"
-    conn_3P = "+ο"
+class Endings2B(ConnectiveOEEOEO, PrimaryMiddle):
 
     ending_2S = "#σαι"
 
@@ -555,14 +550,9 @@ class Endings11(SecondaryMiddle2):
     pass
 
 
-class Endings4(SecondaryMiddle):
+class Endings4(ConnectiveOEEOEO, SecondaryMiddle):
 
-    conn_1S = "+ο"
-    conn_2S = "+ε"
-    conn_3S = "+ε"
-    conn_1P = "+ο"
-    conn_2P = "+ε"
-    conn_3P = "+ο"
+    pass
 
 
 class Endings6(Connective("+α"), SecondaryMiddle):
@@ -608,9 +598,9 @@ class Endings15miA(Connective("+ι"), SecondaryActive):
     ending_3P = "εν"
 
 
-class Endings15miB(Connective("+ιη"), SecondaryActive):
+class Endings15miB(Connective("+ιη"), SecondaryActive2):
 
-    ending_3P = "σαν"
+    pass
 
 
 class Endings15mi(Connective("+ιη"), SecondaryActive):
@@ -670,9 +660,9 @@ class Endings19A(Connective("ει"), SecondaryActive):
     accentuation_3P = properispomenon
 
 
-class Endings19B(Connective("ειη"), SecondaryActive):
+class Endings19B(Connective("ειη"), SecondaryActive2):
 
-    ending_3P = "σαν"
+    pass
 
 
 class Endings19(Connective("ειη"), SecondaryActive):
@@ -706,12 +696,9 @@ class Endings20miD(ImperativeActive):
     ending_2S = "+θι"
 
 
-class Endings20(ImperativeActive):
+class Endings20(ConnectiveOEEOEO, ImperativeActive):
 
-    conn_2S = "+ε"
-    conn_3S = "+ε"
-    conn_2P = "+ε"
-    conn_3P = "+ο"
+    pass
 
 
 class Endings22(Connective("+α"), ImperativeActive):
@@ -731,12 +718,9 @@ class Endings24(ImperativeActive):
     ending_2S = "τι"
 
 
-class Endings21(ImperativeMiddle):
+class Endings21(Connective("+ε"), ImperativeMiddle):
 
-    conn_2S = "+ε"
-    conn_3S = "+ε"
-    conn_2P = "+ε"
-    conn_3P = "+ε"
+    pass
 
 
 class Endings23(Connective("+α"), ImperativeMiddle):
