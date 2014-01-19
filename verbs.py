@@ -1,4 +1,4 @@
-from accentuation import recessive, make_oxytone, make_paroxytone, make_perispomenon, make_properispomenon
+from accentuation import recessive, make_oxytone, make_paroxytone, make_proparoxytone, make_perispomenon, make_properispomenon
 from syllabify import is_vowel
 from characters import strip_length
 
@@ -53,6 +53,8 @@ def phon(w):
 
     w = w.replace("ά+ου", "ῶ")
 
+    w = w.replace("α+ό+ε", "ῶ")
+
     w = w.replace("ᾶ+ο", "ῶ")
     w = w.replace("ά+ο", "ῶ")
     w = w.replace("α+ό", "ώ")
@@ -98,6 +100,8 @@ def phon(w):
 
     w = w.replace("ό+ε+ι", "οῖ")
     w = w.replace("ό+ει", "οῦ")
+
+    w = w.replace("ο+ό+ε", "οῦ")
 
     w = w.replace("ό+ε", "οῦ")
     w = w.replace("ο+έ", "ού")
@@ -190,8 +194,16 @@ def alt(self, endings1, endings2, attr):
     )
 
 
+def oxytone(self, stem):
+    return make_oxytone(stem)
+
+
 def paroxytone(self, stem):
     return make_paroxytone(stem)
+
+
+def proparoxytone(self, stem):
+    return make_proparoxytone(stem)
 
 
 def perispomenon(self, stem):
@@ -801,70 +813,147 @@ class Endings25B(ImperativeMiddle):
     pass
 
 
-class Endings26(Endings):
+class ParticipleEndings:
 
-    def NSM(self): return phon(recessive(self.stem + "+ων"))
-    def NSF(self): return phon(recessive(self.stem + "+ουσα"))
-    def NSN(self): return phon(make_properispomenon(self.stem + "+ον"))
+    conn_NSM = ""
+    conn_GSM = ""
+    conn_NSF = ""
+    conn_GSF = ""
+    conn_NSN = ""
+    conn_GSN = ""
 
+    prep_stem_NSM = nothing
+    prep_stem_GSM = nothing
+    prep_stem_NSF = nothing
+    prep_stem_GSF = nothing
+    prep_stem_NSN = nothing
+    prep_stem_GSN = nothing
 
-class Endings26mi(Endings):
+    accentuation_NSM = lambda self, stem: recessive(stem)
+    accentuation_GSM = lambda self, stem: recessive(stem)
+    accentuation_NSF = lambda self, stem: recessive(stem)
+    accentuation_GSF = lambda self, stem: recessive(stem)
+    accentuation_NSN = lambda self, stem: recessive(stem)
+    accentuation_GSN = lambda self, stem: recessive(stem)
 
-    def NSM(self): return phon(make_oxytone(self.stem + "+ες"))
-    def NSF(self): return phon(recessive(self.stem + "+εσα"))
-    def NSN(self): return phon(make_oxytone(self.stem + "ν"))
+    def __init__(self, stem):
+        self.stem = stem
 
-
-class Endings28(Endings):
-
-    def NSM(self): return phon(make_paroxytone(self.stem + "ας"))
-    def NSF(self): return phon(recessive(self.stem + "ασα"))
-    def NSN(self): return phon(recessive(self.stem + "αν"))
-
-
-class Endings30(Endings):
-
-    def NSM(self): return phon(make_oxytone(self.stem + "εις"))
-    def NSF(self): return phon(make_properispomenon(self.stem + "εισα"))
-    def NSN(self): return phon(make_oxytone(self.stem + "εν"))
-
-
-class Endings32(Endings):
-
-    def NSM(self): return phon(make_paroxytone(self.stem + "μενος"))
-    def NSF(self): return phon(recessive(self.stem + "μενη"))
-    def NSN(self): return phon(make_paroxytone(self.stem + "μενον"))
-
-
-class ParticipleBase1(Endings):
-
-    pl_conn = ""
-
-    def NSM(self): return phon(recessive(self.stem + self.pl_conn + "μενος"))
-    def NSF(self): return phon(recessive(self.stem + self.pl_conn + "μενη"))
-    def NSN(self): return phon(recessive(self.stem + self.pl_conn + "μενον"))
+    def NSM(self): return phon(self.accentuation_NSM(self.prep_stem_NSM(self.stem) + self.conn_NSM + self.ending_NSM))
+    def GSM(self): return phon(self.accentuation_GSM(self.prep_stem_GSM(self.stem) + self.conn_GSM + self.ending_GSM))
+    def NSF(self): return phon(self.accentuation_NSF(self.prep_stem_NSF(self.stem) + self.conn_NSF + self.ending_NSF))
+    def GSF(self): return phon(self.accentuation_GSF(self.prep_stem_GSF(self.stem) + self.conn_GSF + self.ending_GSF))
+    def NSN(self): return phon(self.accentuation_NSN(self.prep_stem_NSN(self.stem) + self.conn_NSN + self.ending_NSN))
+    def GSN(self): return phon(self.accentuation_GSN(self.prep_stem_GSN(self.stem) + self.conn_GSN + self.ending_GSN))
 
 
-class Endings27mi(ParticipleBase1):
+class ActiveParticiple(ParticipleEndings):
+
+    ending_NSM = "+ων"
+    ending_GSM = "ντος"
+    ending_NSF = "+εσα"
+    ending_GSF = "+εσης"
+    ending_NSN = "ν"
+    ending_GSN = "ντος"
+
+
+class ActiveParticiple2(ActiveParticiple):
+
+    ending_NSM = "+ες"
+
+
+class PerfectActiveParticiple(ParticipleEndings):
+
+    ending_NSM = "ως"
+    ending_GSM = "οτος"
+    ending_NSF = "υια"
+    ending_GSF = "υιας"
+    ending_NSN = "ος"
+    ending_GSN = "οτος"
+
+    accentuation_NSM = oxytone
+    accentuation_GSM = paroxytone
+    accentuation_NSF = properispomenon
+    accentuation_GSF = properispomenon
+    accentuation_NSN = oxytone
+    accentuation_GSN = paroxytone
+
+
+class MiddleParticiple(ParticipleEndings):
+
+    ending_NSM = "μενος"
+    ending_NSF = "μενη"
+    ending_NSN = "μενον"
+
+
+class Endings26(ActiveParticiple):
+
+    conn_GSM = "+ο"
+    conn_NSF = "+ο"
+    conn_GSF = "+ο"
+    conn_NSN = "+ο"
+    conn_GSN = "+ο"
+
+    accentuation2_NSF = proparoxytone
+    accentuation_GSF = proparoxytone
+    accentuation_NSN = properispomenon
+
+
+class Endings26mi(ActiveParticiple2):
+
+    accentuation_NSM = oxytone
+    accentuation_GSM = paroxytone
+    accentuation_NSN = oxytone
+    accentuation_GSN = paroxytone
+
+
+class Endings28(ActiveParticiple2):
+
+    conn_NSM = "+α"
+    conn_GSM = "+α"
+    conn_NSF = "+α"
+    conn_GSF = "+α"
+    conn_NSN = "+α"
+    conn_GSN = "+α"
+
+    accentuation_NSM = paroxytone
+    accentuation_GSF = proparoxytone
+
+
+class Endings30(ActiveParticiple2):
+
+    conn_NSM = "+ε"
+    conn_NSF = "+ε"
+    conn_NSN = "+ε"
+
+
+class Endings32(MiddleParticiple):
 
     pass
 
 
-class Endings27(ParticipleBase1):
+class Endings27mi(MiddleParticiple):
 
-    pl_conn = "+ο"
-
-
-class Endings29(ParticipleBase1):
-
-    pl_conn = "α"
+    pass
 
 
-class Endings31(Endings):
+class Endings27(MiddleParticiple):
 
-    def NSM(self): return phon(make_oxytone(self.stem + "ως"))
-    def NSF(self): return phon(make_properispomenon(self.stem + "υια"))
-    def NSN(self): return phon(make_oxytone(self.stem + "ος"))
+    conn_NSM = "+ο"
+    conn_NSF = "+ο"
+    conn_NSN = "+ο"
+
+
+class Endings29(MiddleParticiple):
+
+    conn_NSM = "+α"
+    conn_NSF = "+α"
+    conn_NSN = "+α"
+
+
+class Endings31(PerfectActiveParticiple):
+
+    pass
 
 
 class Verb1:
