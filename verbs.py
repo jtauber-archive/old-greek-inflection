@@ -622,6 +622,16 @@ class Endings15B(Endings15):
     def _3P(self): return alt(self, Endings15, Endings15C, "_3P")
 
 
+class Endings15D(Endings15):
+
+    prep_stem_1S = lengthen
+    prep_stem_2S = lengthen
+    prep_stem_3S = lengthen
+    prep_stem_1P = lengthen
+    prep_stem_2P = lengthen
+    prep_stem_3P = lengthen
+
+
 class Endings15miA(Connective("+ι"), SecondaryActive):
 
     ending_3P = "εν"
@@ -669,6 +679,16 @@ class Endings17(Connective("+αι"), Endings):
 class Endings16(Connective("+οι"), SecondaryMiddle):
 
     pass
+
+
+class Endings16B(Connective("+οι"), SecondaryMiddle):
+
+    prep_stem_1S = lengthen
+    prep_stem_2S = lengthen
+    prep_stem_3S = lengthen
+    prep_stem_1P = lengthen
+    prep_stem_2P = lengthen
+    prep_stem_3P = lengthen
 
 
 class Endings16mi(Connective("+ι"), SecondaryMiddle):
@@ -1052,6 +1072,11 @@ class Verb2D(Verb2):
     def FMI(self): return Endings2C(self.stem2, "σ")
     def FPI(self): return Endings2(self.stem2, "θη" + "σ")
     def AAI(self): return Endings7B(aug(self.stem2))
+
+    def FAO(self): return Endings15D(self.stem2, "σ")
+    def FMO(self): return Endings16B(self.stem2, "σ")
+    def FPO(self): return Endings16(self.stem2, "θη" + "σ")
+
     def PAD(self): return Endings20miB(self.stem1)
     def AAD(self): return Endings20miD(self.stem2)
     def AAN(self): return phon(recessive(phon2(self.stem2) + "+ναι"))
