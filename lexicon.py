@@ -1,6 +1,6 @@
 from verbs import (
     Verb1, Verb1B, Verb1C,
-    Verb2, Verb2B, Verb2C, Verb2D, Verb2E, Verb2F
+    Verb2, Verb2B, Verb2C, Verb2D, Verb2E, Verb2F, Verb2G
 )
 
 
@@ -48,6 +48,11 @@ class hISTHMI(Verb2D):
     stem2 = "στα"
 
 
+class hISTHMI1(Verb2G):
+
+    stem2 = "στα"
+
+
 class DEIKNUMI(Verb2E):
 
     stem1 = "δεικνυ"
@@ -67,6 +72,7 @@ VERBS = {
     "τίθημι": TIQHMI,
     "ἵημι": hIHMI,
     "ἵστημι": hISTHMI,
+    "ἵστημι/1": hISTHMI1,
     "δείκνυμι": DEIKNUMI,
     "γιγνώσκω": GIGNWSKW,
 }

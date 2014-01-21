@@ -463,6 +463,16 @@ class Endings5(Connective("+α"), SecondaryActive):
     ending_3S = "ε"
 
 
+class Endings5C(Endings5):
+
+    prep_stem_1S = lengthen
+    prep_stem_2S = lengthen
+    prep_stem_3S = lengthen
+    prep_stem_1P = lengthen
+    prep_stem_2P = lengthen
+    prep_stem_3P = lengthen
+
+
 class Endings5B(SecondaryActive2):
 
     prep_stem_1S = lengthen
@@ -591,6 +601,16 @@ class Endings6(Connective("+α"), SecondaryMiddle):
 class Endings6B(SecondaryMiddle):
 
     pass
+
+
+class Endings6C(Connective("+α"), SecondaryMiddle):
+
+    prep_stem_1S = lengthen
+    prep_stem_2S = lengthen
+    prep_stem_3S = lengthen
+    prep_stem_1P = lengthen
+    prep_stem_2P = lengthen
+    prep_stem_3P = lengthen
 
 
 class Endings15(Connective("+οι"), Endings):
@@ -1021,6 +1041,7 @@ class Verb2(Verb1):
     def IMI(self): return Endings11(aug(self.stem1))
     def AAI(self): return Endings5B(aug(self.stem2))
     def AMI(self): return Endings6B(aug(self.stem2))
+    def API(self): return Endings7(aug(self.stem2), "θη")
 
     def PAS(self): return Endings12mi(self.stem1)
     def PMS(self): return Endings13mi(self.stem1)
@@ -1072,6 +1093,7 @@ class Verb2D(Verb2):
     def FMI(self): return Endings2C(self.stem2, "σ")
     def FPI(self): return Endings2(self.stem2, "θη" + "σ")
     def AAI(self): return Endings7B(aug(self.stem2))
+    def AMI(self): return Endings6C(aug(self.stem2), "σ")
 
     def FAO(self): return Endings15D(self.stem2, "σ")
     def FMO(self): return Endings16B(self.stem2, "σ")
@@ -1090,6 +1112,7 @@ class Verb2E(Verb2):
     def PMO(self): return Endings16(self.stem1)
     def PAD(self): return Endings20miB(self.stem1)
 
+
 class Verb2F(Verb2):
 
     def IAI(self): return Endings3miD(self.stem1)
@@ -1097,6 +1120,11 @@ class Verb2F(Verb2):
     def PAD(self): return Endings20miB(self.stem1)
     def AAD(self): return Endings20miD(self.stem2)
     def AAN(self): return phon(recessive(phon2(self.stem2) + "+ναι"))
+
+
+class Verb2G(Verb1):
+
+    def AAI(self): return Endings5C(aug(self.stem2), "σ")
 
 
 def aug(stem):
