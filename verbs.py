@@ -198,8 +198,8 @@ def lengthen(self, stem):
 
 def alt(self, endings1, endings2, attr):
     return "{}/{}".format(
-        getattr(endings1(self.stem), attr)(),
-        getattr(endings2(self.stem), attr)(),
+        getattr(endings1(self.stem, self.extra), attr)(),
+        getattr(endings2(self.stem, self.extra), attr)(),
     )
 
 
@@ -270,16 +270,17 @@ class Endings(Connective("")):
     accentuation_2P = lambda self, stem: recessive(stem)
     accentuation_3P = lambda self, stem: recessive(stem)
 
-    def __init__(self, stem):
+    def __init__(self, stem, extra=""):
         self.stem = stem
+        self.extra = extra
 
-    def _1S(self): return phon(self.accentuation_1S(self.prep_stem_1S(self.stem) + self.conn_1S + self.ending_1S))
-    def _2S(self): return phon(self.accentuation_2S(self.prep_stem_2S(self.stem) + self.conn_2S + self.ending_2S))
-    def _3S(self): return phon(self.accentuation_3S(self.prep_stem_3S(self.stem) + self.conn_3S + self.ending_3S))
+    def _1S(self): return phon(self.accentuation_1S(self.prep_stem_1S(self.stem) + self.extra + self.conn_1S + self.ending_1S))
+    def _2S(self): return phon(self.accentuation_2S(self.prep_stem_2S(self.stem) + self.extra + self.conn_2S + self.ending_2S))
+    def _3S(self): return phon(self.accentuation_3S(self.prep_stem_3S(self.stem) + self.extra + self.conn_3S + self.ending_3S))
 
-    def _1P(self): return phon(self.accentuation_1P(self.prep_stem_1P(self.stem) + self.conn_1P + self.ending_1P))
-    def _2P(self): return phon(self.accentuation_2P(self.prep_stem_2P(self.stem) + self.conn_2P + self.ending_2P))
-    def _3P(self): return phon(self.accentuation_3P(self.prep_stem_3P(self.stem) + self.conn_3P + self.ending_3P))
+    def _1P(self): return phon(self.accentuation_1P(self.prep_stem_1P(self.stem) + self.extra + self.conn_1P + self.ending_1P))
+    def _2P(self): return phon(self.accentuation_2P(self.prep_stem_2P(self.stem) + self.extra + self.conn_2P + self.ending_2P))
+    def _3P(self): return phon(self.accentuation_3P(self.prep_stem_3P(self.stem) + self.extra + self.conn_3P + self.ending_3P))
 
 
 class PrimaryActive(Endings):
@@ -370,6 +371,20 @@ class ImperativeMiddle2(ImperativeMiddle):
 
 
 class Endings1(ConnectiveOEEOEO, PrimaryActive):
+
+    conn_1S = ""
+    conn_3P = "+ου"
+
+
+class Endings1B(ConnectiveOEEOEO, PrimaryActive):
+
+    prep_stem_1S = lengthen
+    prep_stem_2S = lengthen
+    prep_stem_3S = lengthen
+
+    prep_stem_1P = lengthen
+    prep_stem_2P = lengthen
+    prep_stem_3P = lengthen
 
     conn_1S = ""
     conn_3P = "+ου"
@@ -519,8 +534,23 @@ class Endings2B(ConnectiveOEEOEO, PrimaryMiddle):
 class Endings2(Endings2B):
 
     def _2S(self): return "{}/{}".format(
-                          phon(recessive(self.stem + "+ε+ι")), # ε + σαι
-                          phon(recessive(self.stem + "+ῃ"))   # ε + σαι
+                          phon(recessive(self.stem + self.extra + "+ε+ι")), # ε + σαι
+                          phon(recessive(self.stem + self.extra + "+ῃ"))   # ε + σαι
+    )
+
+
+class Endings2C(ConnectiveOEEOEO, PrimaryMiddle):
+
+    prep_stem_1S = lengthen
+    prep_stem_2S = lengthen
+    prep_stem_3S = lengthen
+    prep_stem_1P = lengthen
+    prep_stem_2P = lengthen
+    prep_stem_3P = lengthen
+
+    def _2S(self): return "{}/{}".format(
+                          phon(recessive(self.prep_stem_2S(self.stem) + self.extra + "+ε+ι")), # ε + σαι
+                          phon(recessive(self.prep_stem_2S(self.stem) + self.extra + "+ῃ"))   # ε + σαι
     )
 
 
@@ -754,15 +784,16 @@ class ParticipleEndings(Connective("")):
     accentuation_NSN = nothing
     accentuation_GSN = nothing
 
-    def __init__(self, stem):
+    def __init__(self, stem, extra=""):
         self.stem = stem
+        self.extra = extra
 
-    def NSM(self): return self.accentuation_NSM(phon(self.prep_stem_NSM(self.stem) + self.conn_NSM + self.ending_NSM))
-    def GSM(self): return self.accentuation_GSM(phon(self.prep_stem_GSM(self.stem) + self.conn_GSM + self.ending_GSM))
-    def NSF(self): return self.accentuation_NSF(phon(self.prep_stem_NSF(self.stem) + self.conn_NSF + self.ending_NSF))
-    def GSF(self): return self.accentuation_GSF(phon(self.prep_stem_GSF(self.stem) + self.conn_GSF + self.ending_GSF))
-    def NSN(self): return self.accentuation_NSN(phon(self.prep_stem_NSN(self.stem) + self.conn_NSN + self.ending_NSN))
-    def GSN(self): return self.accentuation_GSN(phon(self.prep_stem_GSN(self.stem) + self.conn_GSN + self.ending_GSN))
+    def NSM(self): return self.accentuation_NSM(phon(self.prep_stem_NSM(self.stem) + self.extra + self.conn_NSM + self.ending_NSM))
+    def GSM(self): return self.accentuation_GSM(phon(self.prep_stem_GSM(self.stem) + self.extra + self.conn_GSM + self.ending_GSM))
+    def NSF(self): return self.accentuation_NSF(phon(self.prep_stem_NSF(self.stem) + self.extra + self.conn_NSF + self.ending_NSF))
+    def GSF(self): return self.accentuation_GSF(phon(self.prep_stem_GSF(self.stem) + self.extra + self.conn_GSF + self.ending_GSF))
+    def NSN(self): return self.accentuation_NSN(phon(self.prep_stem_NSN(self.stem) + self.extra + self.conn_NSN + self.ending_NSN))
+    def GSN(self): return self.accentuation_GSN(phon(self.prep_stem_GSN(self.stem) + self.extra + self.conn_GSN + self.ending_GSN))
 
 
 class ActiveParticiple(ParticipleEndings):
@@ -892,39 +923,39 @@ class Verb1:
     def PMI(self): return Endings2(self.stem1)
     def IAI(self): return Endings3(aug(self.stem1))
     def IMI(self): return Endings4(aug(self.stem1))
-    def FAI(self): return Endings1(self.stem1 + "σ")
-    def FMI(self): return Endings2(self.stem1 + "σ")
-    def FPI(self): return Endings2(self.stem1 + "θη" + "σ")
-    def AAI(self): return Endings5(aug(self.stem1 + "σ"))
-    def AMI(self): return Endings6(aug(self.stem1 + "σ"))
-    def API(self): return Endings7(aug(self.stem1 + "θη"))
-    def XAI(self): return Endings8(redup(self.stem1) + "κ")
+    def FAI(self): return Endings1(self.stem1, "σ")
+    def FMI(self): return Endings2(self.stem1, "σ")
+    def FPI(self): return Endings2(self.stem1, "θη" + "σ")
+    def AAI(self): return Endings5(aug(self.stem1), "σ")
+    def AMI(self): return Endings6(aug(self.stem1), "σ")
+    def API(self): return Endings7(aug(self.stem1), "θη")
+    def XAI(self): return Endings8(redup(self.stem1), "κ")
     def XMI(self): return Endings9(redup(self.stem1))
-    def YAI(self): return Endings10(aug(redup(self.stem1) + "κ"))
+    def YAI(self): return Endings10(aug(redup(self.stem1)), "κ")
     def YMI(self): return Endings11(aug(redup(self.stem1)))
 
     def PAS(self): return Endings12(self.stem1)
     def PMS(self): return Endings13(self.stem1)
-    def AAS(self): return Endings12(self.stem1 + "σ")
-    def AMS(self): return Endings13(self.stem1 + "σ")
-    def APS(self): return Endings14(self.stem1 + "θ")
-    def XAS(self): return Endings12(redup(self.stem1) + "κ")
+    def AAS(self): return Endings12(self.stem1, "σ")
+    def AMS(self): return Endings13(self.stem1, "σ")
+    def APS(self): return Endings14(self.stem1, "θ")
+    def XAS(self): return Endings12(redup(self.stem1), "κ")
 
     def PAO(self): return Endings15(self.stem1)
     def PMO(self): return Endings16(self.stem1)
-    def FAO(self): return Endings15(self.stem1 + "σ")
-    def FMO(self): return Endings16(self.stem1 + "σ")
-    def FPO(self): return Endings16(self.stem1 + "θη" + "σ")
-    def AAO(self): return Endings17(self.stem1 + "σ")
-    def AMO(self): return Endings18(self.stem1 + "σ")
-    def APO(self): return Endings19(self.stem1 + "θ")
-    def XAO(self): return Endings15(redup(self.stem1) + "κ")
+    def FAO(self): return Endings15(self.stem1, "σ")
+    def FMO(self): return Endings16(self.stem1, "σ")
+    def FPO(self): return Endings16(self.stem1, "θη" + "σ")
+    def AAO(self): return Endings17(self.stem1, "σ")
+    def AMO(self): return Endings18(self.stem1, "σ")
+    def APO(self): return Endings19(self.stem1, "θ")
+    def XAO(self): return Endings15(redup(self.stem1), "κ")
 
     def PAD(self): return Endings20(self.stem1)
     def PMD(self): return Endings21(self.stem1)
-    def AAD(self): return Endings22(self.stem1 + "σ")
-    def AMD(self): return Endings23(self.stem1 + "σ")
-    def APD(self): return Endings24(self.stem1 + "θ")
+    def AAD(self): return Endings22(self.stem1, "σ")
+    def AMD(self): return Endings23(self.stem1, "σ")
+    def APD(self): return Endings24(self.stem1, "θ")
     def XMD(self): return Endings25(redup(self.stem1))
 
     def PAN(self): return phon(recessive(self.stem1 + "+ειν"))
@@ -940,13 +971,13 @@ class Verb1:
 
     def PAP(self): return Endings26(self.stem1)
     def PMP(self): return Endings27(self.stem1)
-    def FAP(self): return Endings26(self.stem1 + "σ")
-    def FMP(self): return Endings27(self.stem1 + "σ")
-    def FPP(self): return Endings27(self.stem1 + "θησ")
-    def AAP(self): return Endings28(self.stem1 + "σ")
-    def AMP(self): return Endings29(self.stem1 + "σ")
-    def APP(self): return Endings30(self.stem1 + "θ")
-    def XAP(self): return Endings31(redup(self.stem1) + "κ")
+    def FAP(self): return Endings26(self.stem1, "σ")
+    def FMP(self): return Endings27(self.stem1, "σ")
+    def FPP(self): return Endings27(self.stem1, "θησ")
+    def AAP(self): return Endings28(self.stem1, "σ")
+    def AMP(self): return Endings29(self.stem1, "σ")
+    def APP(self): return Endings30(self.stem1, "θ")
+    def XAP(self): return Endings31(redup(self.stem1), "κ")
     def XMP(self): return Endings32(redup(self.stem1))
 
 
@@ -1017,6 +1048,9 @@ class Verb2C(Verb2B):
 class Verb2D(Verb2):
 
     def IAI(self): return Endings3miD(self.stem1)
+    def FAI(self): return Endings1B(self.stem2, "σ")
+    def FMI(self): return Endings2C(self.stem2, "σ")
+    def FPI(self): return Endings2(self.stem2, "θη" + "σ")
     def AAI(self): return Endings7B(aug(self.stem2))
     def PAD(self): return Endings20miB(self.stem1)
     def AAD(self): return Endings20miD(self.stem2)
@@ -1030,6 +1064,14 @@ class Verb2E(Verb2):
     def PAO(self): return Endings15(self.stem1)
     def PMO(self): return Endings16(self.stem1)
     def PAD(self): return Endings20miB(self.stem1)
+
+class Verb2F(Verb2):
+
+    def IAI(self): return Endings3miD(self.stem1)
+    def AAI(self): return Endings7B(aug(self.stem2))
+    def PAD(self): return Endings20miB(self.stem1)
+    def AAD(self): return Endings20miD(self.stem2)
+    def AAN(self): return phon(recessive(phon2(self.stem2) + "+ναι"))
 
 
 def aug(stem):

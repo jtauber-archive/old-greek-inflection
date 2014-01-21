@@ -1,6 +1,6 @@
 from verbs import (
     Verb1, Verb1B, Verb1C,
-    Verb2, Verb2B, Verb2C, Verb2D, Verb2E,
+    Verb2, Verb2B, Verb2C, Verb2D, Verb2E, Verb2F
 )
 
 
@@ -53,7 +53,7 @@ class DEIKNUMI(Verb2E):
     stem1 = "δεικνυ"
 
 
-class GIGNWSKW(Verb2D):
+class GIGNWSKW(Verb2F):
 
     stem2 = "γνο"
 
