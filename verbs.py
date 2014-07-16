@@ -27,8 +27,8 @@ def phon(w):
     w = w.replace("ό+ι#σο", "ό+ιο")
     w = w.replace("οι#σο", "οιο")
 
-    w = w.replace("ά+ε#σαι", "ᾷ") # @@@
-    w = w.replace("ό+ε#σαι", "οῖ") # @@@
+    w = w.replace("ά+ε#σαι", "ᾷ")  # @@@
+    w = w.replace("ό+ε#σαι", "οῖ")  # @@@
     w = w.replace("ᾶ#σαι", "ᾷ")
     w = w.replace("α#σαι", "ᾳ")
     w = w.replace("η#σαι", "ῃ")
@@ -127,7 +127,7 @@ def phon(w):
     w = w.replace("ο+ί", "οί")
 
     w = w.replace("ώ+η", "ῶ")
-    w = w.replace("ώ+ῃ", "ῷ") # @@@
+    w = w.replace("ώ+ῃ", "ῷ")  # @@@
 
     w = w.replace("ή+η", "ῆ")
     w = w.replace("ή+ῃ", "ῇ")
@@ -136,9 +136,9 @@ def phon(w):
     w = w.replace("η+ῖ", "ῇ")
     w = w.replace("η+ι", "ῃ")
 
-    w = w.replace("η+ε", "η") # @@@
+    w = w.replace("η+ε", "η")  # @@@
 
-    w = w.replace("ῡ+ε", "ῡ") # @@@
+    w = w.replace("ῡ+ε", "ῡ")  # @@@
 
     w = w.replace("ύ+ε", "ῦ")
     w = w.replace("υ+έ", "ύ")
@@ -544,8 +544,8 @@ class Endings2B(ConnectiveOEEOEO, PrimaryMiddle):
 class Endings2(Endings2B):
 
     def _2S(self): return "{}/{}".format(
-                          phon(recessive(self.stem + self.extra + "+ε+ι")), # ε + σαι
-                          phon(recessive(self.stem + self.extra + "+ῃ"))   # ε + σαι
+        phon(recessive(self.stem + self.extra + "+ε+ι")),  # ε + σαι
+        phon(recessive(self.stem + self.extra + "+ῃ"))     # ε + σαι
     )
 
 
@@ -559,8 +559,8 @@ class Endings2C(ConnectiveOEEOEO, PrimaryMiddle):
     prep_stem_3P = lengthen
 
     def _2S(self): return "{}/{}".format(
-                          phon(recessive(self.prep_stem_2S(self.stem) + self.extra + "+ε+ι")), # ε + σαι
-                          phon(recessive(self.prep_stem_2S(self.stem) + self.extra + "+ῃ"))   # ε + σαι
+        phon(recessive(self.prep_stem_2S(self.stem) + self.extra + "+ε+ι")),  # ε + σαι
+        phon(recessive(self.prep_stem_2S(self.stem) + self.extra + "+ῃ"))     # ε + σαι
     )
 
 
@@ -773,7 +773,7 @@ class Endings20(ConnectiveOEEOEO, ImperativeActive):
 
 class Endings22(Connective("+α"), ImperativeActive):
 
-    conn_2S = "" # exception to alpha
+    conn_2S = ""  # exception to alpha
 
     ending_2S = "ον"
 
@@ -877,7 +877,7 @@ class MiddleParticiple(ParticipleEndings):
 
 class Endings26(Connective("+ο"), ActiveParticiple):
 
-    conn_NSM = "" # exception to omicron
+    conn_NSM = ""  # exception to omicron
 
     accentuation_NSM = paroxytone
     accentuation_GSM = proparoxytone
