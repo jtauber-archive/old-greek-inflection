@@ -10,4 +10,4 @@ elsewhere that will eventually be incorporated into this).
 λύω is complete and I'm now moving on to contract verbs.
 
 You'll need to `pip install -r requirements.txt` to get `greek-accentuation`
-library and then just running `./verbs.py` will run tests.
+library and then just running `./test.py` will run tests.
